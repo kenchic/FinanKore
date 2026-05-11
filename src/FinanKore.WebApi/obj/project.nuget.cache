@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "6lxpHOUwd1M=",
+  "success": true,
+  "projectFilePath": "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.WebApi\\FinanKore.WebApi.csproj",
+  "expectedPackageFiles": [
+    "D:\\Usuarios\\german.alvarez\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.6\\microsoft.aspnetcore.openapi.10.0.6.nupkg.sha512",
+    "D:\\Usuarios\\german.alvarez\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

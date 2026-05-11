@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "4b23pirJBcQ=",
+  "success": true,
+  "projectFilePath": "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Web\\FinanKore.Web.csproj",
+  "expectedPackageFiles": [
+    "D:\\Usuarios\\german.alvarez\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.6\\microsoft.aspnetcore.app.internal.assets.10.0.6.nupkg.sha512"
+  ],
+  "logs": []
+}

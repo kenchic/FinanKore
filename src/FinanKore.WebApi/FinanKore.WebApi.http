@@ -1,0 +1,6 @@
+@FinanKore.WebApi_HostAddress = http://localhost:5157
+
+GET {{FinanKore.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

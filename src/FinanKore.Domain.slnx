@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="FinanKore.Application/FinanKore.Application.csproj" />
+  <Project Path="FinanKore.Domain/FinanKore.Domain.csproj" />
+  <Project Path="FinanKore.Infrastructure/FinanKore.Infrastructure.csproj" />
+  <Project Path="FinanKore.Web/FinanKore.Web.csproj" />
+  <Project Path="FinanKore.WebApi/FinanKore.WebApi.csproj" />
+</Solution>
