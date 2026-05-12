@@ -41,7 +41,7 @@ Diseñar un modelo físico de datos robusto, normalizado y optimizado para SQL S
 **Acción interna del agente:**
 1. Diseña el script con el bloque `USE`, opciones `SET` e idempotencia:
    ```sql
-   USE [{DatabaseName}];
+   USE [Financore];
    GO
    SET ANSI_NULLS ON;
    GO

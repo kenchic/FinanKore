@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain\\FinanKore.Domain.csproj": {}
+    "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain.csproj": {}
   },
   "projects": {
-    "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain\\FinanKore.Domain.csproj": {
+    "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain\\FinanKore.Domain.csproj",
+        "projectUniqueName": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain.csproj",
         "projectName": "FinanKore.Domain",
-        "projectPath": "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain\\FinanKore.Domain.csproj",
+        "projectPath": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain.csproj",
         "packagesPath": "D:\\Usuarios\\german.alvarez\\.nuget\\packages\\",
-        "outputPath": "E:\\Documentos\\Proyectos\\FinanKore\\FinanKore\\src\\FinanKore.Domain\\FinanKore.Domain\\obj\\",
+        "outputPath": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -27,11 +27,11 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.actsis.com/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -50,7 +50,6 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "imports": [
             "net461",
