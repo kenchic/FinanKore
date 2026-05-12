@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace FinanKore.Aplicacion.Perfil.Dtos;
 
 public sealed record UsuarioDto(

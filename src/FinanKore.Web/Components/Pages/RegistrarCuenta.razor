@@ -1,0 +1,107 @@
+@page "/registrar"
+@using FinanKore.Web.Models
+@using FinanKore.Web.Servicios
+@inject ServicioPerfil ServicioPerfil
+@inject NotificationService Notificacion
+@inject NavigationManager Navegacion
+
+<PageTitle>Registrar Cuenta - FinanKore</PageTitle>
+
+<div class="gx-card" style="max-width: 480px; margin: 3rem auto; padding: 2rem;">
+    <div style="text-align: center; margin-bottom: 1.5rem;">
+        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">person_add</span>
+        <h3 style="margin: 0.5rem 0 0.25rem;">Crear tu Cuenta</h3>
+        <p style="color: var(--rz-text-secondary); margin: 0;">Regístrate para empezar a usar FinanKore</p>
+    </div>
+
+    <RadzenTemplateForm TItem="RegistrarCuentaModelo"
+                        Model="@modelo"
+                        OnSubmit="@HandleRegistrar">
+        <RadzenTextBox Name="Correo"
+                       @bind-Value="@modelo.Correo"
+                       Placeholder="tu@correo.com"
+                       Style="width: 100%; margin-bottom: 1rem;" />
+
+        <RadzenTextBox Name="Nombre"
+                       @bind-Value="@modelo.Nombre"
+                       Placeholder="Nombre completo"
+                       Style="width: 100%; margin-bottom: 1rem;" />
+
+        <RadzenTextBox Name="ImagenUrl"
+                       @bind-Value="@modelo.ImagenUrl"
+                       Placeholder="URL de tu foto (opcional)"
+                       Style="width: 100%; margin-bottom: 1.5rem;" />
+
+        <RadzenButton Text="Crear Cuenta"
+                      ButtonType="@ButtonType.Submit"
+                      ButtonStyle="@ButtonStyle.Primary"
+                      Size="@ButtonSize.Medium"
+                      Style="width: 100%;" />
+    </RadzenTemplateForm>
+
+    <div style="text-align: center; margin-top: 1rem;">
+        <RadzenButton Text="¿Ya tienes cuenta? Inicia Sesión"
+                      ButtonStyle="@ButtonStyle.Info"
+                      Size="@ButtonSize.Small"
+                      Click="@IrAInicio" />
+    </div>
+</div>
+
+@code {
+    private RegistrarCuentaModelo modelo = new();
+
+    private void IrAInicio()
+    {
+        Navegacion.NavigateTo("/");
+    }
+
+    private async Task HandleRegistrar()
+    {
+        if (string.IsNullOrWhiteSpace(modelo.Correo))
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Correo obligatorio",
+                Duration = 4000
+            });
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(modelo.Nombre))
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Nombre obligatorio",
+                Duration = 4000
+            });
+            return;
+        }
+
+        try
+        {
+            var resultado = await ServicioPerfil.RegistrarAsync(modelo);
+
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = $"¡Bienvenido {resultado?.NombreCompleto ?? "usuario"}!",
+                Detail = "Tu cuenta ha sido creada exitosamente.",
+                Duration = 5000
+            });
+
+            Navegacion.NavigateTo("/");
+        }
+        catch (HttpRequestException ex)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al registrar",
+                Detail = ex.Message,
+                Duration = 5000
+            });
+        }
+    }
+}

@@ -1,7 +1,24 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>FinanKore</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="gx-card" style="max-width: 600px; margin: 2rem auto; padding: 2rem; text-align: center;">
+    <span class="material-icons" style="font-size: 4rem; color: var(--rz-primary);">account_balance</span>
+    <h1>FinanKore</h1>
+    <p style="color: var(--rz-text-secondary);">Gestión financiera inteligente</p>
 
-Welcome to your new app.
+    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+        <RadzenButton Text="Registrarse"
+                      Click="@(args => IrARegistrar())" />
+        <RadzenButton Text="Iniciar Sesión" />
+    </div>
+</div>
+
+@code {
+    [Inject] private NavigationManager Navegacion { get; set; } = default!;
+
+    private void IrARegistrar()
+    {
+        Navegacion.NavigateTo("/registrar");
+    }
+}

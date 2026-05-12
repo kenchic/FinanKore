@@ -1,0 +1,55 @@
+## .NET / .NET Core
+**/bin/
+**/obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.suo
+*.log
+*.cache
+*.cache.json
+*.swa.cache.json
+*.dswa.cache.json
+*.rbcswa.cache.json
+*.rjsmrazor.dswa.cache.json
+*.rjsmcshtml.dswa.cache.json
+*.rjimswa.dswa.cache.json
+*.up2date
+
+## IDE
+.vs/
+.vscode/
+*.userprefs
+*.pidb
+*.sln.docstates
+.idea/
+
+## Build tools
+*.nupkg
+*.snupkg
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Environment / Secrets
+*.env
+.env.*
+secrets.json
+*.pfx
+*.cer
+
+## Docker (keep docker-compose.yml, ignore overrides)
+docker-compose.override.yml
+
+## Office temp files
+~$*.xlsx
+~$*.docx
+~$*.pptx
