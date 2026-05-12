@@ -7,12 +7,12 @@ using MediatR;
 
 namespace FinanKore.Aplicacion.Perfil.Comandos;
 
-public sealed class RegistrarUsuarioManejador : IRequestHandler<RegistrarUsuarioComando, UsuarioDto>
+public sealed class IniciarSesionManejador : IRequestHandler<IniciarSesionComando, UsuarioDto>
 {
     private readonly IUsuarioRepositorio _repositorio;
     private readonly IUnidadDeTrabajo _unidadDeTrabajo;
 
-    public RegistrarUsuarioManejador(
+    public IniciarSesionManejador(
         IUsuarioRepositorio repositorio,
         IUnidadDeTrabajo unidadDeTrabajo)
     {
@@ -21,19 +21,22 @@ public sealed class RegistrarUsuarioManejador : IRequestHandler<RegistrarUsuario
     }
 
     public async Task<UsuarioDto> Handle(
-        RegistrarUsuarioComando comando,
+        IniciarSesionComando comando,
         CancellationToken token)
     {
         var correo = new CorreoElectronico(comando.Correo);
-        var nombre = NombrePersona.Crear(comando.Nombre);
-        var imagen = ImagenPerfil.Crear(comando.ImagenUrl ?? string.Empty);
 
-        if (await _repositorio.ExisteCorreoAsync(correo, token))
-            throw new ExcepcionDominio($"El correo '{correo}' ya está registrado.");
+        var usuario = await _repositorio.ObtenerPorCorreoAsync(correo, token)
+            ?? throw new ExcepcionDominio("Correo o contraseña incorrectos.");
 
-        var usuario = Usuario.Registrar(correo, nombre, comando.Password, imagen);
+        var exito = usuario.IniciarSesion(comando.Password);
 
-        await _repositorio.AgregarAsync(usuario, token);
+        if (!exito)
+            throw new ExcepcionDominio("Correo o contraseña incorrectos.");
+
+        if (!usuario.Activo)
+            throw new ExcepcionDominio("Tu cuenta está desactivada. Contacta a soporte.");
+
         await _unidadDeTrabajo.GuardarCambiosAsync(token);
 
         return new UsuarioDto(

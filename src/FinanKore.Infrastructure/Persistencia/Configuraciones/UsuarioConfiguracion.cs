@@ -37,6 +37,19 @@ public sealed class UsuarioConfiguracion : IEntityTypeConfiguration<Usuario>
             n.Ignore(p => p.Completo);
         });
 
+        builder.OwnsOne(u => u.Credencial, c =>
+        {
+            c.Property(p => p.Hash)
+                .HasColumnName("PasswordHash")
+                .HasMaxLength(100)
+                .IsRequired();
+
+            c.Property(p => p.Salt)
+                .HasColumnName("PasswordSalt")
+                .HasMaxLength(50)
+                .IsRequired();
+        });
+
         builder.OwnsOne(u => u.Imagen, i =>
         {
             i.Property(p => p.Url)

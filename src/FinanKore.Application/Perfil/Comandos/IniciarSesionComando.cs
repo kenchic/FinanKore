@@ -3,9 +3,7 @@ using MediatR;
 
 namespace FinanKore.Aplicacion.Perfil.Comandos;
 
-public sealed record RegistrarUsuarioComando(
+public sealed record IniciarSesionComando(
     string Correo,
-    string Nombre,
-    string Password,
-    string? ImagenUrl
+    string Password
 ) : IRequest<UsuarioDto>;

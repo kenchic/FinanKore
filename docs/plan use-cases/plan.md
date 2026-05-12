@@ -3,7 +3,7 @@ Esta tabla enumera los casos de uso en el orden lógico en que deben ser desarro
 
 | Estado | Orden | Nombre del Caso de Uso | 
 | :---: | :---: | :--- | 
-| [ ] | 1 | Registrar Cuenta |  
+| [x] | 1 | Registrar Cuenta |  
 | [ ] | 2 | Iniciar Sesión (Login General) | 
 | [ ] | 3 | Crear Proyecto | 
 | [ ] | 4 | Crear Categorias Proyecto | 

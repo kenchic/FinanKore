@@ -5,5 +5,5 @@ public sealed record UsuarioDto(
     string Correo,
     string NombreCompleto,
     string? ImagenUrl,
-    DateTime FechaRegistro
+    DateTimeOffset FechaRegistro
 );

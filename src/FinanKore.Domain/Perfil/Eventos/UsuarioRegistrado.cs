@@ -6,8 +6,8 @@ public sealed record UsuarioRegistrado(
     Guid UsuarioId,
     string CorreoElectronico,
     string NombreCompleto,
-    DateTime FechaRegistro
+    DateTimeOffset FechaRegistro
 ) : IDominioEvento
 {
-    public DateTime FechaOcurrencia => FechaRegistro;
+    public DateTimeOffset FechaOcurrencia => FechaRegistro;
 }

@@ -24,6 +24,19 @@ public sealed class ServicioPerfil
         return await respuesta.Content
             .ReadFromJsonAsync<UsuarioRegistradoDto>(cancellationToken: token);
     }
+
+    public async Task<UsuarioRegistradoDto?> IniciarSesionAsync(
+        IniciarSesionModelo modelo,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.PostAsJsonAsync(
+            "api/perfil/iniciar-sesion", modelo, token);
+
+        respuesta.EnsureSuccessStatusCode();
+
+        return await respuesta.Content
+            .ReadFromJsonAsync<UsuarioRegistradoDto>(cancellationToken: token);
+    }
 }
 
 public sealed record UsuarioRegistradoDto(
@@ -31,5 +44,5 @@ public sealed record UsuarioRegistradoDto(
     string Correo,
     string NombreCompleto,
     string? ImagenUrl,
-    DateTime FechaRegistro
+    DateTimeOffset FechaRegistro
 );

@@ -32,4 +32,20 @@ public class PerfilController : ControllerBase
             return BadRequest(new { error = ex.Message });
         }
     }
+
+    [HttpPost("iniciar-sesion")]
+    public async Task<ActionResult<UsuarioDto>> IniciarSesion(
+        [FromBody] IniciarSesionComando comando,
+        CancellationToken token)
+    {
+        try
+        {
+            var resultado = await _mediador.Send(comando, token);
+            return Ok(resultado);
+        }
+        catch (ExcepcionDominio ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }

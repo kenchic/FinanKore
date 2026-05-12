@@ -31,12 +31,16 @@ public sealed class UsuarioRepositorio : IUsuarioRepositorio
     public async Task<Usuario?> ObtenerPorCorreoAsync(
         CorreoElectronico correo,
         CancellationToken token = default)
-        => await _contexto.Usuarios.FirstOrDefaultAsync(
-            u => u.Correo.Valor == correo.Valor, token);
+    {
+        var usuarios = await _contexto.Usuarios.ToListAsync(token);
+        return usuarios.FirstOrDefault(u => u.Correo.Valor == correo.Valor);
+    }
 
     public async Task<bool> ExisteCorreoAsync(
         CorreoElectronico correo,
         CancellationToken token = default)
-        => await _contexto.Usuarios.AnyAsync(
-            u => u.Correo.Valor == correo.Valor, token);
+    {
+        var usuarios = await _contexto.Usuarios.ToListAsync(token);
+        return usuarios.Any(u => u.Correo.Valor == correo.Valor);
+    }
 }

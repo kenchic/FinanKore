@@ -1,4 +1,4 @@
-@page "/registrar"
+@page "/iniciar-sesion"
 @rendermode InteractiveServer
 @using FinanKore.Web.Models
 @using FinanKore.Web.Servicios
@@ -6,13 +6,13 @@
 @inject NotificationService Notificacion
 @inject NavigationManager Navegacion
 
-<PageTitle>Registrar Cuenta - FinanKore</PageTitle>
+<PageTitle>Iniciar Sesión - FinanKore</PageTitle>
 
 <div class="gx-card" style="max-width: 480px; margin: 3rem auto; padding: 2rem;">
     <div style="text-align: center; margin-bottom: 1.5rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">person_add</span>
-        <h3 style="margin: 0.5rem 0 0.25rem;">Crear tu Cuenta</h3>
-        <p style="color: var(--rz-text-secondary); margin: 0;">Regístrate para empezar a usar FinanKore</p>
+        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">login</span>
+        <h3 style="margin: 0.5rem 0 0.25rem;">Iniciar Sesión</h3>
+        <p style="color: var(--rz-text-secondary); margin: 0;">Ingresa tus credenciales para acceder</p>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -20,42 +20,34 @@
                        Placeholder="tu@correo.com"
                        Style="width: 100%;" />
 
-        <RadzenTextBox @bind-Value="@modelo.Nombre"
-                       Placeholder="Nombre completo"
-                       Style="width: 100%;" />
-
         <RadzenPassword @bind-Value="@modelo.Password"
-                        Placeholder="Contraseña (mín. 6 caracteres)"
+                        Placeholder="Contraseña"
                         Style="width: 100%;" />
 
-        <RadzenTextBox @bind-Value="@modelo.ImagenUrl"
-                       Placeholder="URL de tu foto (opcional)"
-                       Style="width: 100%;" />
-
-        <RadzenButton Text="Crear Cuenta"
-                      Click="@HandleRegistrar"
+        <RadzenButton Text="Iniciar Sesión"
+                      Click="@HandleIniciarSesion"
                       ButtonStyle="@ButtonStyle.Primary"
                       Size="@ButtonSize.Medium"
                       Style="width: 100%;" />
     </div>
 
     <div style="text-align: center; margin-top: 1rem;">
-        <RadzenButton Text="¿Ya tienes cuenta? Inicia Sesión"
+        <RadzenButton Text="¿No tienes cuenta? Regístrate"
                       ButtonStyle="@ButtonStyle.Info"
                       Size="@ButtonSize.Small"
-                      Click="@IrAInicio" />
+                      Click="@IrARegistrar" />
     </div>
 </div>
 
 @code {
-    private RegistrarCuentaModelo modelo = new();
+    private IniciarSesionModelo modelo = new();
 
-    private void IrAInicio()
+    private void IrARegistrar()
     {
-        Navegacion.NavigateTo("/");
+        Navegacion.NavigateTo("/registrar");
     }
 
-    private async Task HandleRegistrar()
+    private async Task HandleIniciarSesion()
     {
         if (string.IsNullOrWhiteSpace(modelo.Correo))
         {
@@ -68,24 +60,12 @@
             return;
         }
 
-        if (string.IsNullOrWhiteSpace(modelo.Nombre))
+        if (string.IsNullOrWhiteSpace(modelo.Password))
         {
             Notificacion.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = "Nombre obligatorio",
-                Duration = 4000
-            });
-            return;
-        }
-
-        if (string.IsNullOrWhiteSpace(modelo.Password) || modelo.Password.Length < 6)
-        {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Contraseña inválida",
-                Detail = "La contraseña debe tener al menos 6 caracteres.",
+                Summary = "Contraseña obligatoria",
                 Duration = 4000
             });
             return;
@@ -93,13 +73,13 @@
 
         try
         {
-            var resultado = await ServicioPerfil.RegistrarAsync(modelo);
+            var resultado = await ServicioPerfil.IniciarSesionAsync(modelo);
 
             Notificacion.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Success,
                 Summary = $"¡Bienvenido {resultado?.NombreCompleto ?? "usuario"}!",
-                Detail = "Tu cuenta ha sido creada exitosamente.",
+                Detail = "Has iniciado sesión exitosamente.",
                 Duration = 5000
             });
 
@@ -110,7 +90,7 @@
             Notificacion.Notify(new NotificationMessage
             {
                 Severity = NotificationSeverity.Error,
-                Summary = "Error al registrar",
+                Summary = "Error al iniciar sesión",
                 Detail = ex.Message,
                 Duration = 5000
             });
