@@ -58,3 +58,53 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+/* ============================================================
+   FinanKore :: Design System & Layout LinkedIn
+   ============================================================ */
+
+/* Fix Material Icons */
+.material-icons {
+    font-family: 'Material Icons' !important;
+}
+
+/* Colores corporativos */
+:root {
+    --fk-magenta: #e6007e;
+    --fk-azul: #0066cc;
+    --fk-violeta: #7b2cbf;
+}
+
+/* Tarjetas premium */
+.gx-card {
+    background: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.text-secondary {
+    color: var(--rz-text-secondary-color, #666666);
+}
+
+/* Formularios */
+.form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-header h3 {
+    margin: 0.5rem 0 0.25rem;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 1rem;
+}

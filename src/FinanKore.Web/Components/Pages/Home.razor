@@ -1,23 +1,91 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@using FinanKore.Web.Servicios
+@inject NavigationManager Navegacion
+@inject ProtectedSessionStorage AlmacenamientoSesion
+@inject EstadoAutenticacion Estado
 
 <PageTitle>FinanKore</PageTitle>
 
-<div class="gx-card" style="max-width: 600px; margin: 2rem auto; padding: 2rem; text-align: center;">
-    <span class="material-icons" style="font-size: 4rem; color: var(--rz-primary);">account_balance</span>
-    <h1>FinanKore</h1>
-    <p style="color: var(--rz-text-secondary);">Gestión financiera inteligente</p>
-
-    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
-        <RadzenButton Text="Registrarse"
-                      Click="@(args => IrARegistrar())" />
-        <RadzenButton Text="Iniciar Sesión"
-                      Click="@(args => IrAIniciarSesion())" />
+@if (cargando)
+{
+    <div class="gx-card" style="text-align: center; padding: 3rem;">
+        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 48px; height: 48px;" />
+        <p class="text-secondary" style="margin-top: 1rem;">Cargando...</p>
     </div>
-</div>
+}
+else if (usuario is not null)
+{
+    <div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">account_circle</span>
+            <div>
+                <h2 style="margin: 0;">Bienvenido, @usuario.NombreCompleto</h2>
+                <p class="text-secondary" style="margin: 0;">Panel de control financiero</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div class="gx-card" style="padding: 1.5rem; text-align: center; cursor: pointer;" @onclick="IrACrearProyecto">
+            <span class="material-icons" style="font-size: 2.5rem; color: var(--rz-primary);">folder</span>
+            <h4 style="margin: 0.5rem 0 0;">Nuevo Proyecto</h4>
+            <p class="text-secondary" style="margin: 0; font-size: 0.85rem;">Crea proyecciones, simulaciones o ahorros</p>
+        </div>
+
+        <div class="gx-card" style="padding: 1.5rem; text-align: center;">
+            <span class="material-icons" style="font-size: 2.5rem; color: var(--rz-primary);">analytics</span>
+            <h4 style="margin: 0.5rem 0 0;">Mis Proyectos</h4>
+            <p class="text-secondary" style="margin: 0; font-size: 0.85rem;">Gestiona tus proyectos activos</p>
+        </div>
+
+        <div class="gx-card" style="padding: 1.5rem; text-align: center;">
+            <span class="material-icons" style="font-size: 2.5rem; color: var(--rz-primary);">bar_chart</span>
+            <h4 style="margin: 0.5rem 0 0;">Reportes</h4>
+            <p class="text-secondary" style="margin: 0; font-size: 0.85rem;">Visualiza resultados financieros</p>
+        </div>
+    </div>
+
+    <div style="text-align: right; margin-top: 1rem;">
+        <RadzenButton Text="Cerrar Sesión"
+                      Click="@CerrarSesion"
+                      ButtonStyle="ButtonStyle.Secondary"
+                      Size="ButtonSize.Small" />
+    </div>
+}
+else
+{
+    <div class="gx-card" style="text-align: center; padding: 2.5rem; margin: 3rem auto; max-width: 500px;">
+        <span class="material-icons" style="font-size: 4rem; color: var(--rz-primary);">account_balance</span>
+        <h1 style="margin-top: 0.5rem;">FinanKore</h1>
+        <p class="text-secondary" style="font-size: 1.1rem;">Gestión financiera inteligente</p>
+        <p class="text-secondary">Organiza tus proyecciones, simulaciones, ahorros, deudas y gastos en un solo lugar.</p>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+            <RadzenButton Text="Registrarse"
+                          Click="@IrARegistrar" />
+            <RadzenButton Text="Iniciar Sesión"
+                          Click="@IrAIniciarSesion"
+                          ButtonStyle="ButtonStyle.Primary" />
+        </div>
+    </div>
+}
 
 @code {
-    [Inject] private NavigationManager Navegacion { get; set; } = default!;
+    private UsuarioRegistradoDto? usuario;
+    private bool cargando = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var resultado = await AlmacenamientoSesion.GetAsync<UsuarioRegistradoDto>("usuario_sesion");
+            usuario = resultado.Success ? resultado.Value : null;
+            Estado.Usuario = usuario;
+            cargando = false;
+            StateHasChanged();
+        }
+    }
 
     private void IrARegistrar()
     {
@@ -27,5 +95,18 @@
     private void IrAIniciarSesion()
     {
         Navegacion.NavigateTo("/iniciar-sesion");
+    }
+
+    private void IrACrearProyecto()
+    {
+        Navegacion.NavigateTo("/finanzas/proyectos/crear");
+    }
+
+    private async Task CerrarSesion()
+    {
+        await AlmacenamientoSesion.DeleteAsync("usuario_sesion");
+        usuario = null;
+        Estado.Usuario = null;
+        Navegacion.NavigateTo("/", forceLoad: true);
     }
 }

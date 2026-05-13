@@ -61,19 +61,22 @@ public sealed class Usuario : Entidad, IRaizAgregado
         return new Usuario(correo, nombre, credencial, imagen ?? ImagenPerfil.Predeterminada);
     }
 
-    public bool IniciarSesion(string passwordPlano)
+    public void IniciarSesion(string passwordPlano)
     {
         if (string.IsNullOrWhiteSpace(passwordPlano))
-            return false;
+            throw new ExcepcionDominio("La contraseña es obligatoria.");
+
+        if (!Activo)
+            throw new ExcepcionDominio("Tu cuenta está desactivada. Contacta a soporte.");
 
         var exito = Credencial.Verificar(passwordPlano);
 
-        if (exito)
-        {
-            FechaUltimoAcceso = DateTimeOffset.UtcNow;
-        }
+        if (!exito)
+            throw new ExcepcionDominio("Correo o contraseña incorrectos.");
 
-        return exito;
+        FechaUltimoAcceso = DateTimeOffset.UtcNow;
+
+        AgregarEvento(new SesionIniciada(Id, Correo, FechaUltimoAcceso.Value));
     }
 
     public void ActualizarNombre(NombrePersona nuevoNombre)

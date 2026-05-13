@@ -1,5 +1,7 @@
+using FinanKore.Aplicacion.Finanzas.Comandos;
 using FinanKore.Aplicacion.Comun.Interfaces;
 using FinanKore.Aplicacion.Perfil.Comandos;
+using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Perfil;
 using FinanKore.Infraestructura.Persistencia;
 using FinanKore.Infraestructura.Persistencia.Repositorios;
@@ -24,8 +26,11 @@ public static class InyeccionDependencia
 
         servicios.AddScoped<IUnidadDeTrabajo>(sp => sp.GetRequiredService<AppDbContext>());
         servicios.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+        servicios.AddScoped<IProyectoRepositorio, ProyectoRepositorio>();
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<RegistrarUsuarioComando>());
+        servicios.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblyContaining<CrearProyectoComando>());
 
         return servicios;
     }

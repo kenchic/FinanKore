@@ -1,19 +1,18 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+<div class="layout-linkedin">
+    <NavMenu />
+    <div class="layout-body">
+        <aside class="gx-sidebar-left">
+            <SectionOutlet SectionName="SidebarIzquierdo" />
+        </aside>
+        <main class="gx-main-content">
             @Body
-        </article>
-    </main>
+        </main>
+        <aside class="gx-sidebar-right">
+            <SectionOutlet SectionName="SidebarDerecho" />
+        </aside>
+    </div>
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>

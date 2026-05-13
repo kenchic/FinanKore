@@ -5,6 +5,7 @@
 @inject ServicioPerfil ServicioPerfil
 @inject NotificationService Notificacion
 @inject NavigationManager Navegacion
+@inject ProtectedSessionStorage AlmacenamientoSesion
 
 <PageTitle>Registrar Cuenta - FinanKore</PageTitle>
 
@@ -95,15 +96,20 @@
         {
             var resultado = await ServicioPerfil.RegistrarAsync(modelo);
 
-            Notificacion.Notify(new NotificationMessage
+            if (resultado is not null)
             {
-                Severity = NotificationSeverity.Success,
-                Summary = $"¡Bienvenido {resultado?.NombreCompleto ?? "usuario"}!",
-                Detail = "Tu cuenta ha sido creada exitosamente.",
-                Duration = 5000
-            });
+                await AlmacenamientoSesion.SetAsync("usuario_sesion", resultado);
 
-            Navegacion.NavigateTo("/");
+                Notificacion.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = $"¡Bienvenido {resultado.NombreCompleto}!",
+                    Detail = "Tu cuenta ha sido creada exitosamente.",
+                    Duration = 5000
+                });
+
+                Navegacion.NavigateTo("/");
+            }
         }
         catch (HttpRequestException ex)
         {

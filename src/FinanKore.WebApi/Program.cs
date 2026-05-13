@@ -1,9 +1,10 @@
 using FinanKore.Infraestructura;
+using FinanKore.WebApi.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddAuthorization();
 
 builder.Services.AgregarInfraestructura(builder.Configuration);
 
@@ -18,6 +19,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapPerfilEndpoints();
+app.MapFinanzasEndpoints();
 
 app.Run();

@@ -16,7 +16,7 @@ Transformar requerimientos en un diseño estructural de Dominio (DDD) alineado c
 Debes diseñar pensando en la siguiente ruta de archivos:
 - **{ProjectName}.Dominio/**
   - `Comun/`: `Entidad.cs`, `ObjetoValor.cs`, `RaizAgregado.cs`.
-  - `[ContextoDelimitado]/`: (Ej: ACADEMIA, FINANZAS).
+  - `[ContextoDelimitado]/`: (Ej: PROYECTO, FINANZAS).
     - `[Agregado].cs`: El Aggregate Root.
     - `[Entidad].cs`: Otras entidades del contexto.
     - `I[Agregado]Repositorio.cs`: Interfaz del repositorio.
@@ -26,8 +26,8 @@ Debes diseñar pensando en la siguiente ruta de archivos:
 # Instrucciones
 
 ## 1. Contextos y Agregados (Español)
-- Definir el contexto: **PERFIL**, **ACADEMIA**, **EMPAREJAMIENTO**, **CONEXION**, **CALIDAD**, **FINANZAS**, **CALIFICACION**.
-- Designar el Agregado Raíz (ej: `SolicitudAcademica`, `Usuario`).
+- Definir el contexto: **PERFIL**, **PROYECTO**, **EMPAREJAMIENTO**, **CONEXION**, **CALIDAD**, **FINANZAS**, **CALIFICACION**.
+- Designar el Agregado Raíz (ej: `Proyecto`, `Usuario`).
 
 ## 2. Ejecución Física del Código (¡OBLIGATORIO!)
 - **No te limites a crear un documento Markdown con el diseño.**
@@ -45,12 +45,11 @@ Debes diseñar pensando en la siguiente ruta de archivos:
 
 ## Ejemplo: Modelado de Dominio
 ```csharp
-// {ProjectName}.Dominio/Academia/SolicitudAcademica.cs
-namespace {ProjectName}.Dominio.Academia;
+// {ProjectName}.Dominio/Proyecto/Proyecto.cs
+namespace {ProjectName}.Dominio.Proyecto;
 
-public class SolicitudAcademica : Entidad, IRaizAgregado {
+public class Proyecto : Entidad, IRaizAgregado {
     public string Titulo { get; private set; }
-    public DateTime FechaEntrega { get; private set; }
     // ... lógica de negocio ...
 }
 ```

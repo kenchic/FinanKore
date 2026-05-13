@@ -7,19 +7,11 @@ using MediatR;
 
 namespace FinanKore.Aplicacion.Perfil.Comandos;
 
-public sealed class RegistrarUsuarioManejador : IRequestHandler<RegistrarUsuarioComando, UsuarioDto>
+public sealed class RegistrarUsuarioManejador(
+    IUsuarioRepositorio repositorio,
+    IUnidadDeTrabajo unidadDeTrabajo)
+    : IRequestHandler<RegistrarUsuarioComando, UsuarioDto>
 {
-    private readonly IUsuarioRepositorio _repositorio;
-    private readonly IUnidadDeTrabajo _unidadDeTrabajo;
-
-    public RegistrarUsuarioManejador(
-        IUsuarioRepositorio repositorio,
-        IUnidadDeTrabajo unidadDeTrabajo)
-    {
-        _repositorio = repositorio;
-        _unidadDeTrabajo = unidadDeTrabajo;
-    }
-
     public async Task<UsuarioDto> Handle(
         RegistrarUsuarioComando comando,
         CancellationToken token)
@@ -28,13 +20,13 @@ public sealed class RegistrarUsuarioManejador : IRequestHandler<RegistrarUsuario
         var nombre = NombrePersona.Crear(comando.Nombre);
         var imagen = ImagenPerfil.Crear(comando.ImagenUrl ?? string.Empty);
 
-        if (await _repositorio.ExisteCorreoAsync(correo, token))
+        if (await repositorio.ExisteCorreoAsync(correo, token))
             throw new ExcepcionDominio($"El correo '{correo}' ya está registrado.");
 
         var usuario = Usuario.Registrar(correo, nombre, comando.Password, imagen);
 
-        await _repositorio.AgregarAsync(usuario, token);
-        await _unidadDeTrabajo.GuardarCambiosAsync(token);
+        await repositorio.AgregarAsync(usuario, token);
+        await unidadDeTrabajo.GuardarCambiosAsync(token);
 
         return new UsuarioDto(
             usuario.Id,

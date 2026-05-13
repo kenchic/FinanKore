@@ -1,4 +1,5 @@
 using FinanKore.Aplicacion.Comun.Interfaces;
+using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Perfil;
 using FinanKore.Dominio.Perfil.ObjetosValor;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ public sealed class AppDbContext : DbContext, IUnidadDeTrabajo
         : base(opciones) { }
 
     public DbSet<Usuario> Usuarios => Set<Usuario>();
+    public DbSet<Proyecto> Proyectos => Set<Proyecto>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
