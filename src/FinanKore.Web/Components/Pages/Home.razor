@@ -16,7 +16,7 @@
 }
 else if (usuario is not null)
 {
-    <div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+    <div class="gx-card" style="margin-bottom: 1.5rem; padding: 1.5rem;">
         <div style="display: flex; align-items: center; gap: 1rem;">
             <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">account_circle</span>
             <div>
@@ -26,27 +26,42 @@ else if (usuario is not null)
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-        <div class="gx-card" style="padding: 1.5rem; text-align: center; cursor: pointer;" @onclick="IrACrearProyecto">
-            <span class="material-icons" style="font-size: 2.5rem; color: var(--rz-primary);">folder</span>
-            <h4 style="margin: 0.5rem 0 0;">Nuevo Proyecto</h4>
-            <p class="text-secondary" style="margin: 0; font-size: 0.85rem;">Crea proyecciones, simulaciones o ahorros</p>
+    <div class="dashboard-grid">
+        <div class="gx-card dashboard-card" @onclick="() => IrAProyectos()">
+            <div class="dashboard-card-icon" style="color: var(--fk-magenta);">
+                <span class="material-icons">folder</span>
+            </div>
+            <h3>Proyectos</h3>
+            <p class="text-secondary">Crea y gestiona proyecciones, simulaciones y ahorros</p>
+            <div class="dashboard-card-action">
+                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
         </div>
 
-        <div class="gx-card" style="padding: 1.5rem; text-align: center;">
-            <span class="material-icons" style="font-size: 2.5rem; color: var(--rz-primary);">analytics</span>
-            <h4 style="margin: 0.5rem 0 0;">Mis Proyectos</h4>
-            <p class="text-secondary" style="margin: 0; font-size: 0.85rem;">Gestiona tus proyectos activos</p>
+        <div class="gx-card dashboard-card" @onclick="() => IrACategorias()">
+            <div class="dashboard-card-icon" style="color: var(--fk-azul);">
+                <span class="material-icons">category</span>
+            </div>
+            <h3>Categorías</h3>
+            <p class="text-secondary">Administra las categorías de tus proyectos financieros</p>
+            <div class="dashboard-card-action">
+                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
         </div>
 
-        <div class="gx-card" style="padding: 1.5rem; text-align: center;">
-            <span class="material-icons" style="font-size: 2.5rem; color: var(--rz-primary);">bar_chart</span>
-            <h4 style="margin: 0.5rem 0 0;">Reportes</h4>
-            <p class="text-secondary" style="margin: 0; font-size: 0.85rem;">Visualiza resultados financieros</p>
+        <div class="gx-card dashboard-card" @onclick="() => IrAReportes()">
+            <div class="dashboard-card-icon" style="color: var(--fk-violeta);">
+                <span class="material-icons">bar_chart</span>
+            </div>
+            <h3>Reportes</h3>
+            <p class="text-secondary">Visualiza los resultados financieros de tus proyectos</p>
+            <div class="dashboard-card-action">
+                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
         </div>
     </div>
 
-    <div style="text-align: right; margin-top: 1rem;">
+    <div style="text-align: right; margin-top: 1.5rem;">
         <RadzenButton Text="Cerrar Sesión"
                       Click="@CerrarSesion"
                       ButtonStyle="ButtonStyle.Secondary"
@@ -97,9 +112,19 @@ else
         Navegacion.NavigateTo("/iniciar-sesion");
     }
 
-    private void IrACrearProyecto()
+    private void IrAProyectos()
     {
-        Navegacion.NavigateTo("/finanzas/proyectos/crear");
+        Navegacion.NavigateTo("/finanzas/proyectos");
+    }
+
+    private void IrACategorias()
+    {
+        Navegacion.NavigateTo("/finanzas/categorias");
+    }
+
+    private void IrAReportes()
+    {
+        Navegacion.NavigateTo("/finanzas/reportes");
     }
 
     private async Task CerrarSesion()

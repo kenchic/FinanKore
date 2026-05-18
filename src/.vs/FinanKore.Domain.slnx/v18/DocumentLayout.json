@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "E:\\Documentos\\Proyectos\\FinanKore\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.web\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|solutionrelative:finankore.web\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.web\\components\\pages\\iniciarsesion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|solutionrelative:finankore.web\\components\\pages\\iniciarsesion.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -39,19 +43,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "FinanKore.Web\\Components\\Pages\\Home.razor",
+              "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "FinanKore.Web\\Components\\Pages\\Home.razor",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB8AAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-17T02:19:23.293Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "IniciarSesion.razor",
               "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\Pages\\IniciarSesion.razor",
               "RelativeDocumentMoniker": "FinanKore.Web\\Components\\Pages\\IniciarSesion.razor",
               "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\Pages\\IniciarSesion.razor",
               "RelativeToolTip": "FinanKore.Web\\Components\\Pages\\IniciarSesion.razor",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAswEQAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAswD8AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-05-13T03:06:04.083Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\appsettings.json",
               "RelativeDocumentMoniker": "FinanKore.Infrastructure\\Persistencia\\appsettings.json",
@@ -64,7 +81,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\appsettings.json",
               "RelativeDocumentMoniker": "FinanKore.Web\\appsettings.json",

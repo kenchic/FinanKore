@@ -12,6 +12,15 @@ public sealed class ServicioFinanzas
         _http = http;
     }
 
+    public async Task<List<ProyectoCreadoDto>> ObtenerProyectosAsync(
+        CancellationToken token = default)
+    {
+        var resultado = await _http.GetFromJsonAsync<List<ProyectoCreadoDto>>(
+            "api/finanzas/proyectos", token);
+
+        return resultado ?? [];
+    }
+
     public async Task<ProyectoCreadoDto?> CrearProyectoAsync(
         CrearProyectoModelo modelo,
         CancellationToken token = default)

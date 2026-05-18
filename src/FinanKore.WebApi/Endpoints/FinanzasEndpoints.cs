@@ -1,4 +1,5 @@
 using FinanKore.Aplicacion.Finanzas.Comandos;
+using FinanKore.Aplicacion.Finanzas.Consultas;
 using FinanKore.Dominio.Excepciones;
 using MediatR;
 
@@ -10,6 +11,14 @@ public static class FinanzasEndpoints
     {
         var grupo = app.MapGroup("api/finanzas")
             .WithTags("Finanzas");
+
+        grupo.MapGet("proyectos", async (
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            var resultado = await mediador.Send(new ObtenerProyectosConsulta(), token);
+            return Results.Ok(resultado);
+        });
 
         grupo.MapPost("proyectos", async (
             CrearProyectoComando comando,
