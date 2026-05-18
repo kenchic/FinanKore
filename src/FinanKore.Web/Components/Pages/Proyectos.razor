@@ -1,0 +1,104 @@
+@page "/finanzas/proyectos"
+@rendermode InteractiveServer
+@using FinanKore.Web.Servicios
+@inject ServicioFinanzas ServicioFinanzas
+@inject NavigationManager Navegacion
+
+<PageTitle>Proyectos - FinanKore</PageTitle>
+
+<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-magenta);">folder</span>
+        <div style="flex: 1;">
+            <h2 style="margin: 0;">Proyectos</h2>
+            <p class="text-secondary" style="margin: 0;">Gestión de proyectos financieros</p>
+        </div>
+        <RadzenButton Text="Nuevo Proyecto" Click="@CrearProyecto" ButtonStyle="ButtonStyle.Primary" />
+    </div>
+</div>
+
+@if (cargando)
+{
+    <div class="gx-card" style="text-align: center; padding: 2rem;">
+        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
+        <p class="text-secondary" style="margin-top: 0.75rem;">Cargando proyectos...</p>
+    </div>
+}
+else if (proyectos.Count == 0)
+{
+    <div class="gx-card" style="text-align: center; padding: 3rem;">
+        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
+        <p class="text-secondary" style="margin-top: 1rem;">No hay proyectos aún. Creá tu primer proyecto para empezar.</p>
+    </div>
+}
+else
+{
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        @foreach (var proyecto in proyectos)
+        {
+            <div class="gx-card proyecto-fila" @onclick="() => IrADetalle(proyecto.Id)">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span class="material-icons" style="color: var(--fk-magenta);">folder</span>
+                    <div style="flex: 1;">
+                        <strong>@proyecto.Nombre</strong>
+                    </div>
+                    <span class="material-icons" style="color: var(--rz-text-secondary-color, #aaa);">chevron_right</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<div style="text-align: left; margin-top: 1rem;">
+    <RadzenButton Text="Volver al inicio"
+                  ButtonStyle="ButtonStyle.Secondary"
+                  Size="ButtonSize.Small"
+                  Click="@IrAInicio" />
+</div>
+
+<style>
+.proyecto-fila {
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    transition: box-shadow 0.2s ease;
+}
+.proyecto-fila:hover {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+</style>
+
+@code {
+    private List<ProyectoCreadoDto> proyectos = [];
+    private bool cargando = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
+        }
+        catch
+        {
+            proyectos = [];
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+
+    private void CrearProyecto()
+    {
+        Navegacion.NavigateTo("/finanzas/proyectos/crear");
+    }
+
+    private void IrADetalle(Guid id)
+    {
+        Navegacion.NavigateTo($"/finanzas/proyectos/{id}");
+    }
+
+    private void IrAInicio()
+    {
+        Navegacion.NavigateTo("/");
+    }
+}

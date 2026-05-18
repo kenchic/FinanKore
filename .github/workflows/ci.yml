@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Restore
+        run: dotnet restore Financore.sln
+      - name: Build
+        run: dotnet build Financore.sln --configuration Release --no-restore
+      - name: Test with coverage (80% min)
+        run: dotnet test Financore.sln --configuration Release --no-build -p:CollectCoverage=true -p:CoverletOutputFormat=lcov -p:Threshold=80
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: '**/coverage.*'
+
+  pack-nuget:
+    needs: build-test
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Determine version
+        id: ver
+        shell: pwsh
+        run: |
+          $tag = if ($env:GITHUB_REF -match 'refs/tags/') { $env:GITHUB_REF -replace 'refs/tags/','' } else { '' }
+          if ([string]::IsNullOrEmpty($tag)) { $version = '0.1.0-ci.' + $env:GITHUB_RUN_NUMBER } else { $version = $tag }
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+      - name: Pack Core
+        run: dotnet pack Financore.Core/Financore.Core.csproj -c Release -p:PackageVersion=${{ steps.ver.outputs.version }} -o ./.artifacts
+      - name: Pack Client
+        run: dotnet pack Financore.Client/Financore.Client.csproj -c Release -p:PackageVersion=${{ steps.ver.outputs.version }} -o ./.artifacts
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: ./.artifacts/*.nupkg
+

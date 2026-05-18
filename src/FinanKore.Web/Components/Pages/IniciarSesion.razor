@@ -1,0 +1,101 @@
+@page "/iniciar-sesion"
+@rendermode InteractiveServer
+@inject ServicioPerfil ServicioPerfil
+@inject NotificationService Notificacion
+@inject NavigationManager Navegacion
+@inject ProtectedSessionStorage AlmacenamientoSesion
+
+<PageTitle>Iniciar Sesión - FinanKore</PageTitle>
+
+<div class="gx-card" style="max-width: 480px; margin: 3rem auto;">
+    <div class="login-header">
+        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">login</span>
+        <h3 style="margin: 0.5rem 0 0.25rem;">Iniciar Sesión</h3>
+        <p class="text-secondary" style="margin: 0;">Ingresa tus credenciales para acceder</p>
+    </div>
+
+    <RadzenTemplateForm TItem="IniciarSesionModelo" Data="@modelo" Submit="@HandleIniciarSesion">
+        <div class="form-body">
+            <RadzenLabel Text="Correo electrónico" Component="Correo" />
+            <RadzenTextBox Name="Correo"
+                           @bind-Value="modelo.Correo"
+                           Placeholder="tu@correo.com"
+                           Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Correo"
+                                     Text="El correo es obligatorio."
+                                     Style="color: var(--rz-danger);" />
+
+            <RadzenLabel Text="Contraseña" Component="Password" Style="margin-top: 1rem;" />
+            <RadzenPassword Name="Password"
+                            @bind-Value="modelo.Password"
+                            Placeholder="Contraseña"
+                            Style="width: 100%;" />
+            <RadzenRequiredValidator Component="Password"
+                                     Text="La contraseña es obligatoria."
+                                     Style="color: var(--rz-danger);" />
+
+            <RadzenButton Text="Iniciar Sesión"
+                          ButtonType="ButtonType.Submit"
+                          ButtonStyle="ButtonStyle.Primary"
+                          Size="ButtonSize.Medium"
+                          Style="width: 100%; margin-top: 1.5rem;"
+                          IsBusy="@cargando"
+                          BusyText="Ingresando..." />
+        </div>
+    </RadzenTemplateForm>
+
+    <div class="login-footer">
+        <RadzenButton Text="¿No tienes cuenta? Regístrate"
+                      ButtonStyle="ButtonStyle.Info"
+                      Size="ButtonSize.Small"
+                      Click="@IrARegistrar" />
+    </div>
+</div>
+
+@code {
+    private IniciarSesionModelo modelo = new();
+    private bool cargando = false;
+
+    private void IrARegistrar()
+    {
+        Navegacion.NavigateTo("/registrar");
+    }
+
+    private async Task HandleIniciarSesion()
+    {
+        cargando = true;
+        try
+        {
+            var resultado = await ServicioPerfil.IniciarSesionAsync(modelo);
+
+            if (resultado is not null)
+            {
+                await AlmacenamientoSesion.SetAsync("usuario_sesion", resultado);
+
+                Notificacion.Notify(new NotificationMessage
+                {
+                    Severity = NotificationSeverity.Success,
+                    Summary = "¡Bienvenido!",
+                    Detail = $"Hola {resultado.NombreCompleto}, has iniciado sesión exitosamente.",
+                    Duration = 5000
+                });
+
+                Navegacion.NavigateTo("/");
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al iniciar sesión",
+                Detail = ex.Message,
+                Duration = 5000
+            });
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+}

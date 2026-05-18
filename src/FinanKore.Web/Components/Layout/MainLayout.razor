@@ -1,0 +1,22 @@
+﻿@inherits LayoutComponentBase
+
+<div class="layout-linkedin">
+    <NavMenu />
+    <div class="layout-body">
+        <aside class="gx-sidebar-left">
+            <SectionOutlet SectionName="SidebarIzquierdo" />
+        </aside>
+        <main class="gx-main-content">
+            @Body
+        </main>
+        <aside class="gx-sidebar-right">
+            <SectionOutlet SectionName="SidebarDerecho" />
+        </aside>
+    </div>
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>

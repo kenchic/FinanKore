@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage AlmacenamientoSesion
+
+<nav class="navbar-top">
+    <div class="navbar-brand">
+        <a href="/">FinanKore</a>
+    </div>
+    <div class="navbar-links">
+        <NavLink href="/" Match="NavLinkMatch.All">Inicio</NavLink>
+        @if (cargando)
+        {
+            <span class="navbar-loading">...</span>
+        }
+        else if (autenticado)
+        {
+            <NavLink href="/finanzas/proyectos">Proyectos</NavLink>
+            <NavLink href="/finanzas/categorias">Categorías</NavLink>
+            <NavLink href="/finanzas/reportes">Reportes</NavLink>
+        }
+        else
+        {
+            <NavLink href="/iniciar-sesion">Iniciar Sesión</NavLink>
+            <NavLink href="/registrar">Registrarse</NavLink>
+        }
+    </div>
+</nav>
+
+@code {
+    private bool autenticado;
+    private bool cargando = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var resultado = await AlmacenamientoSesion.GetAsync<object>("usuario_sesion");
+            autenticado = resultado.Success;
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+}

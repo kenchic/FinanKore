@@ -1,0 +1,34 @@
+@page "/finanzas/categorias"
+@rendermode InteractiveServer
+@inject NavigationManager Navegacion
+
+<PageTitle>Categorías - FinanKore</PageTitle>
+
+<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-azul);">category</span>
+        <div>
+            <h2 style="margin: 0;">Categorías</h2>
+            <p class="text-secondary" style="margin: 0;">Gestión de categorías para proyectos</p>
+        </div>
+    </div>
+</div>
+
+<div class="gx-card" style="text-align: center; padding: 3rem; margin-top: 1rem;">
+    <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">construction</span>
+    <p class="text-secondary" style="margin-top: 1rem;">Gestión de categorías próximamente.</p>
+</div>
+
+<div style="text-align: left; margin-top: 1rem;">
+    <RadzenButton Text="Volver al inicio"
+                  ButtonStyle="ButtonStyle.Secondary"
+                  Size="ButtonSize.Small"
+                  Click="@IrAInicio" />
+</div>
+
+@code {
+    private void IrAInicio()
+    {
+        Navegacion.NavigateTo("/");
+    }
+}

@@ -1,0 +1,137 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using FinanKore.Web.Servicios
+@inject NavigationManager Navegacion
+@inject ProtectedSessionStorage AlmacenamientoSesion
+@inject EstadoAutenticacion Estado
+
+<PageTitle>FinanKore</PageTitle>
+
+@if (cargando)
+{
+    <div class="gx-card" style="text-align: center; padding: 3rem;">
+        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 48px; height: 48px;" />
+        <p class="text-secondary" style="margin-top: 1rem;">Cargando...</p>
+    </div>
+}
+else if (usuario is not null)
+{
+    <div class="gx-card" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">account_circle</span>
+            <div>
+                <h2 style="margin: 0;">Bienvenido, @usuario.NombreCompleto</h2>
+                <p class="text-secondary" style="margin: 0;">Panel de control financiero</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="gx-card dashboard-card" @onclick="() => IrAProyectos()">
+            <div class="dashboard-card-icon" style="color: var(--fk-magenta);">
+                <span class="material-icons">folder</span>
+            </div>
+            <h3>Proyectos</h3>
+            <p class="text-secondary">Crea y gestiona proyecciones, simulaciones y ahorros</p>
+            <div class="dashboard-card-action">
+                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
+        </div>
+
+        <div class="gx-card dashboard-card" @onclick="() => IrACategorias()">
+            <div class="dashboard-card-icon" style="color: var(--fk-azul);">
+                <span class="material-icons">category</span>
+            </div>
+            <h3>Categorías</h3>
+            <p class="text-secondary">Administra las categorías de tus proyectos financieros</p>
+            <div class="dashboard-card-action">
+                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
+        </div>
+
+        <div class="gx-card dashboard-card" @onclick="() => IrAReportes()">
+            <div class="dashboard-card-icon" style="color: var(--fk-violeta);">
+                <span class="material-icons">bar_chart</span>
+            </div>
+            <h3>Reportes</h3>
+            <p class="text-secondary">Visualiza los resultados financieros de tus proyectos</p>
+            <div class="dashboard-card-action">
+                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: right; margin-top: 1.5rem;">
+        <RadzenButton Text="Cerrar Sesión"
+                      Click="@CerrarSesion"
+                      ButtonStyle="ButtonStyle.Secondary"
+                      Size="ButtonSize.Small" />
+    </div>
+}
+else
+{
+    <div class="gx-card" style="text-align: center; padding: 2.5rem; margin: 3rem auto; max-width: 500px;">
+        <span class="material-icons" style="font-size: 4rem; color: var(--rz-primary);">account_balance</span>
+        <h1 style="margin-top: 0.5rem;">FinanKore</h1>
+        <p class="text-secondary" style="font-size: 1.1rem;">Gestión financiera inteligente</p>
+        <p class="text-secondary">Organiza tus proyecciones, simulaciones, ahorros, deudas y gastos en un solo lugar.</p>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+            <RadzenButton Text="Registrarse"
+                          Click="@IrARegistrar" />
+            <RadzenButton Text="Iniciar Sesión"
+                          Click="@IrAIniciarSesion"
+                          ButtonStyle="ButtonStyle.Primary" />
+        </div>
+    </div>
+}
+
+@code {
+    private UsuarioRegistradoDto? usuario;
+    private bool cargando = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var resultado = await AlmacenamientoSesion.GetAsync<UsuarioRegistradoDto>("usuario_sesion");
+            usuario = resultado.Success ? resultado.Value : null;
+            Estado.Usuario = usuario;
+            cargando = false;
+            StateHasChanged();
+        }
+    }
+
+    private void IrARegistrar()
+    {
+        Navegacion.NavigateTo("/registrar");
+    }
+
+    private void IrAIniciarSesion()
+    {
+        Navegacion.NavigateTo("/iniciar-sesion");
+    }
+
+    private void IrAProyectos()
+    {
+        Navegacion.NavigateTo("/finanzas/proyectos");
+    }
+
+    private void IrACategorias()
+    {
+        Navegacion.NavigateTo("/finanzas/categorias");
+    }
+
+    private void IrAReportes()
+    {
+        Navegacion.NavigateTo("/finanzas/reportes");
+    }
+
+    private async Task CerrarSesion()
+    {
+        await AlmacenamientoSesion.DeleteAsync("usuario_sesion");
+        usuario = null;
+        Estado.Usuario = null;
+        Navegacion.NavigateTo("/", forceLoad: true);
+    }
+}
