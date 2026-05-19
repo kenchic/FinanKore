@@ -36,6 +36,35 @@ public static class FinanzasEndpoints
             }
         });
 
+        var categoriaGrupo = app.MapGroup("api/finanzas/proyectos/{proyectoId:guid}/categorias")
+            .WithTags("Finanzas");
+
+        categoriaGrupo.MapGet("", async (
+            Guid proyectoId,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            var resultado = await mediador.Send(new ObtenerCategoriasConsulta(proyectoId), token);
+            return Results.Ok(resultado);
+        });
+
+        categoriaGrupo.MapPost("", async (
+            Guid proyectoId,
+            CrearCategoriaComando comando,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            try
+            {
+                var resultado = await mediador.Send(comando, token);
+                return Results.Created($"/api/finanzas/proyectos/{proyectoId}/categorias/{resultado.Id}", resultado);
+            }
+            catch (ExcepcionDominio ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+        });
+
         return app;
     }
 }

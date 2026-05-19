@@ -33,6 +33,29 @@ public sealed class ServicioFinanzas
         return await respuesta.Content
             .ReadFromJsonAsync<ProyectoCreadoDto>(cancellationToken: token);
     }
+    public async Task<List<CategoriaCreadaDto>> ObtenerCategoriasAsync(Guid proyectoId,
+        CancellationToken token = default)
+    {
+        var resultado = await _http.GetFromJsonAsync<List<CategoriaCreadaDto>>(
+            $"api/finanzas/proyectos/{proyectoId}/categorias", token);
+
+        return resultado ?? [];
+    }
+
+    public async Task<CategoriaCreadaDto?> CrearCategoriaAsync(
+        CrearCategoriaModelo modelo,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.PostAsJsonAsync(
+            $"api/finanzas/proyectos/{modelo.ProyectoId}/categorias", modelo, token);
+
+        respuesta.EnsureSuccessStatusCode();
+
+        return await respuesta.Content
+            .ReadFromJsonAsync<CategoriaCreadaDto>(cancellationToken: token);
+    }
 }
 
 public sealed record ProyectoCreadoDto(Guid Id, string Nombre);
+
+public sealed record CategoriaCreadaDto(Guid Id, string Nombre, string? Descripcion, Guid ProyectoId, bool Activo, DateTimeOffset FechaCreacion);
