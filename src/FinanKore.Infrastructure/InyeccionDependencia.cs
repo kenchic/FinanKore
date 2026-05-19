@@ -27,10 +27,13 @@ public static class InyeccionDependencia
         servicios.AddScoped<IUnidadDeTrabajo>(sp => sp.GetRequiredService<AppDbContext>());
         servicios.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         servicios.AddScoped<IProyectoRepositorio, ProyectoRepositorio>();
+        servicios.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<RegistrarUsuarioComando>());
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<CrearProyectoComando>());
+        servicios.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblyContaining<CrearCategoriaComando>());
 
         return servicios;
     }

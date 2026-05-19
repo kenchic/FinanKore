@@ -13,6 +13,7 @@ public sealed class AppDbContext : DbContext, IUnidadDeTrabajo
 
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Proyecto> Proyectos => Set<Proyecto>();
+    public DbSet<Categoria> Categorias => Set<Categoria>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
