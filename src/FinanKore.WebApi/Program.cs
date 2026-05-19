@@ -21,5 +21,7 @@ app.UseAuthorization();
 
 app.MapPerfilEndpoints();
 app.MapFinanzasEndpoints();
+app.MapProyectoEndpoints();
+app.MapReportesEndpoints();
 
 app.Run();

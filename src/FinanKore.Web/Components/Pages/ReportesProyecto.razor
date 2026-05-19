@@ -1,0 +1,174 @@
+@page "/finanzas/proyectos/{proyectoId:guid}/reportes"
+@rendermode InteractiveServer
+@using FinanKore.Web.Models
+@using FinanKore.Web.Servicios
+@inject ServicioFinanzas ServicioFinanzas
+@inject NotificationService Notificacion
+@inject NavigationManager Navegacion
+
+<PageTitle>Reportes del Proyecto - FinanKore</PageTitle>
+
+<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-violeta);">bar_chart</span>
+        <div style="flex: 1;">
+            <h2 style="margin: 0;">Proyecto: @nombreProyecto</h2>
+            <p class="text-secondary" style="margin: 0;">Visualización y gestión de reportes</p>
+        </div>
+        <RadzenButton Text="Volver"
+                      Click="@VolverAProyectos"
+                      ButtonStyle="ButtonStyle.Secondary"
+                      Size="ButtonSize.Small" />
+    </div>
+</div>
+
+<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+    <h4 style="margin: 0 0 1rem 0;">Nuevo Reporte</h4>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <RadzenTextBox @bind-Value="@modelo.Nombre"
+                       Placeholder="Nombre del reporte"
+                       Style="width: 100%;" />
+
+        <RadzenTextBox @bind-Value="@modelo.Descripcion"
+                       Placeholder="Descripción (opcional)"
+                       Style="width: 100%;" />
+
+        <RadzenButton Text="Crear Reporte"
+                      Click="@HandleCrear"
+                      ButtonStyle="ButtonStyle.Primary"
+                      Size="ButtonSize.Medium"
+                      Style="width: 100%;" />
+    </div>
+</div>
+
+@if (cargando)
+{
+    <div class="gx-card" style="text-align: center; padding: 2rem;">
+        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
+        <p class="text-secondary" style="margin-top: 0.75rem;">Cargando reportes...</p>
+    </div>
+}
+else if (reportes.Count == 0)
+{
+    <div class="gx-card" style="text-align: center; padding: 3rem;">
+        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
+        <p class="text-secondary" style="margin-top: 1rem;">No hay reportes aún. Creá tu primer reporte arriba.</p>
+    </div>
+}
+else
+{
+    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        @foreach (var reporte in reportes)
+        {
+            <div class="gx-card reporte-fila">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span class="material-icons" style="color: var(--fk-violeta);">bar_chart</span>
+                    <div style="flex: 1;">
+                        <strong>@reporte.Nombre</strong>
+                        <p class="text-secondary" style="margin: 0.25rem 0 0 0; font-size: 0.875rem;">@reporte.Descripcion</p>
+                    </div>
+                    <span class="text-secondary" style="font-size: 0.75rem;">@reporte.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</span>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+<style>
+.reporte-fila {
+    padding: 1rem 1.5rem;
+}
+</style>
+
+@code {
+    [Parameter] public Guid ProyectoId { get; set; }
+
+    private List<ReporteCreadoDto> reportes = [];
+    private CrearReporteModelo modelo = new();
+    private string nombreProyecto = string.Empty;
+    private bool cargando = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        modelo.ProyectoId = ProyectoId;
+        await CargarProyecto();
+        await CargarReportes();
+    }
+
+    private async Task CargarProyecto()
+    {
+        try
+        {
+            var proyecto = await ServicioFinanzas.ObtenerProyectoPorIdAsync(ProyectoId);
+            nombreProyecto = proyecto?.Nombre ?? "Proyecto";
+        }
+        catch
+        {
+            nombreProyecto = "Proyecto";
+        }
+    }
+
+    private async Task CargarReportes()
+    {
+        cargando = true;
+        try
+        {
+            reportes = await ServicioFinanzas.ObtenerReportesAsync(ProyectoId);
+        }
+        catch
+        {
+            reportes = [];
+        }
+        finally
+        {
+            cargando = false;
+        }
+    }
+
+    private async Task HandleCrear()
+    {
+        if (string.IsNullOrWhiteSpace(modelo.Nombre))
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Nombre obligatorio",
+                Detail = "El nombre del reporte no puede estar vacío.",
+                Duration = 4000
+            });
+            return;
+        }
+
+        try
+        {
+            var resultado = await ServicioFinanzas.CrearReporteAsync(modelo);
+
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = $"Reporte '{resultado?.Nombre}' creado",
+                Detail = "El reporte se ha creado exitosamente.",
+                Duration = 5000
+            });
+
+            modelo.Nombre = string.Empty;
+            modelo.Descripcion = string.Empty;
+            await CargarReportes();
+        }
+        catch (HttpRequestException ex)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al crear reporte",
+                Detail = ex.Message,
+                Duration = 5000
+            });
+        }
+    }
+
+    private void VolverAProyectos()
+    {
+        Navegacion.NavigateTo("/finanzas/proyectos");
+    }
+}

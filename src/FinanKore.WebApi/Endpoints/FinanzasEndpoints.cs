@@ -20,6 +20,15 @@ public static class FinanzasEndpoints
             return Results.Ok(resultado);
         });
 
+        grupo.MapGet("proyectos/{id:guid}", async (
+            Guid id,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            var resultado = await mediador.Send(new ObtenerProyectoPorIdConsulta(id), token);
+            return resultado is null ? Results.NotFound() : Results.Ok(resultado);
+        });
+
         grupo.MapPost("proyectos", async (
             CrearProyectoComando comando,
             IMediator mediador,

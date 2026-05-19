@@ -36,13 +36,17 @@ else
     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
         @foreach (var proyecto in proyectos)
         {
-            <div class="gx-card proyecto-fila" @onclick="() => IrADetalle(proyecto.Id)">
+            <div class="gx-card proyecto-fila" @onclick="() => IrAReportes(proyecto.Id)">
                 <div style="display: flex; align-items: center; gap: 1rem;">
                     <span class="material-icons" style="color: var(--fk-magenta);">folder</span>
                     <div style="flex: 1;">
                         <strong>@proyecto.Nombre</strong>
                     </div>
-                    <span class="material-icons" style="color: var(--rz-text-secondary-color, #aaa);">chevron_right</span>
+                    <RadzenButton Text="Reportes"
+                                  Click="() => IrAReportes(proyecto.Id)"
+                                  ClickStopPropagation="true"
+                                  ButtonStyle="ButtonStyle.Primary"
+                                  Size="ButtonSize.Small" />
                 </div>
             </div>
         }
@@ -92,9 +96,9 @@ else
         Navegacion.NavigateTo("/finanzas/proyectos/crear");
     }
 
-    private void IrADetalle(Guid id)
+    private void IrAReportes(Guid id)
     {
-        Navegacion.NavigateTo($"/finanzas/proyectos/{id}");
+        Navegacion.NavigateTo($"/finanzas/proyectos/{id}/reportes");
     }
 
     private void IrAInicio()

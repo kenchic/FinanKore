@@ -2,6 +2,7 @@ using FinanKore.Aplicacion.Comun.Interfaces;
 using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Perfil;
 using FinanKore.Dominio.Perfil.ObjetosValor;
+using FinanKore.Dominio.Proyecto;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanKore.Infraestructura.Persistencia;
@@ -14,6 +15,7 @@ public sealed class AppDbContext : DbContext, IUnidadDeTrabajo
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Proyecto> Proyectos => Set<Proyecto>();
     public DbSet<Categoria> Categorias => Set<Categoria>();
+    public DbSet<Reporte> Reportes => Set<Reporte>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

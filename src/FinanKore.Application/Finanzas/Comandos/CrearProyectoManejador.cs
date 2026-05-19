@@ -14,7 +14,7 @@ public sealed class CrearProyectoManejador(
         CrearProyectoComando comando,
         CancellationToken token)
     {
-        var proyecto = Proyecto.Crear(comando.Nombre);
+        var proyecto = global::FinanKore.Dominio.Finanzas.Proyecto.Crear(comando.Nombre);
 
         await repositorio.AgregarAsync(proyecto, token);
         await unidadDeTrabajo.GuardarCambiosAsync(token);

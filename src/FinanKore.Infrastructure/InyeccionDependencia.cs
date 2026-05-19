@@ -1,8 +1,10 @@
 using FinanKore.Aplicacion.Finanzas.Comandos;
 using FinanKore.Aplicacion.Comun.Interfaces;
 using FinanKore.Aplicacion.Perfil.Comandos;
+using FinanKore.Aplicacion.Proyecto.Comandos;
 using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Perfil;
+using FinanKore.Dominio.Proyecto;
 using FinanKore.Infraestructura.Persistencia;
 using FinanKore.Infraestructura.Persistencia.Repositorios;
 using Microsoft.EntityFrameworkCore;
@@ -28,12 +30,15 @@ public static class InyeccionDependencia
         servicios.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
         servicios.AddScoped<IProyectoRepositorio, ProyectoRepositorio>();
         servicios.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
+        servicios.AddScoped<IReporteRepositorio, ReporteRepositorio>();
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<RegistrarUsuarioComando>());
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<CrearProyectoComando>());
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<CrearCategoriaComando>());
+        servicios.AddMediatR(cfg =>
+            cfg.RegisterServicesFromAssemblyContaining<CrearReporteComando>());
 
         return servicios;
     }
