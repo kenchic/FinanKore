@@ -9,6 +9,11 @@ public sealed class ProyectoRepositorio(AppDbContext contexto) : IProyectoReposi
     public async Task<Proyecto?> ObtenerPorIdAsync(Guid id, CancellationToken token = default)
         => await contexto.Proyectos.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id, token);
 
+    public async Task<Proyecto?> ObtenerPorIdConConceptosAsync(Guid id, CancellationToken token = default)
+        => await contexto.Proyectos
+            .Include(p => p.Conceptos)
+            .FirstOrDefaultAsync(p => p.Id == id, token);
+
     public async Task<IReadOnlyList<Proyecto>> ObtenerTodosAsync(CancellationToken token = default)
         => await contexto.Proyectos.AsNoTracking().ToListAsync(token);
 

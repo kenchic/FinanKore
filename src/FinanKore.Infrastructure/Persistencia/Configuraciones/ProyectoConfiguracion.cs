@@ -17,5 +17,10 @@ public sealed class ProyectoConfiguracion : IEntityTypeConfiguration<Proyecto>
         builder.Property(p => p.Nombre)
             .HasMaxLength(200)
             .IsRequired();
+
+        builder.HasMany(p => p.Conceptos)
+            .WithOne()
+            .HasForeignKey(c => c.ProyectoId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

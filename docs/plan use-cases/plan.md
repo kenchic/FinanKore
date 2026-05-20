@@ -8,6 +8,6 @@ Esta tabla enumera los casos de uso en el orden lógico en que deben ser desarro
 | [x] | 3 | Crear Proyecto | 
 | [x] | 4 | Crear Categorias Proyecto | 
 | [ ] | 5 | Crear Concepto Proyecto | 
-| [ ] | 6 | Crear Reporte Proyecto | 
+| [x] | 6 | Crear Reporte Proyecto | 
 | [ ] | 7 | Crear Concepto Reporte | 
 | [ ] | 8 | Cargar Archivos Concepto Reporte |
