@@ -1,447 +1,572 @@
-# Graph Report - .  (2026-05-12)
+# Graph Report - E:\Documentos\Proyectos\FinanKore  (2026-05-19)
 
 ## Corpus Check
-- Corpus is ~10,156 words - fits in a single context window. You may not need a graph.
+- Corpus is ~18,232 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 352 nodes · 321 edges · 60 communities detected
-- Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 44 edges (avg confidence: 0.85)
+- 653 nodes · 655 edges · 78 communities detected
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 65 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
-- [[_COMMUNITY_Sesion Usuarios|Sesion Usuarios]]
-- [[_COMMUNITY_Usuariorepositorio Appdbcontext|Usuariorepositorio Appdbcontext]]
-- [[_COMMUNITY_Plan Usecases|Plan Usecases]]
-- [[_COMMUNITY_Usuario Entidad|Usuario Entidad]]
-- [[_COMMUNITY_Perfilcontroller Weatherforecastcontroller|Perfilcontroller Weatherforecastcontroller]]
-- [[_COMMUNITY_Nombrepersona Imagenperfil|Nombrepersona Imagenperfil]]
-- [[_COMMUNITY_Favicon App|Favicon App]]
-- [[_COMMUNITY_Usuariorepositorio Appdbcontext|Usuariorepositorio Appdbcontext]]
-- [[_COMMUNITY_Credencial Crear|Credencial Crear]]
-- [[_COMMUNITY_Iniciarsesion Iniciarsesionmodelo|Iniciarsesion Iniciarsesionmodelo]]
-- [[_COMMUNITY_Registrarcuenta Privatecomponentrendermodeattribute|Registrarcuenta Privatecomponentrendermodeattribute]]
-- [[_COMMUNITY_Entidad Agregarevento|Entidad Agregarevento]]
-- [[_COMMUNITY_Irepositorio Actualizar|Irepositorio Actualizar]]
-- [[_COMMUNITY_Home Buildrendertree|Home Buildrendertree]]
-- [[_COMMUNITY_Servicioperfil Iniciarsesionmodelo|Servicioperfil Iniciarsesionmodelo]]
-- [[_COMMUNITY_Agregarcredencialusuario Migrations|Agregarcredencialusuario Migrations]]
-- [[_COMMUNITY_Plan Crear|Plan Crear]]
-- [[_COMMUNITY_Layout Reconnectmodal|Layout Reconnectmodal]]
-- [[_COMMUNITY_App Net10|App Net10]]
-- [[_COMMUNITY_Routes Net10|Routes Net10]]
-- [[_COMMUNITY_Imports Net10|Imports Net10]]
-- [[_COMMUNITY_Navmenu Layout|Navmenu Layout]]
-- [[_COMMUNITY_Reconnectmodal Layout|Reconnectmodal Layout]]
-- [[_COMMUNITY_Objetovalor Equals|Objetovalor Equals]]
-- [[_COMMUNITY_Iusuariorepositorio Irepositorio|Iusuariorepositorio Irepositorio]]
-- [[_COMMUNITY_Imagenperfil Crear|Imagenperfil Crear]]
-- [[_COMMUNITY_Nombrepersona Crear|Nombrepersona Crear]]
-- [[_COMMUNITY_Appdbcontextmodelsnapshot Migrations|Appdbcontextmodelsnapshot Migrations]]
-- [[_COMMUNITY_Mainlayout Layout|Mainlayout Layout]]
-- [[_COMMUNITY_Error Buildrendertree|Error Buildrendertree]]
-- [[_COMMUNITY_Servicioperfil Servicios|Servicioperfil Servicios]]
-- [[_COMMUNITY_Correoelectronico Obtenercomponentesigualdad|Correoelectronico Obtenercomponentesigualdad]]
-- [[_COMMUNITY_Agregarcredencialusuario Migrations|Agregarcredencialusuario Migrations]]
-- [[_COMMUNITY_Usuarioconfiguracion Configuraciones|Usuarioconfiguracion Configuraciones]]
-- [[_COMMUNITY_Notfound Buildrendertree|Notfound Buildrendertree]]
-- [[_COMMUNITY_Credencial Crear|Credencial Crear]]
-- [[_COMMUNITY_Embeddedattribute Net10|Embeddedattribute Net10]]
-- [[_COMMUNITY_Validatabletypeattribute Net10|Validatabletypeattribute Net10]]
-- [[_COMMUNITY_Weatherforecast|Weatherforecast]]
-- [[_COMMUNITY_Iunidaddetrabajo Interfaces|Iunidaddetrabajo Interfaces]]
-- [[_COMMUNITY_Excepciondominio Excepciones|Excepciondominio Excepciones]]
-- [[_COMMUNITY_Inyecciondependencia Agregarinfraestructura|Inyecciondependencia Agregarinfraestructura]]
-- [[_COMMUNITY_Perfilendpoints Endpoints|Perfilendpoints Endpoints]]
-- [[_COMMUNITY_Iraizagregado|Iraizagregado]]
-- [[_COMMUNITY_Idominioevento Eventos|Idominioevento Eventos]]
-- [[_COMMUNITY_Iniciarsesionmodelo Models|Iniciarsesionmodelo Models]]
-- [[_COMMUNITY_Registrarcuentamodelo Models|Registrarcuentamodelo Models]]
-- [[_COMMUNITY_Objetovalor|Objetovalor]]
-- [[_COMMUNITY_Credencial Desdepersistencia|Credencial Desdepersistencia]]
-- [[_COMMUNITY_Inyecciondependencia|Inyecciondependencia]]
-- [[_COMMUNITY_Agregarcredencialusuario 20260512161738|Agregarcredencialusuario 20260512161738]]
-- [[_COMMUNITY_20260512161738 Agregarcredencialusuario|20260512161738 Agregarcredencialusuario]]
-- [[_COMMUNITY_20260512161738 Agregarcredencialusuario|20260512161738 Agregarcredencialusuario]]
-- [[_COMMUNITY_Agregarcredencialusuario 20260512161738|Agregarcredencialusuario 20260512161738]]
-- [[_COMMUNITY_20260512161738 Agregarcredencialusuario|20260512161738 Agregarcredencialusuario]]
-- [[_COMMUNITY_Appdbcontextmodelsnapshot Buildmodel|Appdbcontextmodelsnapshot Buildmodel]]
-- [[_COMMUNITY_Appdbcontext Onmodelcreating|Appdbcontext Onmodelcreating]]
-- [[_COMMUNITY_Appdbcontext Guardarcambiosasync|Appdbcontext Guardarcambiosasync]]
-- [[_COMMUNITY_Servicioperfil|Servicioperfil]]
-- [[_COMMUNITY_Perfilcontroller|Perfilcontroller]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Application|Finankore.Application]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Docs Sql|Docs Sql]]
+- [[_COMMUNITY_Docs Plan Use-Cases|Docs Plan Use-Cases]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Application|Finankore.Application]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Community 15|Community 15]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Docs Plan Use-Cases|Docs Plan Use-Cases]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Community 26|Community 26]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Community 44|Community 44]]
+- [[_COMMUNITY_Finankore.Application|Finankore.Application]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `Usuario` - 16 edges
-2. `Usuario` - 11 edges
-3. `Caso de Uso Iniciar Sesion` - 11 edges
-4. `UsuarioRepositorio` - 10 edges
-5. `IniciarSesionManejador` - 10 edges
-6. `RegistrarUsuarioManejador` - 10 edges
-7. `Configure` - 8 edges
-8. `Caso de Uso Registrar Cuenta` - 8 edges
-9. `Credencial` - 7 edges
-10. `Usuarios` - 7 edges
+1. `Usuario` - 25 edges
+2. `Categorias` - 15 edges
+3. `IniciarSesionManejador` - 12 edges
+4. `RegistrarUsuarioManejador` - 12 edges
+5. `AppDbContext` - 12 edges
+6. `ServicioFinanzas` - 12 edges
+7. `Usuario` - 11 edges
+8. `Home` - 11 edges
+9. `Caso de Uso Iniciar Sesion` - 11 edges
+10. `Caso de Uso: Registrar Cuenta` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Iniciar Sesion` --conceptually_related_to--> `Usuario`  [INFERRED]
   docs/plan use-cases/plan.md → src/FinanKore.Domain/Perfil/Usuario.cs
 - `Registrar Cuenta` --conceptually_related_to--> `Usuario`  [INFERRED]
   docs/plan use-cases/plan.md → src/FinanKore.Domain/Perfil/Usuario.cs
-- `IniciarSesionManejador` --references--> `Caso de Uso Iniciar Sesion`  [EXTRACTED]
-  src/FinanKore.Application/Perfil/Comandos/IniciarSesionManejador.cs → docs/use-cases/iniciar_sesion.md
-- `RegistrarUsuarioManejador` --references--> `Caso de Uso Registrar Cuenta`  [EXTRACTED]
-  src/FinanKore.Application/Perfil/Comandos/RegistrarUsuarioManejador.cs → docs/use-cases/registrar_cuenta.md
-- `Usuario` --references--> `Caso de Uso Iniciar Sesion`  [EXTRACTED]
-  src/FinanKore.Domain/Perfil/Usuario.cs → docs/use-cases/iniciar_sesion.md
+- `IUnidadDeTrabajo` --references--> `Caso de Uso: Crear Proyecto`  [EXTRACTED]
+  src/FinanKore.Application/Comun/Interfaces/IUnidadDeTrabajo.cs → docs/use-cases/crear_proyecto.md
+- `CorreoElectronico` --references--> `Caso de Uso: Registrar Cuenta`  [EXTRACTED]
+  src/FinanKore.Domain/Perfil/ObjetosValor/CorreoElectronico.cs → docs/use-cases/registrar_cuenta.md
+- `ImagenPerfil` --references--> `Caso de Uso: Registrar Cuenta`  [EXTRACTED]
+  src/FinanKore.Domain/Perfil/ObjetosValor/ImagenPerfil.cs → docs/use-cases/registrar_cuenta.md
 
 ## Hyperedges (group relationships)
-- **Flujo de Autenticacion** — perfilendpoints_perfilendpoints, iniciarsesionmanejador_iniciarsesionmanejador, usuario_usuario, usuariorepositorio_usuariorepositorio, sesioniniciada_sesioniniciada [INFERRED 0.85]
-- **Flujo de Registro de Cuenta** — perfilendpoints_perfilendpoints, registrarusuariomanejador_registrarusuariomanejador, usuario_usuario, usuariorepositorio_usuariorepositorio [INFERRED 0.85]
+- **Finanzas Command Handlers** — crearproyectomanejador_crearproyectomanejador, crearcategoriamanejador_crearcategoriamanejador, crearconceptomanejador_crearconceptomanejador [INFERRED 0.85]
+- **Finanzas Query Handlers** — obtenercategoriasconsulta_obtenercategoriasconsulta, obtenercategoriasmanejador_obtenercategoriasmanejador, obtenerconceptosporproyectoconsulta_obtenerconceptosporproyectoconsulta, obtenerconceptosporproyectomanejador_obtenerconceptosporproyectomanejador [INFERRED 0.85]
+- **SQL Finanzas Schema Tables** — 0003_proyectos_finanzas_proyectos, 0004_categorias_finanzas_categorias, 0006_conceptos_finanzas_conceptos [EXTRACTED 1.00]
+- **Reporte CQRS Handlers** — crearreportemanejador_crearreportemanejador, obtenerreportesporproyectomanejador_obtenerreportesporproyectomanejador, obtenertodoslosreportesmanejador_obtenertodoslosreportesmanejador [INFERRED 0.85]
+- **Proyecto Consultas Handlers** — obtenerproyectoporidmanejador_obtenerproyectoporidmanejador, obtenerproyectosmanejador_obtenerproyectosmanejador, proyectodto_proyectodto [INFERRED 0.85]
+- **Perfil Comandos Handlers** — iniciarsesionmanejador_iniciarsesionmanejador, registrarusuariomanejador_registrarusuariomanejador, usuariodto_usuariodto [INFERRED 0.85]
+- **Usuario Aggregate Composition** — usuario_usuario, correo_electronico_correo_electronico, nombre_persona_nombre_persona, credencial_credencial, imagen_perfil_imagen_perfil [EXTRACTED 1.00]
+- **Finanzas Aggregate Event Creation Pattern** — categoria_categoria, categoria_creada_categoria_creada, proyecto_proyecto, proyecto_creado_proyecto_creado, concepto_concepto, concepto_creado_concepto_creado [INFERRED 0.85]
+- **Usuario Domain Events** — usuario_usuario, usuario_registrado_usuario_registrado, sesion_iniciada_sesion_iniciada [EXTRACTED 1.00]
+- **Reporte Vertical Slice** — reporte_reporte, reportecreado_reportecreado, reporteconfiguracion_reporteconfiguracion, reporterepositorio_reporterepositorio [INFERRED 0.85]
+- **Repository Pattern over DbContext** — appdbcontext_appdbcontext, categoriarepositorio_categoriarepositorio, proyectorepositorio_proyectorepositorio, reporterepositorio_reporterepositorio, usuariorepositorio_usuariorepositorio [INFERRED 0.85]
+- **EF Core Configuration Assembly** — appdbcontext_appdbcontext, categoriaconfiguracion_categoriaconfiguracion, conceptoconfiguracion_conceptoconfiguracion, proyectoconfiguracion_proyectoconfiguracion, reporteconfiguracion_reporteconfiguracion, usuarioconfiguracion_usuarioconfiguracion [INFERRED 0.85]
+- **Minimal API Endpoints with MediatR** — perfil_endpoints_perfil_endpoints, proyecto_endpoints_proyecto_endpoints, reportes_endpoints_reportes_endpoints [INFERRED 0.75]
+- **HTTP Client Service Layer** — servicio_finanzas_servicio_finanzas, servicio_perfil_servicio_perfil [INFERRED 0.85]
+- **Web Layer Form Input Models** — crear_categoria_modelo_crear_categoria_modelo, crear_concepto_modelo_crear_concepto_modelo, crear_proyecto_modelo_crear_proyecto_modelo, crear_reporte_modelo_crear_reporte_modelo, iniciar_sesion_modelo_iniciar_sesion_modelo, registrar_cuenta_modelo_registrar_cuenta_modelo [INFERRED 0.75]
 
 ## Communities
 
-### Community 0 - "Sesion Usuarios"
-Cohesion: 0.14
-Nodes (31): Perfil Schema, Tabla Perfil.Usuarios, Perfil.Usuarios (SQL), AppDbContext, Entidad, ExcepcionDominio, IDominioEvento, Caso de Uso Iniciar Sesion (+23 more)
+### Community 0 - "Finankore.Domain"
+Cohesion: 0.07
+Nodes (50): Script SQL 0001 Usuarios, Perfil Schema, Perfil.Usuarios, Tabla Perfil.Usuarios, Script SQL 0002 Usuarios Sesion, Perfil.Usuarios (SQL), IniciarSesionManejador, RegistrarUsuarioManejador (+42 more)
 
-### Community 1 - "Usuariorepositorio Appdbcontext"
-Cohesion: 0.09
-Nodes (9): AppDbContext, IniciarSesionManejador, RegistrarUsuarioManejador, DbContext, IRequestHandler, IUnidadDeTrabajo, IUsuarioRepositorio, AppDbContext (+1 more)
+### Community 1 - "Finankore.Domain"
+Cohesion: 0.06
+Nodes (9): Entidad, Entidad, Categoria, Concepto, Proyecto, IRaizAgregado, List, Usuario (+1 more)
 
-### Community 2 - "Plan Usecases"
+### Community 2 - "Finankore.Web"
+Cohesion: 0.06
+Nodes (14): bool, IniciarSesionModelo, FinanKore.Web.Components.Layout, NavMenu, FinanKore.Web.Components.Pages, Home, __PrivateComponentRenderModeAttribute, FinanKore.Web.Components.Pages (+6 more)
+
+### Community 3 - "Finankore.Domain"
+Cohesion: 0.07
+Nodes (33): Categoria, CategoriaCreada, CategoriaDto, Concepto, ConceptoCreado, ConceptoDto, CorreoElectronico, CrearReporteComando (+25 more)
+
+### Community 4 - "Finankore.Application"
+Cohesion: 0.06
+Nodes (11): CrearCategoriaManejador, CrearConceptoManejador, CrearProyectoManejador, CrearReporteManejador, ObtenerCategoriasManejador, ObtenerConceptosPorProyectoManejador, ObtenerProyectoPorIdManejador, ObtenerProyectosManejador (+3 more)
+
+### Community 5 - "Finankore.Web"
+Cohesion: 0.08
+Nodes (11): ControllerBase, PerfilController, FinanKore.WebApi.Controllers, WeatherForecastController, CrearCategoriaModelo, Guid, IMediator, Categorias (+3 more)
+
+### Community 6 - "Docs Sql"
+Cohesion: 0.11
+Nodes (18): Script SQL 0003 Proyectos, Finanzas.Proyectos, Script SQL 0004 Categorias, Finanzas.Categorias, Script SQL 0005 Reportes, Proyecto.Reportes, Script SQL 0006 Conceptos, Finanzas.Conceptos (+10 more)
+
+### Community 7 - "Docs Plan Use-Cases"
 Cohesion: 0.16
 Nodes (18): Cargar Archivos Concepto Reporte, Crear Categorias Proyecto, Crear Concepto Proyecto, Crear Concepto Reporte, Crear Proyecto, Crear Reporte Proyecto, Orden de Desarrollo por Dependencias, Iniciar Sesion (Login) (+10 more)
 
-### Community 3 - "Usuario Entidad"
-Cohesion: 0.17
-Nodes (3): Entidad, IRaizAgregado, Usuario
+### Community 8 - "Finankore.Web"
+Cohesion: 0.12
+Nodes (3): HttpClient, ServicioFinanzas, ServicioPerfil
 
-### Community 4 - "Perfilcontroller Weatherforecastcontroller"
-Cohesion: 0.18
-Nodes (6): ControllerBase, PerfilController, FinanKore.WebApi.Controllers, WeatherForecastController, IMediator, string
+### Community 9 - "Finankore.Application"
+Cohesion: 0.16
+Nodes (10): CrearReporteComando, CrearReporteManejador, IReporteRepositorio, ObtenerReportesPorProyectoConsulta, ObtenerReportesPorProyectoManejador, ObtenerTodosLosReportesConsulta, ObtenerTodosLosReportesManejador, ReporteDto (+2 more)
 
-### Community 5 - "Nombrepersona Imagenperfil"
-Cohesion: 0.18
-Nodes (11): AppDbContextModelSnapshot, CorreoElectronico, Credencial, ImagenPerfil, Url, Apellidos, Completo, NombrePersona (+3 more)
+### Community 10 - "Finankore.Infrastructure"
+Cohesion: 0.12
+Nodes (6): CategoriaConfiguracion, ConceptoConfiguracion, ProyectoConfiguracion, ReporteConfiguracion, UsuarioConfiguracion, IEntityTypeConfiguration
 
-### Community 6 - "Favicon App"
+### Community 11 - "Finankore.Web"
+Cohesion: 0.13
+Nodes (15): CrearCategoriaModelo, CrearConceptoModelo, CrearProyectoModelo, CrearReporteModelo, EstadoAutenticacion, IniciarSesionModelo, RegistrarCuentaModelo, CategoriaCreadaDto (+7 more)
+
+### Community 12 - "Finankore.Domain"
+Cohesion: 0.14
+Nodes (5): ICategoriaRepositorio, IProyectoRepositorio, IRepositorio, IUsuarioRepositorio, IReporteRepositorio
+
+### Community 13 - "Finankore.Infrastructure"
+Cohesion: 0.2
+Nodes (14): AppDbContext, AppDbContextModelSnapshot, CategoriaConfiguracion, CategoriaRepositorio, ConceptoConfiguracion, AgregarInfraestructura, InyeccionDependencia, ProyectoConfiguracion (+6 more)
+
+### Community 14 - "Finankore.Infrastructure"
+Cohesion: 0.2
+Nodes (2): AppDbContext, UsuarioRepositorio
+
+### Community 15 - "Community 15"
 Cohesion: 0.25
 Nodes (9): App.razor, Browser Tab Icon, Circular Badge/Coin Shape, #512BD4 (Deep Purple), #F6F6F6 (Off-White), $ Dollar Sign, favicon.png, FinanKore Financial Domain (+1 more)
 
-### Community 7 - "Usuariorepositorio Appdbcontext"
+### Community 16 - "Finankore.Infrastructure"
 Cohesion: 0.25
 Nodes (9): Usuarios, Valor, Actualizar, AgregarAsync, Eliminar, ExisteCorreoAsync, ObtenerPorCorreoAsync, ObtenerPorIdAsync (+1 more)
 
-### Community 8 - "Credencial Crear"
+### Community 17 - "Finankore.Infrastructure"
+Cohesion: 0.22
+Nodes (2): ICategoriaRepositorio, CategoriaRepositorio
+
+### Community 18 - "Finankore.Domain"
 Cohesion: 0.36
 Nodes (1): Credencial
 
-### Community 9 - "Iniciarsesion Iniciarsesionmodelo"
-Cohesion: 0.25
-Nodes (4): IniciarSesionModelo, FinanKore.Web.Components.Pages, IniciarSesion, __PrivateComponentRenderModeAttribute
-
-### Community 10 - "Registrarcuenta Privatecomponentrendermodeattribute"
+### Community 19 - "Finankore.Web"
 Cohesion: 0.25
 Nodes (4): FinanKore.Web.Components.Pages, __PrivateComponentRenderModeAttribute, RegistrarCuenta, RegistrarCuentaModelo
 
-### Community 11 - "Entidad Agregarevento"
-Cohesion: 0.29
-Nodes (2): Entidad, List
+### Community 20 - "Finankore.Web"
+Cohesion: 0.25
+Nodes (4): CrearProyectoModelo, CrearProyecto, FinanKore.Web.Components.Pages, __PrivateComponentRenderModeAttribute
 
-### Community 12 - "Irepositorio Actualizar"
+### Community 21 - "Finankore.Domain"
 Cohesion: 0.29
 Nodes (1): IRepositorio
 
-### Community 13 - "Home Buildrendertree"
-Cohesion: 0.29
-Nodes (3): FinanKore.Web.Components.Pages, Home, __PrivateComponentRenderModeAttribute
-
-### Community 14 - "Servicioperfil Iniciarsesionmodelo"
+### Community 22 - "Finankore.Web"
 Cohesion: 0.33
 Nodes (7): IniciarSesionModelo, IniciarSesion, Registrar, RegistrarCuentaModelo, IniciarSesionAsync, RegistrarAsync, UsuarioRegistradoDto
 
-### Community 15 - "Agregarcredencialusuario Migrations"
+### Community 23 - "Finankore.Infrastructure"
 Cohesion: 0.33
 Nodes (3): Migration, AgregarCredencialUsuario, FinanKore.Infrastructure.Migrations
 
-### Community 16 - "Plan Crear"
+### Community 24 - "Docs Plan Use-Cases"
 Cohesion: 0.33
 Nodes (6): Cargar Archivos Concepto Reporte, Crear Categorias Proyecto, Crear Concepto Proyecto, Crear Concepto Reporte, Crear Proyecto, Crear Reporte Proyecto
 
-### Community 17 - "Layout Reconnectmodal"
+### Community 25 - "Finankore.Web"
+Cohesion: 0.33
+Nodes (3): FinanKore.Web.Components.Pages, __PrivateComponentRenderModeAttribute, Reportes
+
+### Community 26 - "Community 26"
 Cohesion: 0.5
 Nodes (2): retry(), retryWhenDocumentBecomesVisible()
 
-### Community 18 - "App Net10"
+### Community 27 - "Finankore.Web"
 Cohesion: 0.5
 Nodes (2): App, FinanKore.Web.Components
 
-### Community 19 - "Routes Net10"
+### Community 28 - "Finankore.Web"
 Cohesion: 0.5
 Nodes (2): FinanKore.Web.Components, Routes
 
-### Community 20 - "Imports Net10"
+### Community 29 - "Finankore.Web"
 Cohesion: 0.5
 Nodes (2): FinanKore.Web.Components, _Imports
 
-### Community 21 - "Navmenu Layout"
-Cohesion: 0.5
-Nodes (2): FinanKore.Web.Components.Layout, NavMenu
-
-### Community 22 - "Reconnectmodal Layout"
+### Community 30 - "Finankore.Web"
 Cohesion: 0.5
 Nodes (2): FinanKore.Web.Components.Layout, ReconnectModal
 
-### Community 23 - "Objetovalor Equals"
+### Community 31 - "Finankore.Domain"
 Cohesion: 0.6
 Nodes (1): ObjetoValor
 
-### Community 24 - "Iusuariorepositorio Irepositorio"
-Cohesion: 0.4
-Nodes (2): IRepositorio, IUsuarioRepositorio
-
-### Community 25 - "Imagenperfil Crear"
+### Community 32 - "Finankore.Domain"
 Cohesion: 0.4
 Nodes (1): ImagenPerfil
 
-### Community 26 - "Nombrepersona Crear"
+### Community 33 - "Finankore.Domain"
 Cohesion: 0.4
 Nodes (1): NombrePersona
 
-### Community 27 - "Appdbcontextmodelsnapshot Migrations"
+### Community 34 - "Finankore.Infrastructure"
 Cohesion: 0.4
 Nodes (3): AppDbContextModelSnapshot, FinanKore.Infrastructure.Migrations, ModelSnapshot
 
-### Community 28 - "Mainlayout Layout"
+### Community 35 - "Finankore.Infrastructure"
+Cohesion: 0.4
+Nodes (2): DbContext, AppDbContext
+
+### Community 36 - "Finankore.Web"
 Cohesion: 0.4
 Nodes (3): FinanKore.Web.Components.Layout, MainLayout, LayoutComponentBase
 
-### Community 29 - "Error Buildrendertree"
+### Community 37 - "Finankore.Web"
 Cohesion: 0.4
 Nodes (2): Error, FinanKore.Web.Components.Pages
 
-### Community 30 - "Servicioperfil Servicios"
-Cohesion: 0.4
-Nodes (2): HttpClient, ServicioPerfil
-
-### Community 31 - "Correoelectronico Obtenercomponentesigualdad"
-Cohesion: 0.5
-Nodes (1): CorreoElectronico
-
-### Community 32 - "Agregarcredencialusuario Migrations"
-Cohesion: 0.5
-Nodes (2): AgregarCredencialUsuario, FinanKore.Infrastructure.Migrations
-
-### Community 33 - "Usuarioconfiguracion Configuraciones"
-Cohesion: 0.5
-Nodes (2): UsuarioConfiguracion, IEntityTypeConfiguration
-
-### Community 34 - "Notfound Buildrendertree"
-Cohesion: 0.5
-Nodes (2): FinanKore.Web.Components.Pages, NotFound
-
-### Community 35 - "Credencial Crear"
-Cohesion: 0.5
-Nodes (4): Crear, GenerarSalt, Hashear, Verificar
-
-### Community 36 - "Embeddedattribute Net10"
+### Community 38 - "Finankore.Web"
 Cohesion: 0.67
 Nodes (2): EmbeddedAttribute, Microsoft.CodeAnalysis
 
-### Community 37 - "Validatabletypeattribute Net10"
+### Community 39 - "Finankore.Web"
 Cohesion: 0.67
 Nodes (2): Microsoft.Extensions.Validation.Embedded, ValidatableTypeAttribute
 
-### Community 38 - "Weatherforecast"
+### Community 40 - "Finankore.Domain"
+Cohesion: 0.5
+Nodes (1): CorreoElectronico
+
+### Community 41 - "Finankore.Infrastructure"
+Cohesion: 0.5
+Nodes (2): AgregarCredencialUsuario, FinanKore.Infrastructure.Migrations
+
+### Community 42 - "Finankore.Web"
+Cohesion: 0.5
+Nodes (2): FinanKore.Web.Components.Pages, NotFound
+
+### Community 43 - "Finankore.Domain"
+Cohesion: 0.5
+Nodes (4): Crear, GenerarSalt, Hashear, Verificar
+
+### Community 44 - "Community 44"
 Cohesion: 0.67
 Nodes (2): FinanKore.WebApi, WeatherForecast
 
-### Community 39 - "Iunidaddetrabajo Interfaces"
+### Community 45 - "Finankore.Application"
 Cohesion: 0.67
 Nodes (1): IUnidadDeTrabajo
 
-### Community 40 - "Excepciondominio Excepciones"
+### Community 46 - "Finankore.Domain"
 Cohesion: 0.67
 Nodes (2): ExcepcionDominio, Exception
 
-### Community 41 - "Inyecciondependencia Agregarinfraestructura"
+### Community 47 - "Finankore.Infrastructure"
 Cohesion: 0.67
 Nodes (1): InyeccionDependencia
 
-### Community 42 - "Perfilendpoints Endpoints"
+### Community 48 - "Finankore.Webapi"
 Cohesion: 0.67
 Nodes (1): PerfilEndpoints
 
-### Community 43 - "Iraizagregado"
+### Community 49 - "Finankore.Webapi"
+Cohesion: 0.67
+Nodes (1): FinanzasEndpoints
+
+### Community 50 - "Finankore.Webapi"
+Cohesion: 0.67
+Nodes (1): ProyectoEndpoints
+
+### Community 51 - "Finankore.Webapi"
+Cohesion: 0.67
+Nodes (1): ReportesEndpoints
+
+### Community 52 - "Finankore.Domain"
 Cohesion: 1.0
 Nodes (1): IRaizAgregado
 
-### Community 44 - "Idominioevento Eventos"
+### Community 53 - "Finankore.Domain"
 Cohesion: 1.0
 Nodes (1): IDominioEvento
 
-### Community 45 - "Iniciarsesionmodelo Models"
+### Community 54 - "Finankore.Web"
 Cohesion: 1.0
 Nodes (1): IniciarSesionModelo
 
-### Community 46 - "Registrarcuentamodelo Models"
+### Community 55 - "Finankore.Web"
 Cohesion: 1.0
 Nodes (1): RegistrarCuentaModelo
 
-### Community 77 - "Objetovalor"
+### Community 56 - "Finankore.Web"
+Cohesion: 1.0
+Nodes (1): CrearCategoriaModelo
+
+### Community 57 - "Finankore.Web"
+Cohesion: 1.0
+Nodes (1): CrearConceptoModelo
+
+### Community 58 - "Finankore.Web"
+Cohesion: 1.0
+Nodes (1): CrearProyectoModelo
+
+### Community 59 - "Finankore.Web"
+Cohesion: 1.0
+Nodes (1): CrearReporteModelo
+
+### Community 60 - "Finankore.Web"
+Cohesion: 1.0
+Nodes (1): EstadoAutenticacion
+
+### Community 61 - "Finankore.Webapi"
+Cohesion: 1.0
+Nodes (2): ObtenerTodosLosReportesConsulta, ReportesEndpoints
+
+### Community 92 - "Finankore.Domain"
 Cohesion: 1.0
 Nodes (1): ObjetoValor
 
-### Community 78 - "Credencial Desdepersistencia"
+### Community 93 - "Finankore.Domain"
 Cohesion: 1.0
 Nodes (1): DesdePersistencia
 
-### Community 79 - "Inyecciondependencia"
-Cohesion: 1.0
-Nodes (1): InyeccionDependencia
-
-### Community 80 - "Agregarcredencialusuario 20260512161738"
+### Community 94 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): AgregarCredencialUsuario
 
-### Community 81 - "20260512161738 Agregarcredencialusuario"
+### Community 95 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): Up
 
-### Community 82 - "20260512161738 Agregarcredencialusuario"
+### Community 96 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): Down
 
-### Community 83 - "Agregarcredencialusuario 20260512161738"
+### Community 97 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): AgregarCredencialUsuario
 
-### Community 84 - "20260512161738 Agregarcredencialusuario"
+### Community 98 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): BuildTargetModel
 
-### Community 85 - "Appdbcontextmodelsnapshot Buildmodel"
+### Community 99 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): BuildModel
 
-### Community 86 - "Appdbcontext Onmodelcreating"
+### Community 100 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): OnModelCreating
 
-### Community 87 - "Appdbcontext Guardarcambiosasync"
+### Community 101 - "Finankore.Infrastructure"
 Cohesion: 1.0
 Nodes (1): GuardarCambiosAsync
 
-### Community 88 - "Servicioperfil"
+### Community 102 - "Finankore.Web"
 Cohesion: 1.0
 Nodes (1): ServicioPerfil
 
-### Community 89 - "Perfilcontroller"
+### Community 103 - "Finankore.Webapi"
 Cohesion: 1.0
 Nodes (1): PerfilController
 
+### Community 133 - "Finankore.Domain"
+Cohesion: 1.0
+Nodes (1): IRepositorio
+
+### Community 134 - "Finankore.Domain"
+Cohesion: 1.0
+Nodes (1): ObjetoValor
+
+### Community 135 - "Finankore.Domain"
+Cohesion: 1.0
+Nodes (1): IDominioEvento
+
+### Community 136 - "Finankore.Webapi"
+Cohesion: 1.0
+Nodes (1): FinanzasEndpoints
+
 ## Knowledge Gaps
-- **70 isolated node(s):** `Microsoft.CodeAnalysis`, `EmbeddedAttribute`, `Microsoft.Extensions.Validation.Embedded`, `ValidatableTypeAttribute`, `FinanKore.WebApi` (+65 more)
+- **110 isolated node(s):** `FinanKore.WebApi`, `WeatherForecast`, `FinanKore.WebApi.Controllers`, `Documentacion de Arquitectura`, `Crear Categorias Proyecto` (+105 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Credencial Crear`** (8 nodes): `Credencial`, `.Crear()`, `.DesdePersistencia()`, `.GenerarSalt()`, `.Hashear()`, `.ObtenerComponentesIgualdad()`, `.Verificar()`, `Credencial.cs`
+- **Thin community `Finankore.Infrastructure`** (10 nodes): `AppDbContext`, `UsuarioRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ExisteCorreoAsync()`, `.ObtenerPorCorreoAsync()`, `.ObtenerPorIdAsync()`, `.ObtenerTodosAsync()`, `UsuarioRepositorio.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Entidad Agregarevento`** (7 nodes): `Entidad`, `.AgregarEvento()`, `.Equals()`, `.GetHashCode()`, `.LimpiarEventos()`, `List`, `Entidad.cs`
+- **Thin community `Finankore.Infrastructure`** (9 nodes): `ICategoriaRepositorio`, `CategoriaRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ObtenerPorIdAsync()`, `.ObtenerPorProyectoAsync()`, `.ObtenerTodosAsync()`, `CategoriaRepositorio.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Irepositorio Actualizar`** (7 nodes): `IRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ObtenerPorIdAsync()`, `.ObtenerTodosAsync()`, `IRepositorio.cs`
+- **Thin community `Finankore.Domain`** (8 nodes): `Credencial`, `.Crear()`, `.DesdePersistencia()`, `.GenerarSalt()`, `.Hashear()`, `.ObtenerComponentesIgualdad()`, `.Verificar()`, `Credencial.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Layout Reconnectmodal`** (5 nodes): `ReconnectModal.razor.js`, `handleReconnectStateChanged()`, `resume()`, `retry()`, `retryWhenDocumentBecomesVisible()`
+- **Thin community `Finankore.Domain`** (7 nodes): `IRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ObtenerPorIdAsync()`, `.ObtenerTodosAsync()`, `IRepositorio.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `App Net10`** (5 nodes): `App`, `.BuildRenderTree()`, `FinanKore.Web.Components`, `App.razor.g.cs`, `App.razor.g.cs`
+- **Thin community `Community 26`** (5 nodes): `ReconnectModal.razor.js`, `handleReconnectStateChanged()`, `resume()`, `retry()`, `retryWhenDocumentBecomesVisible()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Routes Net10`** (5 nodes): `FinanKore.Web.Components`, `Routes`, `.BuildRenderTree()`, `Routes.razor.g.cs`, `Routes.razor.g.cs`
+- **Thin community `Finankore.Web`** (5 nodes): `App`, `.BuildRenderTree()`, `FinanKore.Web.Components`, `App.razor.g.cs`, `App.razor.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Imports Net10`** (5 nodes): `FinanKore.Web.Components`, `_Imports`, `.Execute()`, `_Imports.razor.g.cs`, `_Imports.razor.g.cs`
+- **Thin community `Finankore.Web`** (5 nodes): `FinanKore.Web.Components`, `Routes`, `.BuildRenderTree()`, `Routes.razor.g.cs`, `Routes.razor.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Navmenu Layout`** (5 nodes): `NavMenu.razor.g.cs`, `FinanKore.Web.Components.Layout`, `NavMenu`, `.BuildRenderTree()`, `NavMenu.razor.g.cs`
+- **Thin community `Finankore.Web`** (5 nodes): `FinanKore.Web.Components`, `_Imports`, `.Execute()`, `_Imports.razor.g.cs`, `_Imports.razor.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Reconnectmodal Layout`** (5 nodes): `ReconnectModal.razor.g.cs`, `FinanKore.Web.Components.Layout`, `ReconnectModal`, `.BuildRenderTree()`, `ReconnectModal.razor.g.cs`
+- **Thin community `Finankore.Web`** (5 nodes): `ReconnectModal.razor.g.cs`, `FinanKore.Web.Components.Layout`, `ReconnectModal`, `.BuildRenderTree()`, `ReconnectModal.razor.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Objetovalor Equals`** (5 nodes): `ObjetoValor`, `.Equals()`, `.GetHashCode()`, `.ObtenerComponentesIgualdad()`, `ObjetoValor.cs`
+- **Thin community `Finankore.Domain`** (5 nodes): `ObjetoValor`, `.Equals()`, `.GetHashCode()`, `.ObtenerComponentesIgualdad()`, `ObjetoValor.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Iusuariorepositorio Irepositorio`** (5 nodes): `IRepositorio`, `IUsuarioRepositorio`, `.ExisteCorreoAsync()`, `.ObtenerPorCorreoAsync()`, `IUsuarioRepositorio.cs`
+- **Thin community `Finankore.Domain`** (5 nodes): `ImagenPerfil`, `.Crear()`, `.ObtenerComponentesIgualdad()`, `.ToString()`, `ImagenPerfil.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Imagenperfil Crear`** (5 nodes): `ImagenPerfil`, `.Crear()`, `.ObtenerComponentesIgualdad()`, `.ToString()`, `ImagenPerfil.cs`
+- **Thin community `Finankore.Domain`** (5 nodes): `NombrePersona`, `.Crear()`, `.ObtenerComponentesIgualdad()`, `.ToString()`, `NombrePersona.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Nombrepersona Crear`** (5 nodes): `NombrePersona`, `.Crear()`, `.ObtenerComponentesIgualdad()`, `.ToString()`, `NombrePersona.cs`
+- **Thin community `Finankore.Infrastructure`** (5 nodes): `DbContext`, `AppDbContext`, `.GuardarCambiosAsync()`, `.OnModelCreating()`, `AppDbContext.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Error Buildrendertree`** (5 nodes): `Error`, `.BuildRenderTree()`, `.OnInitialized()`, `FinanKore.Web.Components.Pages`, `Error.razor.g.cs`
+- **Thin community `Finankore.Web`** (5 nodes): `Error`, `.BuildRenderTree()`, `.OnInitialized()`, `FinanKore.Web.Components.Pages`, `Error.razor.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Servicioperfil Servicios`** (5 nodes): `HttpClient`, `ServicioPerfil`, `.IniciarSesionAsync()`, `.RegistrarAsync()`, `ServicioPerfil.cs`
+- **Thin community `Finankore.Web`** (4 nodes): `EmbeddedAttribute.cs`, `EmbeddedAttribute`, `Microsoft.CodeAnalysis`, `EmbeddedAttribute.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Correoelectronico Obtenercomponentesigualdad`** (4 nodes): `CorreoElectronico`, `.ObtenerComponentesIgualdad()`, `.ToString()`, `CorreoElectronico.cs`
+- **Thin community `Finankore.Web`** (4 nodes): `ValidatableTypeAttribute.cs`, `Microsoft.Extensions.Validation.Embedded`, `ValidatableTypeAttribute`, `ValidatableTypeAttribute.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Agregarcredencialusuario Migrations`** (4 nodes): `AgregarCredencialUsuario`, `.BuildTargetModel()`, `FinanKore.Infrastructure.Migrations`, `20260512161738_AgregarCredencialUsuario.Designer.cs`
+- **Thin community `Finankore.Domain`** (4 nodes): `CorreoElectronico`, `.ObtenerComponentesIgualdad()`, `.ToString()`, `CorreoElectronico.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Usuarioconfiguracion Configuraciones`** (4 nodes): `UsuarioConfiguracion`, `.Configure()`, `IEntityTypeConfiguration`, `UsuarioConfiguracion.cs`
+- **Thin community `Finankore.Infrastructure`** (4 nodes): `AgregarCredencialUsuario`, `.BuildTargetModel()`, `FinanKore.Infrastructure.Migrations`, `20260512161738_AgregarCredencialUsuario.Designer.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Notfound Buildrendertree`** (4 nodes): `FinanKore.Web.Components.Pages`, `NotFound`, `.BuildRenderTree()`, `NotFound.razor.g.cs`
+- **Thin community `Finankore.Web`** (4 nodes): `FinanKore.Web.Components.Pages`, `NotFound`, `.BuildRenderTree()`, `NotFound.razor.g.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Embeddedattribute Net10`** (3 nodes): `EmbeddedAttribute.cs`, `EmbeddedAttribute`, `Microsoft.CodeAnalysis`
+- **Thin community `Community 44`** (3 nodes): `WeatherForecast.cs`, `FinanKore.WebApi`, `WeatherForecast`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Validatabletypeattribute Net10`** (3 nodes): `ValidatableTypeAttribute.cs`, `Microsoft.Extensions.Validation.Embedded`, `ValidatableTypeAttribute`
+- **Thin community `Finankore.Application`** (3 nodes): `IUnidadDeTrabajo`, `.GuardarCambiosAsync()`, `IUnidadDeTrabajo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Weatherforecast`** (3 nodes): `WeatherForecast.cs`, `FinanKore.WebApi`, `WeatherForecast`
+- **Thin community `Finankore.Domain`** (3 nodes): `ExcepcionDominio`, `Exception`, `ExcepcionDominio.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Iunidaddetrabajo Interfaces`** (3 nodes): `IUnidadDeTrabajo`, `.GuardarCambiosAsync()`, `IUnidadDeTrabajo.cs`
+- **Thin community `Finankore.Infrastructure`** (3 nodes): `InyeccionDependencia`, `.AgregarInfraestructura()`, `InyeccionDependencia.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Excepciondominio Excepciones`** (3 nodes): `ExcepcionDominio`, `Exception`, `ExcepcionDominio.cs`
+- **Thin community `Finankore.Webapi`** (3 nodes): `PerfilEndpoints`, `.MapPerfilEndpoints()`, `PerfilEndpoints.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Inyecciondependencia Agregarinfraestructura`** (3 nodes): `InyeccionDependencia`, `.AgregarInfraestructura()`, `InyeccionDependencia.cs`
+- **Thin community `Finankore.Webapi`** (3 nodes): `FinanzasEndpoints`, `.MapFinanzasEndpoints()`, `FinanzasEndpoints.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Perfilendpoints Endpoints`** (3 nodes): `PerfilEndpoints`, `.MapPerfilEndpoints()`, `PerfilEndpoints.cs`
+- **Thin community `Finankore.Webapi`** (3 nodes): `ProyectoEndpoints`, `.MapProyectoEndpoints()`, `ProyectoEndpoints.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Iraizagregado`** (2 nodes): `IRaizAgregado`, `IRaizAgregado.cs`
+- **Thin community `Finankore.Webapi`** (3 nodes): `ReportesEndpoints`, `.MapReportesEndpoints()`, `ReportesEndpoints.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Idominioevento Eventos`** (2 nodes): `IDominioEvento`, `IDominioEvento.cs`
+- **Thin community `Finankore.Domain`** (2 nodes): `IRaizAgregado`, `IRaizAgregado.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Iniciarsesionmodelo Models`** (2 nodes): `IniciarSesionModelo`, `IniciarSesionModelo.cs`
+- **Thin community `Finankore.Domain`** (2 nodes): `IDominioEvento`, `IDominioEvento.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Registrarcuentamodelo Models`** (2 nodes): `RegistrarCuentaModelo`, `RegistrarCuentaModelo.cs`
+- **Thin community `Finankore.Web`** (2 nodes): `IniciarSesionModelo`, `IniciarSesionModelo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Objetovalor`** (1 nodes): `ObjetoValor`
+- **Thin community `Finankore.Web`** (2 nodes): `RegistrarCuentaModelo`, `RegistrarCuentaModelo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Credencial Desdepersistencia`** (1 nodes): `DesdePersistencia`
+- **Thin community `Finankore.Web`** (2 nodes): `CrearCategoriaModelo`, `CrearCategoriaModelo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Inyecciondependencia`** (1 nodes): `InyeccionDependencia`
+- **Thin community `Finankore.Web`** (2 nodes): `CrearConceptoModelo`, `CrearConceptoModelo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Agregarcredencialusuario 20260512161738`** (1 nodes): `AgregarCredencialUsuario`
+- **Thin community `Finankore.Web`** (2 nodes): `CrearProyectoModelo`, `CrearProyectoModelo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `20260512161738 Agregarcredencialusuario`** (1 nodes): `Up`
+- **Thin community `Finankore.Web`** (2 nodes): `CrearReporteModelo`, `CrearReporteModelo.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `20260512161738 Agregarcredencialusuario`** (1 nodes): `Down`
+- **Thin community `Finankore.Web`** (2 nodes): `EstadoAutenticacion`, `EstadoAutenticacion.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Agregarcredencialusuario 20260512161738`** (1 nodes): `AgregarCredencialUsuario`
+- **Thin community `Finankore.Webapi`** (2 nodes): `ObtenerTodosLosReportesConsulta`, `ReportesEndpoints`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `20260512161738 Agregarcredencialusuario`** (1 nodes): `BuildTargetModel`
+- **Thin community `Finankore.Domain`** (1 nodes): `ObjetoValor`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Appdbcontextmodelsnapshot Buildmodel`** (1 nodes): `BuildModel`
+- **Thin community `Finankore.Domain`** (1 nodes): `DesdePersistencia`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Appdbcontext Onmodelcreating`** (1 nodes): `OnModelCreating`
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `AgregarCredencialUsuario`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Appdbcontext Guardarcambiosasync`** (1 nodes): `GuardarCambiosAsync`
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `Up`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Servicioperfil`** (1 nodes): `ServicioPerfil`
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `Down`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Perfilcontroller`** (1 nodes): `PerfilController`
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `AgregarCredencialUsuario`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `BuildTargetModel`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `BuildModel`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `OnModelCreating`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Infrastructure`** (1 nodes): `GuardarCambiosAsync`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Web`** (1 nodes): `ServicioPerfil`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Webapi`** (1 nodes): `PerfilController`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Domain`** (1 nodes): `IRepositorio`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Domain`** (1 nodes): `ObjetoValor`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Domain`** (1 nodes): `IDominioEvento`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Finankore.Webapi`** (1 nodes): `FinanzasEndpoints`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `AppDbContext` connect `Sesion Usuarios` to `Nombrepersona Imagenperfil`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `Usuario` connect `Finankore.Domain` to `Finankore.Domain`?**
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Are the 6 inferred relationships involving `Usuario` (e.g. with `Tabla Perfil.Usuarios` and `Registrar Cuenta`) actually correct?**
   _`Usuario` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `IniciarSesionManejador` (e.g. with `RegistrarUsuarioManejador` and `PerfilEndpoints`) actually correct?**
   _`IniciarSesionManejador` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Microsoft.CodeAnalysis`, `EmbeddedAttribute`, `Microsoft.Extensions.Validation.Embedded` to the rest of the system?**
-  _70 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Sesion Usuarios` be split into smaller, more focused modules?**
-  _Cohesion score 0.14 - nodes in this community are weakly interconnected._
-- **Should `Usuariorepositorio Appdbcontext` be split into smaller, more focused modules?**
-  _Cohesion score 0.09 - nodes in this community are weakly interconnected._
+- **Are the 2 inferred relationships involving `RegistrarUsuarioManejador` (e.g. with `IniciarSesionManejador` and `PerfilEndpoints`) actually correct?**
+  _`RegistrarUsuarioManejador` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `FinanKore.WebApi`, `WeatherForecast`, `FinanKore.WebApi.Controllers` to the rest of the system?**
+  _110 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Finankore.Domain` be split into smaller, more focused modules?**
+  _Cohesion score 0.07 - nodes in this community are weakly interconnected._
+- **Should `Finankore.Domain` be split into smaller, more focused modules?**
+  _Cohesion score 0.06 - nodes in this community are weakly interconnected._
