@@ -42,11 +42,12 @@ public sealed class ServicioFinanzas
         return await respuesta.Content
             .ReadFromJsonAsync<ProyectoCreadoDto>(cancellationToken: token);
     }
-    public async Task<List<CategoriaCreadaDto>> ObtenerCategoriasAsync(Guid proyectoId,
+
+    public async Task<List<CategoriaCreadaDto>> ObtenerCategoriasAsync(
         CancellationToken token = default)
     {
         var resultado = await _http.GetFromJsonAsync<List<CategoriaCreadaDto>>(
-            $"api/finanzas/proyectos/{proyectoId}/categorias", token);
+            "api/finanzas/categorias", token);
 
         return resultado ?? [];
     }
@@ -56,7 +57,7 @@ public sealed class ServicioFinanzas
         CancellationToken token = default)
     {
         var respuesta = await _http.PostAsJsonAsync(
-            $"api/finanzas/proyectos/{modelo.ProyectoId}/categorias", modelo, token);
+            "api/finanzas/categorias", modelo, token);
 
         respuesta.EnsureSuccessStatusCode();
 
@@ -120,9 +121,9 @@ public sealed class ServicioFinanzas
 
 public sealed record ProyectoCreadoDto(Guid Id, string Nombre);
 
-public sealed record ConceptoCreadoDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ProyectoId, DateTimeOffset FechaCreacion);
+public sealed record ConceptoCreadoDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ProyectoId, Guid CategoriaId, DateTimeOffset FechaCreacion);
 
-public sealed record CategoriaCreadaDto(Guid Id, string Nombre, string? Descripcion, Guid ProyectoId, bool Activo, DateTimeOffset FechaCreacion);
+public sealed record CategoriaCreadaDto(Guid Id, string Nombre, string? Descripcion, bool Activo, DateTimeOffset FechaCreacion);
 
 public sealed record ReporteCreadoDto(Guid Id, Guid ProyectoId, string Nombre, string Descripcion, DateTimeOffset FechaCreacion);
 

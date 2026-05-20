@@ -12,10 +12,10 @@ public sealed class ObtenerCategoriasManejador(
         ObtenerCategoriasConsulta consulta,
         CancellationToken token)
     {
-        var categorias = await repositorio.ObtenerPorProyectoAsync(consulta.ProyectoId, token);
+        var categorias = await repositorio.ObtenerActivasAsync(token);
 
         return categorias
-            .Select(c => new CategoriaDto(c.Id, c.Nombre, c.Descripcion, c.ProyectoId, c.Activo, c.FechaCreacion))
+            .Select(c => new CategoriaDto(c.Id, c.Nombre, c.Descripcion, c.Activo, c.FechaCreacion))
             .ToList();
     }
 }

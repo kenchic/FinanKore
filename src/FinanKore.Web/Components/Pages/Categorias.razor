@@ -13,50 +13,20 @@
         <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-azul);">category</span>
         <div style="flex: 1;">
             <h2 style="margin: 0;">Categorías</h2>
-            <p class="text-secondary" style="margin: 0;">Gestión de categorías para proyectos</p>
+            <p class="text-secondary" style="margin: 0;">Gestión de categorías globales del sistema</p>
         </div>
-        @if (proyectoSeleccionadoId != Guid.Empty)
-        {
-            <RadzenButton Text="Nueva Categoría" Click="@MostrarFormulario" ButtonStyle="@ButtonStyle.Primary" />
-        }
+        <RadzenButton Text="Nueva Categoría" Click="@MostrarFormulario" ButtonStyle="@ButtonStyle.Primary" />
     </div>
 </div>
 
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1rem 1.5rem;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <span class="material-icons" style="color: var(--rz-text-secondary-color);">folder</span>
-        @if (circuitoConectado)
-        {
-            <RadzenDropDown Data="@proyectos"
-                            TextProperty="Nombre"
-                            ValueProperty="Id"
-                            @bind-Value="@proyectoSeleccionadoId"
-                            Placeholder="Seleccionar proyecto..."
-                            Change="@OnProyectoCambiado"
-                            Style="width: 100%; max-width: 400px;" />
-        }
-        else
-        {
-            <span class="text-secondary">Cargando proyectos...</span>
-        }
-    </div>
-</div>
-
-@if (proyectoSeleccionadoId == Guid.Empty)
-{
-    <div class="gx-card" style="text-align: center; padding: 3rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">info</span>
-        <p class="text-secondary" style="margin-top: 1rem;">Seleccioná un proyecto para ver sus categorías.</p>
-    </div>
-}
-else if (mostrandoFormulario)
+@if (mostrandoFormulario)
 {
     <div class="gx-card" style="padding: 2rem; max-width: 520px;">
         <div style="text-align: center; margin-bottom: 1.5rem;">
             <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">add_circle</span>
             <h3 style="margin: 0.5rem 0 0.25rem;">Nueva Categoría</h3>
             <p style="color: var(--rz-text-secondary); margin: 0;">
-                Crear categoría para <strong>@nombreProyectoSeleccionado</strong>
+                Crear una categoría disponible para todos los proyectos
             </p>
         </div>
 
@@ -96,7 +66,7 @@ else if (categorias.Count == 0)
 {
     <div class="gx-card" style="text-align: center; padding: 3rem;">
         <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
-        <p class="text-secondary" style="margin-top: 1rem;">No hay categorías en este proyecto. ¡Creá la primera!</p>
+        <p class="text-secondary" style="margin-top: 1rem;">No hay categorías aún. ¡Creá la primera!</p>
     </div>
 }
 else
@@ -141,49 +111,13 @@ else
 </style>
 
 @code {
-    private List<ProyectoCreadoDto> proyectos = [];
     private List<CategoriaCreadaDto> categorias = [];
-    private Guid proyectoSeleccionadoId = Guid.Empty;
-    private string nombreProyectoSeleccionado = string.Empty;
-    private bool cargando;
+    private bool cargando = true;
     private bool mostrandoFormulario;
-    private bool circuitoConectado;
     private CrearCategoriaModelo modelo = new() { Nombre = string.Empty, Descripcion = string.Empty };
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
-        }
-        catch
-        {
-            proyectos = [];
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender && !circuitoConectado)
-        {
-            await Task.Delay(300);
-            circuitoConectado = true;
-            StateHasChanged();
-        }
-    }
-
-    private async Task OnProyectoCambiado()
-    {
-        mostrandoFormulario = false;
-        var proyecto = proyectos.FirstOrDefault(p => p.Id == proyectoSeleccionadoId);
-        nombreProyectoSeleccionado = proyecto?.Nombre ?? string.Empty;
-
-        if (proyectoSeleccionadoId == Guid.Empty)
-        {
-            categorias = [];
-            return;
-        }
-
         await CargarCategorias();
     }
 
@@ -192,7 +126,7 @@ else
         cargando = true;
         try
         {
-            categorias = await ServicioFinanzas.ObtenerCategoriasAsync(proyectoSeleccionadoId);
+            categorias = await ServicioFinanzas.ObtenerCategoriasAsync();
         }
         catch
         {
@@ -206,7 +140,7 @@ else
 
     private void MostrarFormulario()
     {
-        modelo = new CrearCategoriaModelo { ProyectoId = proyectoSeleccionadoId, Nombre = string.Empty, Descripcion = string.Empty };
+        modelo = new CrearCategoriaModelo { Nombre = string.Empty, Descripcion = string.Empty };
         mostrandoFormulario = true;
     }
 

@@ -1,31 +1,31 @@
 # Graph Report - E:\Documentos\Proyectos\FinanKore  (2026-05-19)
 
 ## Corpus Check
-- Corpus is ~18,232 words - fits in a single context window. You may not need a graph.
+- Corpus is ~18,116 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 653 nodes · 655 edges · 78 communities detected
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 65 edges (avg confidence: 0.84)
+- 677 nodes · 702 edges · 77 communities detected
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 81 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
 - [[_COMMUNITY_Finankore.Web|Finankore.Web]]
+- [[_COMMUNITY_Finankore.Application|Finankore.Application]]
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
 - [[_COMMUNITY_Finankore.Application|Finankore.Application]]
 - [[_COMMUNITY_Finankore.Web|Finankore.Web]]
-- [[_COMMUNITY_Docs Sql|Docs Sql]]
+- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
 - [[_COMMUNITY_Docs Plan Use-Cases|Docs Plan Use-Cases]]
 - [[_COMMUNITY_Finankore.Web|Finankore.Web]]
 - [[_COMMUNITY_Finankore.Application|Finankore.Application]]
 - [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
-- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
+- [[_COMMUNITY_Finankore.Web|Finankore.Web]]
 - [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
 - [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
-- [[_COMMUNITY_Community 15|Community 15]]
-- [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
+- [[_COMMUNITY_Community 16|Community 16]]
 - [[_COMMUNITY_Finankore.Infrastructure|Finankore.Infrastructure]]
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
 - [[_COMMUNITY_Finankore.Web|Finankore.Web]]
@@ -86,7 +86,6 @@
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
 - [[_COMMUNITY_Finankore.Domain|Finankore.Domain]]
-- [[_COMMUNITY_Finankore.Webapi|Finankore.Webapi]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `Usuario` - 25 edges
@@ -112,28 +111,11 @@
 - `ImagenPerfil` --references--> `Caso de Uso: Registrar Cuenta`  [EXTRACTED]
   src/FinanKore.Domain/Perfil/ObjetosValor/ImagenPerfil.cs → docs/use-cases/registrar_cuenta.md
 
-## Hyperedges (group relationships)
-- **Finanzas Command Handlers** — crearproyectomanejador_crearproyectomanejador, crearcategoriamanejador_crearcategoriamanejador, crearconceptomanejador_crearconceptomanejador [INFERRED 0.85]
-- **Finanzas Query Handlers** — obtenercategoriasconsulta_obtenercategoriasconsulta, obtenercategoriasmanejador_obtenercategoriasmanejador, obtenerconceptosporproyectoconsulta_obtenerconceptosporproyectoconsulta, obtenerconceptosporproyectomanejador_obtenerconceptosporproyectomanejador [INFERRED 0.85]
-- **SQL Finanzas Schema Tables** — 0003_proyectos_finanzas_proyectos, 0004_categorias_finanzas_categorias, 0006_conceptos_finanzas_conceptos [EXTRACTED 1.00]
-- **Reporte CQRS Handlers** — crearreportemanejador_crearreportemanejador, obtenerreportesporproyectomanejador_obtenerreportesporproyectomanejador, obtenertodoslosreportesmanejador_obtenertodoslosreportesmanejador [INFERRED 0.85]
-- **Proyecto Consultas Handlers** — obtenerproyectoporidmanejador_obtenerproyectoporidmanejador, obtenerproyectosmanejador_obtenerproyectosmanejador, proyectodto_proyectodto [INFERRED 0.85]
-- **Perfil Comandos Handlers** — iniciarsesionmanejador_iniciarsesionmanejador, registrarusuariomanejador_registrarusuariomanejador, usuariodto_usuariodto [INFERRED 0.85]
-- **Usuario Aggregate Composition** — usuario_usuario, correo_electronico_correo_electronico, nombre_persona_nombre_persona, credencial_credencial, imagen_perfil_imagen_perfil [EXTRACTED 1.00]
-- **Finanzas Aggregate Event Creation Pattern** — categoria_categoria, categoria_creada_categoria_creada, proyecto_proyecto, proyecto_creado_proyecto_creado, concepto_concepto, concepto_creado_concepto_creado [INFERRED 0.85]
-- **Usuario Domain Events** — usuario_usuario, usuario_registrado_usuario_registrado, sesion_iniciada_sesion_iniciada [EXTRACTED 1.00]
-- **Reporte Vertical Slice** — reporte_reporte, reportecreado_reportecreado, reporteconfiguracion_reporteconfiguracion, reporterepositorio_reporterepositorio [INFERRED 0.85]
-- **Repository Pattern over DbContext** — appdbcontext_appdbcontext, categoriarepositorio_categoriarepositorio, proyectorepositorio_proyectorepositorio, reporterepositorio_reporterepositorio, usuariorepositorio_usuariorepositorio [INFERRED 0.85]
-- **EF Core Configuration Assembly** — appdbcontext_appdbcontext, categoriaconfiguracion_categoriaconfiguracion, conceptoconfiguracion_conceptoconfiguracion, proyectoconfiguracion_proyectoconfiguracion, reporteconfiguracion_reporteconfiguracion, usuarioconfiguracion_usuarioconfiguracion [INFERRED 0.85]
-- **Minimal API Endpoints with MediatR** — perfil_endpoints_perfil_endpoints, proyecto_endpoints_proyecto_endpoints, reportes_endpoints_reportes_endpoints [INFERRED 0.75]
-- **HTTP Client Service Layer** — servicio_finanzas_servicio_finanzas, servicio_perfil_servicio_perfil [INFERRED 0.85]
-- **Web Layer Form Input Models** — crear_categoria_modelo_crear_categoria_modelo, crear_concepto_modelo_crear_concepto_modelo, crear_proyecto_modelo_crear_proyecto_modelo, crear_reporte_modelo_crear_reporte_modelo, iniciar_sesion_modelo_iniciar_sesion_modelo, registrar_cuenta_modelo_registrar_cuenta_modelo [INFERRED 0.75]
-
 ## Communities
 
 ### Community 0 - "Finankore.Domain"
 Cohesion: 0.07
-Nodes (50): Script SQL 0001 Usuarios, Perfil Schema, Perfil.Usuarios, Tabla Perfil.Usuarios, Script SQL 0002 Usuarios Sesion, Perfil.Usuarios (SQL), IniciarSesionManejador, RegistrarUsuarioManejador (+42 more)
+Nodes (54): Script SQL 0001 Usuarios, Perfil Schema, Perfil.Usuarios, Tabla Perfil.Usuarios, Script SQL 0002 Usuarios Sesion, Perfil.Usuarios (SQL), IniciarSesionManejador, RegistrarUsuarioManejador (+46 more)
 
 ### Community 1 - "Finankore.Domain"
 Cohesion: 0.06
@@ -143,65 +125,65 @@ Nodes (9): Entidad, Entidad, Categoria, Concepto, Proyecto, IRaizAgregado, List,
 Cohesion: 0.06
 Nodes (14): bool, IniciarSesionModelo, FinanKore.Web.Components.Layout, NavMenu, FinanKore.Web.Components.Pages, Home, __PrivateComponentRenderModeAttribute, FinanKore.Web.Components.Pages (+6 more)
 
-### Community 3 - "Finankore.Domain"
+### Community 3 - "Finankore.Application"
 Cohesion: 0.07
-Nodes (33): Categoria, CategoriaCreada, CategoriaDto, Concepto, ConceptoCreado, ConceptoDto, CorreoElectronico, CrearReporteComando (+25 more)
+Nodes (27): Script SQL 0003 Proyectos, Finanzas.Proyectos, Script SQL 0004 Categorias, Finanzas.Categorias, Script SQL 0005 Reportes, Proyecto.Reportes, Script SQL 0006 Conceptos, Finanzas.Conceptos (+19 more)
 
-### Community 4 - "Finankore.Application"
+### Community 4 - "Finankore.Domain"
+Cohesion: 0.1
+Nodes (32): Finanzas.Categorias (SQL), Finanzas.Conceptos (SQL), Categoria, CategoriaCreada, CategoriaDto, Concepto, ConceptoCreado, ConceptoDto (+24 more)
+
+### Community 5 - "Finankore.Application"
 Cohesion: 0.06
 Nodes (11): CrearCategoriaManejador, CrearConceptoManejador, CrearProyectoManejador, CrearReporteManejador, ObtenerCategoriasManejador, ObtenerConceptosPorProyectoManejador, ObtenerProyectoPorIdManejador, ObtenerProyectosManejador (+3 more)
 
-### Community 5 - "Finankore.Web"
+### Community 6 - "Finankore.Web"
 Cohesion: 0.08
 Nodes (11): ControllerBase, PerfilController, FinanKore.WebApi.Controllers, WeatherForecastController, CrearCategoriaModelo, Guid, IMediator, Categorias (+3 more)
 
-### Community 6 - "Docs Sql"
-Cohesion: 0.11
-Nodes (18): Script SQL 0003 Proyectos, Finanzas.Proyectos, Script SQL 0004 Categorias, Finanzas.Categorias, Script SQL 0005 Reportes, Proyecto.Reportes, Script SQL 0006 Conceptos, Finanzas.Conceptos (+10 more)
+### Community 7 - "Finankore.Infrastructure"
+Cohesion: 0.12
+Nodes (25): AppDbContext, AppDbContextModelSnapshot, CategoriaConfiguracion, CategoriaCreada, CategoriaRepositorio, ConceptoConfiguracion, ConceptoCreado, CrearCategoriaModelo (+17 more)
 
-### Community 7 - "Docs Plan Use-Cases"
+### Community 8 - "Docs Plan Use-Cases"
 Cohesion: 0.16
 Nodes (18): Cargar Archivos Concepto Reporte, Crear Categorias Proyecto, Crear Concepto Proyecto, Crear Concepto Reporte, Crear Proyecto, Crear Reporte Proyecto, Orden de Desarrollo por Dependencias, Iniciar Sesion (Login) (+10 more)
 
-### Community 8 - "Finankore.Web"
+### Community 9 - "Finankore.Web"
 Cohesion: 0.12
 Nodes (3): HttpClient, ServicioFinanzas, ServicioPerfil
 
-### Community 9 - "Finankore.Application"
+### Community 10 - "Finankore.Application"
 Cohesion: 0.16
 Nodes (10): CrearReporteComando, CrearReporteManejador, IReporteRepositorio, ObtenerReportesPorProyectoConsulta, ObtenerReportesPorProyectoManejador, ObtenerTodosLosReportesConsulta, ObtenerTodosLosReportesManejador, ReporteDto (+2 more)
 
-### Community 10 - "Finankore.Infrastructure"
+### Community 11 - "Finankore.Infrastructure"
 Cohesion: 0.12
 Nodes (6): CategoriaConfiguracion, ConceptoConfiguracion, ProyectoConfiguracion, ReporteConfiguracion, UsuarioConfiguracion, IEntityTypeConfiguration
 
-### Community 11 - "Finankore.Web"
-Cohesion: 0.13
-Nodes (15): CrearCategoriaModelo, CrearConceptoModelo, CrearProyectoModelo, CrearReporteModelo, EstadoAutenticacion, IniciarSesionModelo, RegistrarCuentaModelo, CategoriaCreadaDto (+7 more)
-
 ### Community 12 - "Finankore.Domain"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (5): ICategoriaRepositorio, IProyectoRepositorio, IRepositorio, IUsuarioRepositorio, IReporteRepositorio
 
-### Community 13 - "Finankore.Infrastructure"
-Cohesion: 0.2
-Nodes (14): AppDbContext, AppDbContextModelSnapshot, CategoriaConfiguracion, CategoriaRepositorio, ConceptoConfiguracion, AgregarInfraestructura, InyeccionDependencia, ProyectoConfiguracion (+6 more)
+### Community 13 - "Finankore.Web"
+Cohesion: 0.13
+Nodes (15): CrearCategoriaModelo, CrearConceptoModelo, CrearProyectoModelo, CrearReporteModelo, EstadoAutenticacion, IniciarSesionModelo, RegistrarCuentaModelo, CategoriaCreadaDto (+7 more)
 
 ### Community 14 - "Finankore.Infrastructure"
 Cohesion: 0.2
 Nodes (2): AppDbContext, UsuarioRepositorio
 
-### Community 15 - "Community 15"
+### Community 15 - "Finankore.Infrastructure"
+Cohesion: 0.2
+Nodes (2): ICategoriaRepositorio, CategoriaRepositorio
+
+### Community 16 - "Community 16"
 Cohesion: 0.25
 Nodes (9): App.razor, Browser Tab Icon, Circular Badge/Coin Shape, #512BD4 (Deep Purple), #F6F6F6 (Off-White), $ Dollar Sign, favicon.png, FinanKore Financial Domain (+1 more)
 
-### Community 16 - "Finankore.Infrastructure"
+### Community 17 - "Finankore.Infrastructure"
 Cohesion: 0.25
 Nodes (9): Usuarios, Valor, Actualizar, AgregarAsync, Eliminar, ExisteCorreoAsync, ObtenerPorCorreoAsync, ObtenerPorIdAsync (+1 more)
-
-### Community 17 - "Finankore.Infrastructure"
-Cohesion: 0.22
-Nodes (2): ICategoriaRepositorio, CategoriaRepositorio
 
 ### Community 18 - "Finankore.Domain"
 Cohesion: 0.36
@@ -439,16 +421,12 @@ Nodes (1): ObjetoValor
 Cohesion: 1.0
 Nodes (1): IDominioEvento
 
-### Community 136 - "Finankore.Webapi"
-Cohesion: 1.0
-Nodes (1): FinanzasEndpoints
-
 ## Knowledge Gaps
-- **110 isolated node(s):** `FinanKore.WebApi`, `WeatherForecast`, `FinanKore.WebApi.Controllers`, `Documentacion de Arquitectura`, `Crear Categorias Proyecto` (+105 more)
+- **111 isolated node(s):** `FinanKore.WebApi`, `WeatherForecast`, `FinanKore.WebApi.Controllers`, `Documentacion de Arquitectura`, `Crear Categorias Proyecto` (+106 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **Thin community `Finankore.Infrastructure`** (10 nodes): `AppDbContext`, `UsuarioRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ExisteCorreoAsync()`, `.ObtenerPorCorreoAsync()`, `.ObtenerPorIdAsync()`, `.ObtenerTodosAsync()`, `UsuarioRepositorio.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Finankore.Infrastructure`** (9 nodes): `ICategoriaRepositorio`, `CategoriaRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ObtenerPorIdAsync()`, `.ObtenerPorProyectoAsync()`, `.ObtenerTodosAsync()`, `CategoriaRepositorio.cs`
+- **Thin community `Finankore.Infrastructure`** (10 nodes): `ICategoriaRepositorio`, `CategoriaRepositorio`, `.Actualizar()`, `.AgregarAsync()`, `.Eliminar()`, `.ObtenerActivasAsync()`, `.ObtenerPorIdAsync()`, `.ObtenerPorProyectoAsync()`, `.ObtenerTodosAsync()`, `CategoriaRepositorio.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Finankore.Domain`** (8 nodes): `Credencial`, `.Crear()`, `.DesdePersistencia()`, `.GenerarSalt()`, `.Hashear()`, `.ObtenerComponentesIgualdad()`, `.Verificar()`, `Credencial.cs`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
@@ -550,14 +528,12 @@ Nodes (1): FinanzasEndpoints
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Finankore.Domain`** (1 nodes): `IDominioEvento`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Finankore.Webapi`** (1 nodes): `FinanzasEndpoints`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Usuario` connect `Finankore.Domain` to `Finankore.Domain`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
 - **Are the 6 inferred relationships involving `Usuario` (e.g. with `Tabla Perfil.Usuarios` and `Registrar Cuenta`) actually correct?**
   _`Usuario` has 6 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `IniciarSesionManejador` (e.g. with `RegistrarUsuarioManejador` and `PerfilEndpoints`) actually correct?**
@@ -565,7 +541,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Are the 2 inferred relationships involving `RegistrarUsuarioManejador` (e.g. with `IniciarSesionManejador` and `PerfilEndpoints`) actually correct?**
   _`RegistrarUsuarioManejador` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `FinanKore.WebApi`, `WeatherForecast`, `FinanKore.WebApi.Controllers` to the rest of the system?**
-  _110 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _111 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Finankore.Domain` be split into smaller, more focused modules?**
   _Cohesion score 0.07 - nodes in this community are weakly interconnected._
 - **Should `Finankore.Domain` be split into smaller, more focused modules?**

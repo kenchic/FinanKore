@@ -78,6 +78,13 @@ else if (mostrandoFormulario)
                             Placeholder="Tipo de movimiento..."
                             Style="width: 100%;" />
 
+            <RadzenDropDown Data="@categorias"
+                            TextProperty="Nombre"
+                            ValueProperty="Id"
+                            @bind-Value="@modelo.CategoriaId"
+                            Placeholder="Seleccionar categoría..."
+                            Style="width: 100%;" />
+
             <div style="display: flex; gap: 0.5rem;">
                 <RadzenButton Text="Guardar"
                               Click="@HandleCrear"
@@ -152,6 +159,7 @@ else
 @code {
     private List<ProyectoCreadoDto> proyectos = [];
     private List<ConceptoCreadoDto> conceptos = [];
+    private List<CategoriaCreadaDto> categorias = [];
     private Guid proyectoSeleccionadoId = Guid.Empty;
     private string nombreProyectoSeleccionado = string.Empty;
     private bool cargando;
@@ -170,10 +178,12 @@ else
         try
         {
             proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
+            categorias = await ServicioFinanzas.ObtenerCategoriasAsync();
         }
         catch
         {
             proyectos = [];
+            categorias = [];
         }
     }
 
@@ -252,6 +262,18 @@ else
                 Severity = NotificationSeverity.Error,
                 Summary = "Valor inválido",
                 Detail = "El valor no puede ser negativo.",
+                Duration = 4000
+            });
+            return;
+        }
+
+        if (modelo.CategoriaId == Guid.Empty)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Categoría obligatoria",
+                Detail = "Debés seleccionar una categoría.",
                 Duration = 4000
             });
             return;

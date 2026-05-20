@@ -20,6 +20,6 @@ public sealed class CategoriaRepositorio(AppDbContext contexto) : ICategoriaRepo
     public void Eliminar(Categoria entidad)
         => contexto.Categorias.Remove(entidad);
 
-    public async Task<IReadOnlyList<Categoria>> ObtenerPorProyectoAsync(Guid proyectoId, CancellationToken token = default)
-        => await contexto.Categorias.AsNoTracking().Where(c => c.ProyectoId == proyectoId).ToListAsync(token);
+    public async Task<IReadOnlyList<Categoria>> ObtenerActivasAsync(CancellationToken token = default)
+        => await contexto.Categorias.AsNoTracking().Where(c => c.Activo).ToListAsync(token);
 }

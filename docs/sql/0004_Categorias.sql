@@ -1,6 +1,6 @@
 -- ============================================================
 -- FinanKore :: 0004_Categorias.sql
--- Caso de Uso: Crear Categorias Proyecto
+-- Caso de Uso: Crear Categorias
 -- Contexto:    FINANZAS
 -- Tabla:       Finanzas.Categorias
 -- ============================================================
@@ -36,41 +36,24 @@ BEGIN
         [Id]            UNIQUEIDENTIFIER   NOT NULL,
         [Nombre]        NVARCHAR(200)      NOT NULL,
         [Descripcion]   NVARCHAR(500)      NULL,
-        [ProyectoId]    UNIQUEIDENTIFIER   NOT NULL,
         [Activo]        BIT                NOT NULL DEFAULT 1,
         [FechaCreacion] DATETIMEOFFSET     NOT NULL,
 
         CONSTRAINT [PK_Categorias]
-            PRIMARY KEY CLUSTERED ([Id]),
-
-        CONSTRAINT [FK_Categorias_Proyectos]
-            FOREIGN KEY ([ProyectoId])
-            REFERENCES [Finanzas].[Proyectos] ([Id])
+            PRIMARY KEY CLUSTERED ([Id])
     );
 END
 GO
 
--- 3. Índice para búsquedas por proyecto
+-- 3. Índice único para nombres de categoría (global al sistema)
 IF NOT EXISTS (SELECT * FROM sys.indexes i
                INNER JOIN sys.tables t ON i.object_id = t.object_id
                INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
                WHERE s.name = N'Finanzas' AND t.name = N'Categorias'
-                 AND i.name = N'IX_Categorias_ProyectoId')
+                 AND i.name = N'UQ_Categorias_Nombre')
 BEGIN
-    CREATE NONCLUSTERED INDEX [IX_Categorias_ProyectoId]
-        ON [Finanzas].[Categorias] ([ProyectoId]);
-END
-GO
-
--- 4. Índice único para nombres de categoría por proyecto
-IF NOT EXISTS (SELECT * FROM sys.indexes i
-               INNER JOIN sys.tables t ON i.object_id = t.object_id
-               INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
-               WHERE s.name = N'Finanzas' AND t.name = N'Categorias'
-                 AND i.name = N'UQ_Categorias_ProyectoId_Nombre')
-BEGIN
-    CREATE UNIQUE NONCLUSTERED INDEX [UQ_Categorias_ProyectoId_Nombre]
-        ON [Finanzas].[Categorias] ([ProyectoId], [Nombre]);
+    CREATE UNIQUE NONCLUSTERED INDEX [UQ_Categorias_Nombre]
+        ON [Finanzas].[Categorias] ([Nombre]);
 END
 GO
 

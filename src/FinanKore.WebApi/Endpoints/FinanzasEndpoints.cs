@@ -45,20 +45,16 @@ public static class FinanzasEndpoints
             }
         });
 
-        var categoriaGrupo = app.MapGroup("api/finanzas/proyectos/{proyectoId:guid}/categorias")
-            .WithTags("Finanzas");
-
-        categoriaGrupo.MapGet("", async (
-            Guid proyectoId,
+        // Categorías: globales al sistema
+        grupo.MapGet("categorias", async (
             IMediator mediador,
             CancellationToken token) =>
         {
-            var resultado = await mediador.Send(new ObtenerCategoriasConsulta(proyectoId), token);
+            var resultado = await mediador.Send(new ObtenerCategoriasConsulta(), token);
             return Results.Ok(resultado);
         });
 
-        categoriaGrupo.MapPost("", async (
-            Guid proyectoId,
+        grupo.MapPost("categorias", async (
             CrearCategoriaComando comando,
             IMediator mediador,
             CancellationToken token) =>
@@ -66,7 +62,7 @@ public static class FinanzasEndpoints
             try
             {
                 var resultado = await mediador.Send(comando, token);
-                return Results.Created($"/api/finanzas/proyectos/{proyectoId}/categorias/{resultado.Id}", resultado);
+                return Results.Created($"/api/finanzas/categorias/{resultado.Id}", resultado);
             }
             catch (ExcepcionDominio ex)
             {
@@ -74,6 +70,7 @@ public static class FinanzasEndpoints
             }
         });
 
+        // Conceptos: por proyecto
         var conceptoGrupo = app.MapGroup("api/finanzas/proyectos/{proyectoId:guid}/conceptos")
             .WithTags("Finanzas");
 

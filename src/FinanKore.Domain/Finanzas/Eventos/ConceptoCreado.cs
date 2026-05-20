@@ -7,7 +7,8 @@ public sealed record ConceptoCreado(
     string Nombre,
     decimal Valor,
     TipoMovimiento Tipo,
-    Guid ProyectoId) : Dominio.Eventos.IDominioEvento
+    Guid ProyectoId,
+    Guid CategoriaId) : Dominio.Eventos.IDominioEvento
 {
     public DateTimeOffset FechaOcurrencia { get; } = DateTimeOffset.UtcNow;
 }

@@ -14,11 +14,11 @@ public sealed class CrearCategoriaManejador(
         CrearCategoriaComando comando,
         CancellationToken token)
     {
-        var categoria = Categoria.Crear(comando.Nombre, comando.Descripcion, comando.ProyectoId);
+        var categoria = Categoria.Crear(comando.Nombre, comando.Descripcion);
 
         await repositorio.AgregarAsync(categoria, token);
         await unidadDeTrabajo.GuardarCambiosAsync(token);
 
-        return new CategoriaDto(categoria.Id, categoria.Nombre, categoria.Descripcion, categoria.ProyectoId, categoria.Activo, categoria.FechaCreacion);
+        return new CategoriaDto(categoria.Id, categoria.Nombre, categoria.Descripcion, categoria.Activo, categoria.FechaCreacion);
     }
 }

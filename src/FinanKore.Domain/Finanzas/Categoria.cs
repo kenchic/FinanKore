@@ -7,7 +7,6 @@ public sealed class Categoria : Entidad, IRaizAgregado
 {
     public string Nombre { get; private set; }
     public string? Descripcion { get; private set; }
-    public Guid ProyectoId { get; private set; }
     public bool Activo { get; private set; }
     public DateTimeOffset FechaCreacion { get; private set; }
 
@@ -16,19 +15,18 @@ public sealed class Categoria : Entidad, IRaizAgregado
         Nombre = string.Empty;
     }
 
-    private Categoria(string nombre, string? descripcion, Guid proyectoId)
+    private Categoria(string nombre, string? descripcion)
     {
         Id = Guid.NewGuid();
         Nombre = nombre;
         Descripcion = descripcion;
-        ProyectoId = proyectoId;
         Activo = true;
         FechaCreacion = DateTimeOffset.UtcNow;
 
-        AgregarEvento(new CategoriaCreada(Id, Nombre, ProyectoId));
+        AgregarEvento(new CategoriaCreada(Id, Nombre));
     }
 
-    public static Categoria Crear(string nombre, string? descripcion, Guid proyectoId)
+    public static Categoria Crear(string nombre, string? descripcion)
     {
         if (string.IsNullOrWhiteSpace(nombre))
             throw new Excepciones.ExcepcionDominio("El nombre de la categoría es obligatorio.");
@@ -39,10 +37,7 @@ public sealed class Categoria : Entidad, IRaizAgregado
         if (descripcion is { Length: > 500 })
             throw new Excepciones.ExcepcionDominio("La descripción de la categoría no puede exceder los 500 caracteres.");
 
-        if (proyectoId == Guid.Empty)
-            throw new Excepciones.ExcepcionDominio("El proyecto asociado es obligatorio.");
-
-        return new Categoria(nombre.Trim(), descripcion?.Trim(), proyectoId);
+        return new Categoria(nombre.Trim(), descripcion?.Trim());
     }
 
     public void ActualizarNombre(string nombre)

@@ -21,9 +21,6 @@ public sealed class CategoriaConfiguracion : IEntityTypeConfiguration<Categoria>
         builder.Property(c => c.Descripcion)
             .HasMaxLength(500);
 
-        builder.Property(c => c.ProyectoId)
-            .IsRequired();
-
         builder.Property(c => c.Activo)
             .IsRequired()
             .HasDefaultValue(true);
@@ -31,11 +28,8 @@ public sealed class CategoriaConfiguracion : IEntityTypeConfiguration<Categoria>
         builder.Property(c => c.FechaCreacion)
             .IsRequired();
 
-        builder.HasIndex(c => c.ProyectoId)
-            .HasDatabaseName("IX_Categorias_ProyectoId");
-
-        builder.HasIndex(c => new { c.ProyectoId, c.Nombre })
+        builder.HasIndex(c => c.Nombre)
             .IsUnique()
-            .HasDatabaseName("UQ_Categorias_ProyectoId_Nombre");
+            .HasDatabaseName("UQ_Categorias_Nombre");
     }
 }

@@ -38,6 +38,7 @@ BEGIN
         [Valor]         DECIMAL(18,2)      NOT NULL,
         [Tipo]          INT                NOT NULL,
         [ProyectoId]    UNIQUEIDENTIFIER   NOT NULL,
+        [CategoriaId]   UNIQUEIDENTIFIER   NOT NULL,
         [FechaCreacion] DATETIMEOFFSET     NOT NULL,
 
         CONSTRAINT [PK_Conceptos]
@@ -46,7 +47,11 @@ BEGIN
         CONSTRAINT [FK_Conceptos_Proyectos]
             FOREIGN KEY ([ProyectoId])
             REFERENCES [Finanzas].[Proyectos] ([Id])
-            ON DELETE CASCADE
+            ON DELETE CASCADE,
+
+        CONSTRAINT [FK_Conceptos_Categorias]
+            FOREIGN KEY ([CategoriaId])
+            REFERENCES [Finanzas].[Categorias] ([Id])
     );
 END
 GO
@@ -63,7 +68,19 @@ BEGIN
 END
 GO
 
--- 4. Índice único para nombres de concepto por proyecto
+-- 4. Índice para búsquedas por categoría
+IF NOT EXISTS (SELECT * FROM sys.indexes i
+               INNER JOIN sys.tables t ON i.object_id = t.object_id
+               INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
+               WHERE s.name = N'Finanzas' AND t.name = N'Conceptos'
+                 AND i.name = N'IX_Conceptos_CategoriaId')
+BEGIN
+    CREATE NONCLUSTERED INDEX [IX_Conceptos_CategoriaId]
+        ON [Finanzas].[Conceptos] ([CategoriaId]);
+END
+GO
+
+-- 5. Índice único para nombres de concepto por proyecto
 IF NOT EXISTS (SELECT * FROM sys.indexes i
                INNER JOIN sys.tables t ON i.object_id = t.object_id
                INNER JOIN sys.schemas s ON t.schema_id = s.schema_id

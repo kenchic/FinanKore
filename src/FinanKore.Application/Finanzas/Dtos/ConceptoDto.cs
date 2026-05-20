@@ -8,4 +8,5 @@ public sealed record ConceptoDto(
     decimal Valor,
     TipoMovimiento Tipo,
     Guid ProyectoId,
+    Guid CategoriaId,
     DateTimeOffset FechaCreacion);

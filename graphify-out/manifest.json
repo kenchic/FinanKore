@@ -12,36 +12,36 @@
     "hash": "83cd0f594c44fcf92df6d776e1bb1365"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\docs\\sql\\0004_Categorias.sql": {
-    "mtime": 1779223992.965803,
-    "hash": "cfc597b8d79dc2a426d92d136b681977"
+    "mtime": 1779250662.2390218,
+    "hash": "0e7e4d822db89f1d666b52fd5d32f9ec"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\docs\\sql\\0005_Reportes.sql": {
     "mtime": 1779227530.5816278,
     "hash": "3af73143310e0fd449850d56f18d09f7"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\docs\\sql\\0006_Conceptos.sql": {
-    "mtime": 1779232577.7787268,
-    "hash": "4374e439a9808cd5cba5c2c15918c1cd"
+    "mtime": 1779250716.3655245,
+    "hash": "37a6ccb31b552fb4435b4a7befb85894"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Comun\\Interfaces\\IUnidadDeTrabajo.cs": {
     "mtime": 1779071797.1421573,
     "hash": "763571843b9cfa50d223f680f2ccee80"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Comandos\\CrearCategoriaComando.cs": {
-    "mtime": 1779223992.995747,
-    "hash": "4688f7a49b142793c1d10031b980b450"
+    "mtime": 1779250360.8589694,
+    "hash": "be31c71320b443648598928c5b30e745"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Comandos\\CrearCategoriaManejador.cs": {
-    "mtime": 1779223992.9984238,
-    "hash": "3b76e889ea6ca7ca61671bf7597ed81f"
+    "mtime": 1779250361.3794248,
+    "hash": "928114382400c664ffb6fc046d4718bd"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Comandos\\CrearConceptoComando.cs": {
-    "mtime": 1779233161.8408368,
-    "hash": "703db0b6d4a0db3320ee896814f7627c"
+    "mtime": 1779250363.3461256,
+    "hash": "2d4aa7110a128806ba5e7d7d17e3dfad"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Comandos\\CrearConceptoManejador.cs": {
-    "mtime": 1779233251.1016328,
-    "hash": "6dac6f3b70261ed906bd40690906c409"
+    "mtime": 1779250374.0955615,
+    "hash": "2fc4958e5737dafb4881c8b6ddfba94d"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Comandos\\CrearProyectoComando.cs": {
     "mtime": 1779071797.1481903,
@@ -52,20 +52,20 @@
     "hash": "aef56e836a4cc79b7ef579d90abc0b75"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Consultas\\ObtenerCategoriasConsulta.cs": {
-    "mtime": 1779223992.999887,
-    "hash": "f9934f1c686dc4b88bfaef77aa600727"
+    "mtime": 1779250382.948183,
+    "hash": "faaf55b22f370667997aa36f2e69296e"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Consultas\\ObtenerCategoriasManejador.cs": {
-    "mtime": 1779223993.0014017,
-    "hash": "6384901a30692739ad9686dbee88da1e"
+    "mtime": 1779250386.4552648,
+    "hash": "bba740604d781a1d80fcfe6abc914927"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Consultas\\ObtenerConceptosPorProyectoConsulta.cs": {
     "mtime": 1779233168.4113693,
     "hash": "80b6465f83b425824be3a8e37b31ccb2"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Consultas\\ObtenerConceptosPorProyectoManejador.cs": {
-    "mtime": 1779233171.8262444,
-    "hash": "7bb678a9410ee12fc74d62974558eb45"
+    "mtime": 1779250393.509275,
+    "hash": "71c1bc9d963a063bd0537758566b0800"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Consultas\\ObtenerProyectoPorIdConsulta.cs": {
     "mtime": 1779228914.6727273,
@@ -84,20 +84,20 @@
     "hash": "bf54708c802595b48bd0f91fa8c951a6"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Dtos\\CategoriaDto.cs": {
-    "mtime": 1779223993.0026915,
-    "hash": "c8b951a56e7c70b2bd20d7d0d58f1c7a"
+    "mtime": 1779250378.7756047,
+    "hash": "9afa0f43ab45e3642470c2733c86f8aa"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Dtos\\ConceptoDto.cs": {
-    "mtime": 1779233160.109369,
-    "hash": "c99a78e4918914364a9c688c9d81f2d7"
+    "mtime": 1779250380.9265273,
+    "hash": "6ae40587115bc854fccfd72e2da0b5b2"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\Finanzas\\Dtos\\ProyectoDto.cs": {
     "mtime": 1779071797.154047,
     "hash": "58b677dd95823acee6e7151e58767dbb"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\obj\\Debug\\net10.0\\FinanKore.Application.AssemblyInfo.cs": {
-    "mtime": 1779236710.0235069,
-    "hash": "5ed5dfeb552a0e3ad2c562c5722c0104"
+    "mtime": 1779250769.0571835,
+    "hash": "8358cb5361c8751e75a17c0425d8e992"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Application\\obj\\Debug\\net10.0\\FinanKore.Application.GlobalUsings.g.cs": {
     "mtime": 1778520949.8100836,
@@ -180,32 +180,32 @@
     "hash": "bf516482eafbb9ba7c9a2f557f31c6d6"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\Categoria.cs": {
-    "mtime": 1779223993.0037005,
-    "hash": "e4efee9ce708f75cd92a5752e2b75e71"
+    "mtime": 1779250292.87707,
+    "hash": "e1c9b3b709331be1b11b8dc35546815e"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\Concepto.cs": {
-    "mtime": 1779232205.177745,
-    "hash": "f4812fa41ba4290b62a5e42f758acae2"
+    "mtime": 1779250305.0638847,
+    "hash": "787c78cb03dba025d364d7734dee2b9d"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\ICategoriaRepositorio.cs": {
-    "mtime": 1779223993.0072289,
-    "hash": "70f6aadb960ebf98312d6dfff00f485d"
+    "mtime": 1779250340.1115558,
+    "hash": "95a00cc4e07f0f11f7632123ad3d1e55"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\IProyectoRepositorio.cs": {
     "mtime": 1779233158.6204884,
     "hash": "07152f788a0848918cc878bf82369eb7"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\Proyecto.cs": {
-    "mtime": 1779232229.4764707,
-    "hash": "133d798a62eade9e31738f589371af71"
+    "mtime": 1779250324.0564413,
+    "hash": "690e5c5708f804faa4f4708d92ff52ef"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\Eventos\\CategoriaCreada.cs": {
-    "mtime": 1779223993.006219,
-    "hash": "197b4f5287b205c1374e3329033247fd"
+    "mtime": 1779250327.149277,
+    "hash": "4688c8e9cc5bf74fd2dbad83eca1f0d7"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\Eventos\\ConceptoCreado.cs": {
-    "mtime": 1779232208.3054729,
-    "hash": "bb25960457200279b77f4b85ad3122a5"
+    "mtime": 1779250330.5897071,
+    "hash": "43704212a34e668d7f1036093e3c424e"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\Finanzas\\Eventos\\ProyectoCreado.cs": {
     "mtime": 1779071797.183599,
@@ -216,8 +216,8 @@
     "hash": "0960bbfebca137f47f462e015c412ec6"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\obj\\Debug\\net10.0\\FinanKore.Domain.AssemblyInfo.cs": {
-    "mtime": 1779236709.7365842,
-    "hash": "528c08052570c42ebfa67b9dc2dedcdc"
+    "mtime": 1779250766.0570214,
+    "hash": "eed1822581f0ec1b6942d5fa53167150"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Domain\\obj\\Debug\\net10.0\\FinanKore.Domain.GlobalUsings.g.cs": {
     "mtime": 1778520497.9716065,
@@ -292,8 +292,8 @@
     "hash": "904b213056f2ece779d375d46cff2ecd"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\obj\\Debug\\net10.0\\FinanKore.Infrastructure.AssemblyInfo.cs": {
-    "mtime": 1779236710.3511462,
-    "hash": "77c001d9d53714a17f58a8be8d5136a4"
+    "mtime": 1779250769.4733067,
+    "hash": "394d7f0fda4435c10e62216e6bc16418"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\obj\\Debug\\net10.0\\FinanKore.Infrastructure.GlobalUsings.g.cs": {
     "mtime": 1778521552.6896062,
@@ -312,12 +312,12 @@
     "hash": "d002e45a94a646321ced71c5aa89aef3"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Configuraciones\\CategoriaConfiguracion.cs": {
-    "mtime": 1779223993.013659,
-    "hash": "7d72d6dd73cac144d1f86693f31c7262"
+    "mtime": 1779250399.4155214,
+    "hash": "16da16961671a2fc569f655cd1656b4e"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Configuraciones\\ConceptoConfiguracion.cs": {
-    "mtime": 1779233200.2471194,
-    "hash": "921d64646eae675292dc7f2a72589cf3"
+    "mtime": 1779250420.4594657,
+    "hash": "9830101557bac615ee04d57d535598f4"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Configuraciones\\ProyectoConfiguracion.cs": {
     "mtime": 1779236680.6292696,
@@ -332,8 +332,8 @@
     "hash": "cb9ce297a92c0def3acbe1ba75852bad"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Repositorios\\CategoriaRepositorio.cs": {
-    "mtime": 1779223993.0147228,
-    "hash": "8fba29d073f5c09764334eeb66b99433"
+    "mtime": 1779250409.0697126,
+    "hash": "f545033c7798daf83fbb207c1b883815"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Repositorios\\ProyectoRepositorio.cs": {
     "mtime": 1779233208.0290926,
@@ -356,12 +356,12 @@
     "hash": "bdc7a0873231c569cd31aa85311186a3"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Models\\CrearCategoriaModelo.cs": {
-    "mtime": 1779223993.0195453,
-    "hash": "981c6b3b784e84f55e0ddf615476fb35"
+    "mtime": 1779250420.955629,
+    "hash": "e951966f3349992333e15b8696c39d91"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Models\\CrearConceptoModelo.cs": {
-    "mtime": 1779235264.0099576,
-    "hash": "174832986fbfc13c9f6c832587d7c6b4"
+    "mtime": 1779250427.0120475,
+    "hash": "9798dc2a63c6a580c220e83461771886"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Models\\CrearProyectoModelo.cs": {
     "mtime": 1779071797.2651484,
@@ -384,8 +384,8 @@
     "hash": "4754a7d0933592bbad0d81eb7999c607"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\obj\\Debug\\net10.0\\FinanKore.Web.AssemblyInfo.cs": {
-    "mtime": 1779235265.3961232,
-    "hash": "26b7981aaf0b5a88d6e8c0b388f3fe70"
+    "mtime": 1779250782.953813,
+    "hash": "bfb9b9546397d312a1da7a64ba4293b1"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\obj\\Debug\\net10.0\\FinanKore.Web.GlobalUsings.g.cs": {
     "mtime": 1778526378.2207592,
@@ -484,8 +484,8 @@
     "hash": "c7e86db30386bf8d7cbd955fdb15623d"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Servicios\\ServicioFinanzas.cs": {
-    "mtime": 1779235338.3717244,
-    "hash": "74f61d4a111fd8f054747b1ffd0baaa7"
+    "mtime": 1779250447.680403,
+    "hash": "5334d915a531fbd1d57855d0c89712d7"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Servicios\\ServicioPerfil.cs": {
     "mtime": 1779071797.2811506,
@@ -496,8 +496,8 @@
     "hash": "ea194677b6e1f6d2f24da819cf567b3d"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\Endpoints\\FinanzasEndpoints.cs": {
-    "mtime": 1779233215.3150604,
-    "hash": "01aa3cf70017cc069f4785434c129c9c"
+    "mtime": 1779250473.1043656,
+    "hash": "bd9180e1f0b59ce7eb9883c7eb622e7a"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\Endpoints\\PerfilEndpoints.cs": {
     "mtime": 1779071797.438627,
@@ -512,8 +512,8 @@
     "hash": "d893ce07f671ea6d3d917b3eb62f83c1"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\obj\\Debug\\net10.0\\FinanKore.WebApi.AssemblyInfo.cs": {
-    "mtime": 1779233265.77294,
-    "hash": "36f88b81091f3234db85587b7c87df72"
+    "mtime": 1779250770.078089,
+    "hash": "137c63672990888807a2b96a2e7524cd"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\obj\\Debug\\net10.0\\FinanKore.WebApi.GlobalUsings.g.cs": {
     "mtime": 1778525864.0534801,
@@ -564,8 +564,8 @@
     "hash": "5cd2fa21b6a7842f00504817ccdcc366"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\obj\\Debug\\net10.0\\FinanKore.Web.csproj.FileListAbsolute.txt": {
-    "mtime": 1779236420.7431908,
-    "hash": "945934d3f2578ace48fc9216055bf02d"
+    "mtime": 1779250784.438372,
+    "hash": "c9448d3b9bb723f14a04c2106703c4ae"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\obj\\Debug\\net10.0\\staticwebassets.references.upToDateCheck.txt": {
     "mtime": 1778600588.0982873,
@@ -575,13 +575,9 @@
     "mtime": 1778526378.7241395,
     "hash": "d41d8cd98f00b204e9800998ecf8427e"
   },
-  "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\obj\\Debug\\net10.0\\staticwebassets.upToDateCheck.txt": {
-    "mtime": 1779236420.6879764,
-    "hash": "7e67797b5b4c6c4f87946a35d677006d"
-  },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\obj\\Debug\\net10.0\\FinanKore.WebApi.csproj.FileListAbsolute.txt": {
-    "mtime": 1779241943.103542,
-    "hash": "613402e936f7da14740cc312bbcc2a95"
+    "mtime": 1779250771.7401726,
+    "hash": "b8414f935b091d376a0a85468a644f39"
   },
   "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\obj\\Debug\\net10.0\\staticwebassets.references.upToDateCheck.txt": {
     "mtime": 1778627441.1876326,

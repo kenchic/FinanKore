@@ -28,11 +28,17 @@ public sealed class ConceptoConfiguracion : IEntityTypeConfiguration<Concepto>
         builder.Property(c => c.ProyectoId)
             .IsRequired();
 
+        builder.Property(c => c.CategoriaId)
+            .IsRequired();
+
         builder.Property(c => c.FechaCreacion)
             .IsRequired();
 
         builder.HasIndex(c => c.ProyectoId)
             .HasDatabaseName("IX_Conceptos_ProyectoId");
+
+        builder.HasIndex(c => c.CategoriaId)
+            .HasDatabaseName("IX_Conceptos_CategoriaId");
 
         builder.HasIndex(c => new { c.ProyectoId, c.Nombre })
             .IsUnique()

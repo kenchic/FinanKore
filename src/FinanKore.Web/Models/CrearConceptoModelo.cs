@@ -6,4 +6,5 @@ public sealed class CrearConceptoModelo
     public decimal Valor { get; set; }
     public int Tipo { get; set; } = 1; // 1 = Entrada, 2 = Salida
     public Guid ProyectoId { get; set; }
+    public Guid CategoriaId { get; set; }
 }
