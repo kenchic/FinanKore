@@ -9,5 +9,5 @@ Esta tabla enumera los casos de uso en el orden lógico en que deben ser desarro
 | [x] | 4 | Crear Categorias Proyecto | 
 | [x] | 5 | Crear Concepto Proyecto | 
 | [x] | 6 | Crear Reporte Proyecto | 
-| [ ] | 7 | Crear Concepto Reporte | 
+| [x] | 7 | Crear Concepto Reporte | 
 | [ ] | 8 | Cargar Archivos Concepto Reporte |

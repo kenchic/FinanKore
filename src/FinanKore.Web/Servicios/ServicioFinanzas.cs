@@ -117,7 +117,31 @@ public sealed class ServicioFinanzas
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoCreadoDto>(cancellationToken: token);
     }
+
+    public async Task<List<ConceptoReporteDto>> ObtenerConceptosPorReporteAsync(Guid reporteId,
+        CancellationToken token = default)
+    {
+        var resultado = await _http.GetFromJsonAsync<List<ConceptoReporteDto>>(
+            $"api/reportes/{reporteId}/conceptos", token);
+
+        return resultado ?? [];
+    }
+
+    public async Task<ConceptoReporteDto?> CrearConceptoReporteAsync(
+        CrearConceptoReporteModelo modelo,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.PostAsJsonAsync(
+            $"api/reportes/{modelo.ReporteId}/conceptos", modelo, token);
+
+        respuesta.EnsureSuccessStatusCode();
+
+        return await respuesta.Content
+            .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
+    }
 }
+
+public sealed record ConceptoReporteDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ReporteId, Guid CategoriaId, DateTimeOffset FechaCreacion);
 
 public sealed record ProyectoCreadoDto(Guid Id, string Nombre);
 

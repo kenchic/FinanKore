@@ -9,6 +9,11 @@ public sealed class ReporteRepositorio(AppDbContext contexto) : IReporteReposito
     public async Task<Reporte?> ObtenerPorIdAsync(Guid id, CancellationToken token = default)
         => await contexto.Reportes.AsNoTracking().FirstOrDefaultAsync(r => r.Id == id, token);
 
+    public async Task<Reporte?> ObtenerPorIdConConceptosAsync(Guid id, CancellationToken token = default)
+        => await contexto.Reportes
+            .Include(r => r.Conceptos)
+            .FirstOrDefaultAsync(r => r.Id == id, token);
+
     public async Task<IReadOnlyList<Reporte>> ObtenerTodosAsync(CancellationToken token = default)
         => await contexto.Reportes.AsNoTracking().ToListAsync(token);
 

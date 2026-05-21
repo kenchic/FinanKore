@@ -74,9 +74,12 @@ else
                     <div style="flex: 1;">
                         <div style="font-size: 0.875rem; color: var(--rz-text-secondary-color);">@reporte.ProyectoNombre</div>
                         <strong>@reporte.ReporteNombre</strong>
-                        <p class="text-secondary" style="margin: 0.25rem 0 0 0; font-size: 0.875rem;">@reporte.Descripcion</p>
                     </div>
-                    <span class="text-secondary" style="font-size: 0.75rem;">@reporte.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</span>
+                    <RadzenButton Text="Conceptos"
+                                  Click="@(() => IrAConceptos(reporte.Id))"
+                                  ButtonStyle="ButtonStyle.Primary"
+                                  Size="ButtonSize.Small"
+                                  Icon="receipt_long" />
                 </div>
             </div>
         }
@@ -148,5 +151,10 @@ else
     private void IrAInicio()
     {
         Navegacion.NavigateTo("/");
+    }
+
+    private void IrAConceptos(Guid reporteId)
+    {
+        Navegacion.NavigateTo($"/finanzas/reportes/{reporteId}/conceptos");
     }
 }

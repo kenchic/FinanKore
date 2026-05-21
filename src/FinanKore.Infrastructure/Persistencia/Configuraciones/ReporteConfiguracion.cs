@@ -26,5 +26,10 @@ public sealed class ReporteConfiguracion : IEntityTypeConfiguration<Reporte>
 
         builder.Property(r => r.FechaCreacion)
             .IsRequired();
+
+        builder.HasMany(r => r.Conceptos)
+            .WithOne()
+            .HasForeignKey(c => c.ReporteId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
