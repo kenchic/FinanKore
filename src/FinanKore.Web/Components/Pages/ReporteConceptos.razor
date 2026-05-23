@@ -88,6 +88,55 @@
     </div>
 }
 
+@if (modalEditarVisible)
+{
+    <div class="modal-backdrop" @onclick="CerrarModalEditar"></div>
+    <div class="gx-card modal-panel">
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <span class="material-icons" style="font-size: 2rem; color: var(--fk-violeta);">edit</span>
+            <h3 style="margin: 0;">Editar Concepto</h3>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem;">Nombre</label>
+                <RadzenTextBox @bind-Value="@modeloEditar.Nombre"
+                               Style="width: 100%;" />
+            </div>
+
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem;">Valor</label>
+                <RadzenNumeric @bind-Value="@modeloEditar.Valor"
+                               Min="0"
+                               Style="width: 100%;" />
+            </div>
+
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem;">Tipo de Movimiento</label>
+                <span class="text-secondary" style="display: block; padding: 0.5rem 0; font-size: 0.95rem;">@modeloEditarTipoTexto</span>
+            </div>
+
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem;">Categoría</label>
+                <span class="text-secondary" style="display: block; padding: 0.5rem 0; font-size: 0.95rem;">@modeloEditarCategoriaNombre</span>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                <RadzenButton Text="Guardar"
+                              Click="@GuardarEdicion"
+                              ButtonStyle="ButtonStyle.Primary"
+                              Size="ButtonSize.Medium"
+                              Style="flex: 1;" />
+                <RadzenButton Text="Cancelar"
+                              Click="@CerrarModalEditar"
+                              ButtonStyle="ButtonStyle.Secondary"
+                              Size="ButtonSize.Medium"
+                              Style="flex: 1;" />
+            </div>
+        </div>
+    </div>
+}
+
 @if (cargando)
 {
     <div class="gx-card" style="text-align: center; padding: 2rem;">
@@ -175,9 +224,10 @@ else
                             </td>
                             @foreach (var categoria in categoriasUsadas)
                             {
-                                <td class="td-valor">
-                                    @if (concepto.CategoriaId == categoria.Id)
-                                    {
+                            <td class="td-valor">
+                                @if (concepto.CategoriaId == categoria.Id)
+                                {
+                                    <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;">
                                         @if (concepto.Tipo == 1)
                                         {
                                             <span class="valor-entrada">$ @concepto.Valor.ToString("N0")</span>
@@ -186,8 +236,27 @@ else
                                         {
                                             <span class="valor-salida">$ (@concepto.Valor.ToString("N0"))</span>
                                         }
-                                    }
-                                </td>
+                                        <button type="button"
+                                                class="btn-icono-concepto"
+                                                @onclick="() => AbrirModalEditar(concepto)"
+                                                title="Editar concepto"
+                                                style="border: none; background: none; cursor: pointer; padding: 0.25rem; display: inline-flex; align-items: center; justify-content: center; opacity: 0.6; transition: opacity 0.2s;"
+                                                onmouseover="this.style.opacity='1'"
+                                                onmouseout="this.style.opacity='0.6'">
+                                            <span class="material-icons" style="font-size: 1rem; color: var(--fk-violeta);">edit</span>
+                                        </button>
+                                        <button type="button"
+                                                class="btn-icono-concepto"
+                                                @onclick="() => CancelarConcepto(concepto.Id)"
+                                                title="Cancelar concepto (poner en cero)"
+                                                style="border: none; background: none; cursor: pointer; padding: 0.25rem; display: inline-flex; align-items: center; justify-content: center; opacity: 0.6; transition: opacity 0.2s;"
+                                                onmouseover="this.style.opacity='1'"
+                                                onmouseout="this.style.opacity='0.6'">
+                                            <span class="material-icons" style="font-size: 1rem; color: var(--fk-magenta);">cancel</span>
+                                        </button>
+                                    </div>
+                                }
+                            </td>
                             }
                         </tr>
                     }
@@ -267,6 +336,10 @@ else
     .tabla-conceptos tbody tr:hover td {
         background: #f5f5f5;
     }
+
+    .btn-icono-concepto:hover {
+        opacity: 1;
+    }
 </style>
 
 @code {
@@ -278,7 +351,12 @@ else
     private string nombreReporte = string.Empty;
     private bool cargando = true;
     private bool modalVisible = false;
+    private bool modalEditarVisible = false;
     private CrearConceptoReporteModelo modelo = new() { Nombre = string.Empty, Valor = 0, Tipo = 1 };
+    private CrearConceptoReporteModelo modeloEditar = new() { Nombre = string.Empty, Valor = 0, Tipo = 1 };
+    private string modeloEditarTipoTexto = string.Empty;
+    private string modeloEditarCategoriaNombre = string.Empty;
+    private Guid conceptoEditandoId = Guid.Empty;
     private decimal saldoTotal = 0;
 
     private List<TipoMovimientoOpcion> tiposMovimiento =
@@ -442,6 +520,115 @@ else
             {
                 Severity = NotificationSeverity.Error,
                 Summary = "Error al crear concepto",
+                Detail = ex.Message,
+                Duration = 5000
+            });
+        }
+    }
+
+    private async Task CancelarConcepto(Guid conceptoId)
+    {
+        try
+        {
+            await ServicioFinanzas.CancelarConceptoAsync(ReporteId, conceptoId);
+
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Concepto cancelado",
+                Detail = "El valor del concepto ha sido puesto en cero.",
+                Duration = 4000
+            });
+
+            await CargarConceptos();
+        }
+        catch (Exception ex)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al cancelar concepto",
+                Detail = ex.Message,
+                Duration = 5000
+            });
+        }
+    }
+
+    private void AbrirModalEditar(ConceptoReporteDto concepto)
+    {
+        conceptoEditandoId = concepto.Id;
+        modeloEditar = new CrearConceptoReporteModelo
+        {
+            ReporteId = concepto.ReporteId,
+            Nombre = concepto.Nombre,
+            Valor = concepto.Valor,
+            Tipo = concepto.Tipo,
+            CategoriaId = concepto.CategoriaId
+        };
+
+        modeloEditarTipoTexto = concepto.Tipo == 1 ? "Entrada" : "Salida";
+        modeloEditarCategoriaNombre = categorias
+            .FirstOrDefault(c => c.Id == concepto.CategoriaId)?.Nombre ?? "Sin categoría";
+
+        modalEditarVisible = true;
+    }
+
+    private void CerrarModalEditar()
+    {
+        modalEditarVisible = false;
+    }
+
+    private async Task GuardarEdicion()
+    {
+        if (string.IsNullOrWhiteSpace(modeloEditar.Nombre))
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Nombre obligatorio",
+                Detail = "El concepto debe tener un nombre.",
+                Duration = 4000
+            });
+            return;
+        }
+
+        if (modeloEditar.Valor < 0)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Valor inválido",
+                Detail = "El valor no puede ser negativo.",
+                Duration = 4000
+            });
+            return;
+        }
+
+        try
+        {
+            await ServicioFinanzas.EditarConceptoAsync(
+                ReporteId,
+                conceptoEditandoId,
+                modeloEditar.Nombre,
+                modeloEditar.Valor);
+
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Success,
+                Summary = "Concepto actualizado",
+                Detail = $"'{modeloEditar.Nombre}' se ha actualizado correctamente.",
+                Duration = 4000
+            });
+
+            modalEditarVisible = false;
+            await CargarConceptos();
+        }
+        catch (Exception ex)
+        {
+            Notificacion.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Error al actualizar concepto",
                 Detail = ex.Message,
                 Duration = 5000
             });

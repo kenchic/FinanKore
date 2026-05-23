@@ -139,6 +139,38 @@ public sealed class ServicioFinanzas
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
     }
+
+    public async Task<ConceptoReporteDto?> CancelarConceptoAsync(
+        Guid reporteId,
+        Guid conceptoId,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.PutAsync(
+            $"api/reportes/{reporteId}/conceptos/{conceptoId}/valor", null, token);
+
+        respuesta.EnsureSuccessStatusCode();
+
+        return await respuesta.Content
+            .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
+    }
+
+    public async Task<ConceptoReporteDto?> EditarConceptoAsync(
+        Guid reporteId,
+        Guid conceptoId,
+        string nombre,
+        decimal valor,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.PutAsJsonAsync(
+            $"api/reportes/{reporteId}/conceptos/{conceptoId}",
+            new { nombre, valor },
+            token);
+
+        respuesta.EnsureSuccessStatusCode();
+
+        return await respuesta.Content
+            .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
+    }
 }
 
 public sealed record ConceptoReporteDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ReporteId, Guid CategoriaId, DateTimeOffset FechaCreacion);

@@ -48,6 +48,51 @@ public static class ReportesEndpoints
             }
         });
 
+        grupo.MapPut("{reporteId:guid}/conceptos/{conceptoId:guid}/valor", async (
+            Guid reporteId,
+            Guid conceptoId,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            try
+            {
+                var comando = new ActualizarConceptoReporteValorComando(conceptoId, 0);
+                var resultado = await mediador.Send(comando, token);
+                return Results.Ok(resultado);
+            }
+            catch (ExcepcionDominio ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.NotFound(new { error = ex.Message });
+            }
+        });
+
+        grupo.MapPut("{reporteId:guid}/conceptos/{conceptoId:guid}", async (
+            Guid reporteId,
+            Guid conceptoId,
+            ActualizarConceptoReporteComando comando,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            try
+            {
+                var comandoConId = comando with { ConceptoId = conceptoId };
+                var resultado = await mediador.Send(comandoConId, token);
+                return Results.Ok(resultado);
+            }
+            catch (ExcepcionDominio ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.NotFound(new { error = ex.Message });
+            }
+        });
+
         return app;
     }
 }
