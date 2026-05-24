@@ -7,9 +7,9 @@
 
 <PageTitle>Iniciar Sesión - FinanKore</PageTitle>
 
-<div class="gx-card" style="max-width: 480px; margin: 3rem auto;">
+<div class="gx-card" style="max-width: 480px; margin: 2rem auto;">
     <div class="login-header">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">login</span>
+        <span class="material-icons" style="font-size: 3rem; color: var(--fk-magenta);">login</span>
         <h3 style="margin: 0.5rem 0 0.25rem;">Iniciar Sesión</h3>
         <p class="text-secondary" style="margin: 0;">Ingresa tus credenciales para acceder</p>
     </div>
@@ -56,10 +56,7 @@
     private IniciarSesionModelo modelo = new();
     private bool cargando = false;
 
-    private void IrARegistrar()
-    {
-        Navegacion.NavigateTo("/registrar");
-    }
+    private void IrARegistrar() => Navegacion.NavigateTo("/registrar");
 
     private async Task HandleIniciarSesion()
     {

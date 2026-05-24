@@ -9,11 +9,11 @@
 
 <PageTitle>Registrar Cuenta - FinanKore</PageTitle>
 
-<div class="gx-card" style="max-width: 480px; margin: 3rem auto; padding: 2rem;">
+<div class="gx-card" style="max-width: 480px; margin: 2rem auto; padding: 2rem;">
     <div style="text-align: center; margin-bottom: 1.5rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">person_add</span>
+        <span class="material-icons" style="font-size: 3rem; color: var(--fk-magenta);">person_add</span>
         <h3 style="margin: 0.5rem 0 0.25rem;">Crear tu Cuenta</h3>
-        <p style="color: var(--rz-text-secondary); margin: 0;">Regístrate para empezar a usar FinanKore</p>
+        <p class="text-secondary" style="margin: 0;">Regístrate para empezar a usar FinanKore</p>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -35,15 +35,15 @@
 
         <RadzenButton Text="Crear Cuenta"
                       Click="@HandleRegistrar"
-                      ButtonStyle="@ButtonStyle.Primary"
-                      Size="@ButtonSize.Medium"
+                      ButtonStyle="ButtonStyle.Primary"
+                      Size="ButtonSize.Medium"
                       Style="width: 100%;" />
     </div>
 
     <div style="text-align: center; margin-top: 1rem;">
         <RadzenButton Text="¿Ya tienes cuenta? Inicia Sesión"
-                      ButtonStyle="@ButtonStyle.Info"
-                      Size="@ButtonSize.Small"
+                      ButtonStyle="ButtonStyle.Info"
+                      Size="ButtonSize.Small"
                       Click="@IrAInicio" />
     </div>
 </div>
@@ -51,44 +51,25 @@
 @code {
     private RegistrarCuentaModelo modelo = new();
 
-    private void IrAInicio()
-    {
-        Navegacion.NavigateTo("/");
-    }
+    private void IrAInicio() => Navegacion.NavigateTo("/");
 
     private async Task HandleRegistrar()
     {
         if (string.IsNullOrWhiteSpace(modelo.Correo))
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Correo obligatorio",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Correo obligatorio", Duration = 4000 });
             return;
         }
 
         if (string.IsNullOrWhiteSpace(modelo.Nombre))
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Nombre obligatorio",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Nombre obligatorio", Duration = 4000 });
             return;
         }
 
         if (string.IsNullOrWhiteSpace(modelo.Password) || modelo.Password.Length < 6)
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Contraseña inválida",
-                Detail = "La contraseña debe tener al menos 6 caracteres.",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Contraseña inválida", Detail = "La contraseña debe tener al menos 6 caracteres.", Duration = 4000 });
             return;
         }
 

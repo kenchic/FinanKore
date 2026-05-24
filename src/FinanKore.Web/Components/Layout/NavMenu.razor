@@ -1,43 +1,102 @@
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedSessionStorage AlmacenamientoSesion
+@inject NavigationManager Navegacion
 
-<nav class="navbar-top">
-    <div class="navbar-brand">
-        <a href="/">FinanKore</a>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <span class="material-icons sidebar-brand-icon">account_balance</span>
+        <span class="sidebar-brand-text">FinanKore</span>
     </div>
-    <div class="navbar-links">
-        <NavLink href="/" Match="NavLinkMatch.All">Inicio</NavLink>
+
+    <nav class="sidebar-nav">
         @if (cargando)
         {
-            <span class="navbar-loading">...</span>
+            <div class="sidebar-loading">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 24px; height: 24px;" />
+            </div>
         }
         else if (autenticado)
         {
-            <NavLink href="/finanzas/proyectos">Proyectos</NavLink>
-            <NavLink href="/finanzas/categorias">Categorías</NavLink>
-            <NavLink href="/finanzas/conceptos">Conceptos</NavLink>
-            <NavLink href="/finanzas/reportes">Reportes</NavLink>
+            <NavLink href="/" Match="NavLinkMatch.All" class="sidebar-nav-item">
+                <span class="material-icons">dashboard</span>
+                <span>Inicio</span>
+            </NavLink>
+            <NavLink href="/finanzas/proyectos" class="sidebar-nav-item">
+                <span class="material-icons">folder</span>
+                <span>Proyectos</span>
+            </NavLink>
+            <NavLink href="/finanzas/categorias" class="sidebar-nav-item">
+                <span class="material-icons">category</span>
+                <span>Categorías</span>
+            </NavLink>
+            <NavLink href="/finanzas/conceptos" class="sidebar-nav-item">
+                <span class="material-icons">list_alt</span>
+                <span>Conceptos</span>
+            </NavLink>
+            <NavLink href="/finanzas/reportes" class="sidebar-nav-item">
+                <span class="material-icons">bar_chart</span>
+                <span>Reportes</span>
+            </NavLink>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-user">
+                <div class="sidebar-user-avatar">
+                    <span class="material-icons">person</span>
+                </div>
+                <div class="sidebar-user-info">
+                    <span class="sidebar-user-name">@usuarioNombre</span>
+                    <span class="sidebar-user-email">@usuarioCorreo</span>
+                </div>
+            </div>
+
+            <button class="sidebar-logout" @onclick="CerrarSesion">
+                <span class="material-icons">logout</span>
+                <span>Cerrar Sesión</span>
+            </button>
         }
         else
         {
-            <NavLink href="/iniciar-sesion">Iniciar Sesión</NavLink>
-            <NavLink href="/registrar">Registrarse</NavLink>
+            <NavLink href="/iniciar-sesion" class="sidebar-nav-item">
+                <span class="material-icons">login</span>
+                <span>Iniciar Sesión</span>
+            </NavLink>
+            <NavLink href="/registrar" class="sidebar-nav-item">
+                <span class="material-icons">person_add</span>
+                <span>Registrarse</span>
+            </NavLink>
         }
-    </div>
-</nav>
+    </nav>
+</aside>
 
 @code {
     private bool autenticado;
     private bool cargando = true;
+    private string usuarioNombre = string.Empty;
+    private string usuarioCorreo = string.Empty;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            var resultado = await AlmacenamientoSesion.GetAsync<object>("usuario_sesion");
+            var resultado = await AlmacenamientoSesion.GetAsync<UsuarioRegistradoDto>("usuario_sesion");
             autenticado = resultado.Success;
+            if (autenticado && resultado.Value is not null)
+            {
+                usuarioNombre = resultado.Value.NombreCompleto;
+                usuarioCorreo = resultado.Value.Correo;
+            }
             cargando = false;
             StateHasChanged();
         }
+    }
+
+    private async Task CerrarSesion()
+    {
+        await AlmacenamientoSesion.DeleteAsync("usuario_sesion");
+        autenticado = false;
+        usuarioNombre = string.Empty;
+        usuarioCorreo = string.Empty;
+        Navegacion.NavigateTo("/", forceLoad: true);
     }
 }

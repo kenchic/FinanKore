@@ -68,7 +68,7 @@ h1:focus {
 }
 
 /* ============================================================
-   FinanKore :: Design System & Layout LinkedIn
+   FinanKore :: Design System - Dashboard Layout
    ============================================================ */
 
 /* Fix Material Icons */
@@ -82,19 +82,24 @@ h1:focus {
     --fk-azul: #0066cc;
     --fk-violeta: #7b2cbf;
     --fk-verde: #1fa203;
+    --fk-gris-fondo: #f0f2f5;
+    --fk-gris-borde: rgba(0, 0, 0, 0.06);
+    --fk-texto-primario: #1a1a2e;
+    --fk-texto-secundario: #6b7280;
 }
 
 /* Tarjetas premium */
 .gx-card {
     background: #ffffff;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
     padding: 1.5rem;
     margin-bottom: 1rem;
+    border: 1px solid var(--fk-gris-borde);
 }
 
 .text-secondary {
-    color: var(--rz-text-secondary-color, #666666);
+    color: var(--fk-texto-secundario);
 }
 
 /* Formularios */
@@ -116,4 +121,264 @@ h1:focus {
 .login-footer {
     text-align: center;
     margin-top: 1rem;
+}
+
+/* ============================================================
+   Dashboard - KPI Cards
+   ============================================================ */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--fk-gris-borde);
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.kpi-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.kpi-icon .material-icons {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.kpi-icon-magenta {
+    background: linear-gradient(135deg, var(--fk-magenta), #ff4da6);
+}
+
+.kpi-icon-azul {
+    background: linear-gradient(135deg, var(--fk-azul), #3399ff);
+}
+
+.kpi-icon-violeta {
+    background: linear-gradient(135deg, var(--fk-violeta), #a855f7);
+}
+
+.kpi-icon-verde {
+    background: linear-gradient(135deg, var(--fk-verde), #4ade80);
+}
+
+.kpi-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.kpi-label {
+    font-size: 0.8rem;
+    color: var(--fk-texto-secundario);
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.kpi-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--fk-texto-primario);
+    line-height: 1;
+}
+
+.kpi-subtitle {
+    font-size: 0.75rem;
+    color: var(--fk-texto-secundario);
+    margin-top: 0.35rem;
+}
+
+/* ============================================================
+   Dashboard - Chart Placeholders
+   ============================================================ */
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.chart-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--fk-gris-borde);
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.chart-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--fk-texto-primario);
+    margin: 0;
+}
+
+.chart-legend {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.75rem;
+    color: var(--fk-texto-secundario);
+}
+
+.chart-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.chart-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.chart-placeholder {
+    height: 250px;
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px dashed #d1d5db;
+}
+
+.chart-placeholder .material-icons {
+    font-size: 2.5rem;
+    color: #d1d5db;
+}
+
+.chart-placeholder-text {
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+/* ============================================================
+   Dashboard - Tablas
+   ============================================================ */
+
+.tabla-container {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    border: 1px solid var(--fk-gris-borde);
+    overflow: hidden;
+}
+
+.tabla-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--fk-gris-borde);
+}
+
+.tabla-titulo {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--fk-texto-primario);
+    margin: 0;
+}
+
+.tabla-body {
+    overflow-x: auto;
+}
+
+/* Radzen DataGrid overrides */
+.rz-datatable {
+    border: none !important;
+}
+
+.rz-datatable .rz-datatable-tbody > tr {
+    border-bottom: 1px solid var(--fk-gris-borde) !important;
+}
+
+.rz-datatable .rz-datatable-tbody > tr:last-child {
+    border-bottom: none !important;
+}
+
+.rz-datatable .rz-datatable-tbody > tr:hover {
+    background-color: #f9fafb !important;
+}
+
+/* ============================================================
+   Badges de estado
+   ============================================================ */
+
+.badge-estado {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-completado {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-cancelado {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-activo {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chart-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kpi-value {
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .kpi-grid {
+        grid-template-columns: 1fr;
+    }
 }

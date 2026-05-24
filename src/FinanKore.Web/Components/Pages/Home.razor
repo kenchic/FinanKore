@@ -1,11 +1,12 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @using FinanKore.Web.Servicios
+@inject ServicioFinanzas ServicioFinanzas
 @inject NavigationManager Navegacion
 @inject ProtectedSessionStorage AlmacenamientoSesion
 @inject EstadoAutenticacion Estado
 
-<PageTitle>FinanKore</PageTitle>
+<PageTitle>FinanKore - Panel</PageTitle>
 
 @if (cargando)
 {
@@ -16,69 +17,150 @@
 }
 else if (usuario is not null)
 {
-    <div class="gx-card" style="margin-bottom: 1.5rem; padding: 1.5rem;">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">account_circle</span>
-            <div>
-                <h2 style="margin: 0;">Bienvenido, @usuario.NombreCompleto</h2>
-                <p class="text-secondary" style="margin: 0;">Panel de control financiero</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="dashboard-grid">
-        <div class="gx-card dashboard-card" @onclick="() => IrAProyectos()">
-            <div class="dashboard-card-icon" style="color: var(--fk-magenta);">
+    <div class="kpi-grid">
+        <div class="kpi-card" @onclick="() => IrAProyectos()">
+            <div class="kpi-icon kpi-icon-magenta">
                 <span class="material-icons">folder</span>
             </div>
-            <h3>Proyectos</h3>
-            <p class="text-secondary">Crea y gestiona proyecciones, simulaciones y ahorros</p>
-            <div class="dashboard-card-action">
-                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            <div class="kpi-content">
+                <div class="kpi-label">Proyectos</div>
+                <div class="kpi-value">@totalProyectos</div>
+                <div class="kpi-subtitle">Proyectos activos</div>
             </div>
         </div>
 
-        <div class="gx-card dashboard-card" @onclick="() => IrACategorias()">
-            <div class="dashboard-card-icon" style="color: var(--fk-azul);">
+        <div class="kpi-card" @onclick="() => IrACategorias()">
+            <div class="kpi-icon kpi-icon-azul">
                 <span class="material-icons">category</span>
             </div>
-            <h3>Categorías</h3>
-            <p class="text-secondary">Administra las categorías de tus proyectos financieros</p>
-            <div class="dashboard-card-action">
-                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            <div class="kpi-content">
+                <div class="kpi-label">Categorías</div>
+                <div class="kpi-value">@totalCategorias</div>
+                <div class="kpi-subtitle">Categorías configuradas</div>
             </div>
         </div>
 
-        <div class="gx-card dashboard-card" @onclick="() => IrAReportes()">
-            <div class="dashboard-card-icon" style="color: var(--fk-violeta);">
+        <div class="kpi-card" @onclick="() => IrAReportes()">
+            <div class="kpi-icon kpi-icon-violeta">
                 <span class="material-icons">bar_chart</span>
             </div>
-            <h3>Reportes</h3>
-            <p class="text-secondary">Visualiza los resultados financieros de tus proyectos</p>
-            <div class="dashboard-card-action">
-                <RadzenButton Text="Gestionar" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            <div class="kpi-content">
+                <div class="kpi-label">Reportes</div>
+                <div class="kpi-value">@totalReportes</div>
+                <div class="kpi-subtitle">Reportes generados</div>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon-verde">
+                <span class="material-icons">trending_up</span>
+            </div>
+            <div class="kpi-content">
+                <div class="kpi-label">Balance</div>
+                <div class="kpi-value">@balanceTotal</div>
+                <div class="kpi-subtitle">Entradas - Salidas</div>
             </div>
         </div>
     </div>
 
-    <div style="text-align: right; margin-top: 1.5rem;">
-        <RadzenButton Text="Cerrar Sesión"
-                      Click="@CerrarSesion"
-                      ButtonStyle="ButtonStyle.Secondary"
-                      Size="ButtonSize.Small" />
+    <div class="chart-grid">
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title">Ingresos vs Egresos</h3>
+                <div class="chart-legend">
+                    <div class="chart-legend-item">
+                        <div class="chart-legend-dot" style="background: var(--fk-verde);"></div>
+                        <span>Ingresos</span>
+                    </div>
+                    <div class="chart-legend-item">
+                        <div class="chart-legend-dot" style="background: var(--fk-magenta);"></div>
+                        <span>Egresos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-placeholder">
+                <span class="material-icons">show_chart</span>
+                <span class="chart-placeholder-text">Gráfico de líneas - Próximamente</span>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-header">
+                <h3 class="chart-title">Distribución por Categoría</h3>
+                <div class="chart-legend">
+                    <div class="chart-legend-item">
+                        <div class="chart-legend-dot" style="background: var(--fk-azul);"></div>
+                        <span>Categorías</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-placeholder">
+                <span class="material-icons">pie_chart</span>
+                <span class="chart-placeholder-text">Gráfico circular - Próximamente</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="tabla-container">
+        <div class="tabla-header">
+            <h3 class="tabla-titulo">Proyectos Recientes</h3>
+            <RadzenButton Text="Ver Todos"
+                          ButtonStyle="ButtonStyle.Primary"
+                          Size="ButtonSize.Small"
+                          Click="@IrAProyectos" />
+        </div>
+        <div class="tabla-body">
+            @if (proyectosRecientes is not null && proyectosRecientes.Any())
+            {
+                <table class="rz-datatable">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var proyecto in proyectosRecientes.Take(5))
+                        {
+                            <tr>
+                                <td><strong>@proyecto.Nombre</strong></td>
+                                <td>
+                                    <RadzenButton Text="Conceptos"
+                                                  ButtonStyle="ButtonStyle.Light"
+                                                  Size="ButtonSize.Small"
+                                                  Click="@(() => IrAConceptos(proyecto.Id))" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div style="text-align: center; padding: 2rem;">
+                    <span class="material-icons" style="font-size: 2.5rem; color: #d1d5db;">folder_open</span>
+                    <p class="text-secondary" style="margin-top: 0.5rem;">No hay proyectos creados aún</p>
+                    <RadzenButton Text="Crear Proyecto"
+                                  ButtonStyle="ButtonStyle.Primary"
+                                  Size="ButtonSize.Small"
+                                  Click="@IrACrearProyecto" />
+                </div>
+            }
+        </div>
     </div>
 }
 else
 {
-    <div class="gx-card" style="text-align: center; padding: 2.5rem; margin: 3rem auto; max-width: 500px;">
-        <span class="material-icons" style="font-size: 4rem; color: var(--rz-primary);">account_balance</span>
-        <h1 style="margin-top: 0.5rem;">FinanKore</h1>
+    <div class="gx-card" style="text-align: center; padding: 3rem; margin: 2rem auto; max-width: 500px;">
+        <span class="material-icons" style="font-size: 4rem; color: var(--fk-magenta);">account_balance</span>
+        <h1 style="margin-top: 0.5rem; color: var(--fk-texto-primario);">FinanKore</h1>
         <p class="text-secondary" style="font-size: 1.1rem;">Gestión financiera inteligente</p>
         <p class="text-secondary">Organiza tus proyecciones, simulaciones, ahorros, deudas y gastos en un solo lugar.</p>
 
         <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
             <RadzenButton Text="Registrarse"
-                          Click="@IrARegistrar" />
+                          Click="@IrARegistrar"
+                          ButtonStyle="ButtonStyle.Secondary" />
             <RadzenButton Text="Iniciar Sesión"
                           Click="@IrAIniciarSesion"
                           ButtonStyle="ButtonStyle.Primary" />
@@ -89,6 +171,11 @@ else
 @code {
     private UsuarioRegistradoDto? usuario;
     private bool cargando = true;
+    private int totalProyectos;
+    private int totalCategorias;
+    private int totalReportes;
+    private string balanceTotal = "$0";
+    private List<ProyectoCreadoDto>? proyectosRecientes;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -97,35 +184,61 @@ else
             var resultado = await AlmacenamientoSesion.GetAsync<UsuarioRegistradoDto>("usuario_sesion");
             usuario = resultado.Success ? resultado.Value : null;
             Estado.Usuario = usuario;
+
+            if (usuario is not null)
+            {
+                await CargarDatosDashboard();
+            }
+
             cargando = false;
             StateHasChanged();
         }
     }
 
-    private void IrARegistrar()
+    private async Task CargarDatosDashboard()
     {
-        Navegacion.NavigateTo("/registrar");
+        try
+        {
+            var proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
+            proyectosRecientes = proyectos;
+            totalProyectos = proyectosRecientes?.Count ?? 0;
+
+            var categorias = await ServicioFinanzas.ObtenerCategoriasAsync();
+            totalCategorias = categorias?.Count ?? 0;
+
+            var reportes = await ServicioFinanzas.ObtenerTodosLosReportesAsync();
+            totalReportes = reportes?.Count ?? 0;
+
+            decimal totalEntradas = 0;
+            decimal totalSalidas = 0;
+            foreach (var p in proyectosRecientes ?? new List<ProyectoCreadoDto>())
+            {
+                var conceptos = await ServicioFinanzas.ObtenerConceptosAsync(p.Id);
+                foreach (var c in conceptos ?? new List<ConceptoCreadoDto>())
+                {
+                    if (c.Tipo == 1) totalEntradas += c.Valor;
+                    else totalSalidas += c.Valor;
+                }
+            }
+            var balance = totalEntradas - totalSalidas;
+            balanceTotal = balance >= 0 ? $"+${balance:N0}" : $"-${Math.Abs(balance):N0}";
+        }
+        catch
+        {
+            totalProyectos = 0;
+            totalCategorias = 0;
+            totalReportes = 0;
+            balanceTotal = "$0";
+        }
     }
 
-    private void IrAIniciarSesion()
-    {
-        Navegacion.NavigateTo("/iniciar-sesion");
-    }
-
-    private void IrAProyectos()
-    {
-        Navegacion.NavigateTo("/finanzas/proyectos");
-    }
-
-    private void IrACategorias()
-    {
-        Navegacion.NavigateTo("/finanzas/categorias");
-    }
-
-    private void IrAReportes()
-    {
-        Navegacion.NavigateTo("/finanzas/reportes");
-    }
+    private void IrARegistrar() => Navegacion.NavigateTo("/registrar");
+    private void IrAIniciarSesion() => Navegacion.NavigateTo("/iniciar-sesion");
+    private void IrAProyectos() => Navegacion.NavigateTo("/finanzas/proyectos");
+    private void IrACategorias() => Navegacion.NavigateTo("/finanzas/categorias");
+    private void IrAReportes() => Navegacion.NavigateTo("/finanzas/reportes");
+    private void IrACrearProyecto() => Navegacion.NavigateTo("/finanzas/proyectos/crear");
+    private void IrAConceptos(Guid id) => Navegacion.NavigateTo($"/finanzas/proyectos/{id}/conceptos");
 
     private async Task CerrarSesion()
     {

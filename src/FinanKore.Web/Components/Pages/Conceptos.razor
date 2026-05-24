@@ -8,23 +8,9 @@
 
 <PageTitle>Conceptos - FinanKore</PageTitle>
 
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+<div class="gx-card" style="margin-bottom: 1rem;">
     <div style="display: flex; align-items: center; gap: 1rem;">
-        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-violeta);">receipt_long</span>
-        <div style="flex: 1;">
-            <h2 style="margin: 0;">Conceptos</h2>
-            <p class="text-secondary" style="margin: 0;">Gestión de conceptos de entrada y salida por proyecto</p>
-        </div>
-        @if (proyectoSeleccionadoId != Guid.Empty)
-        {
-            <RadzenButton Text="Nuevo Concepto" Click="@MostrarFormulario" ButtonStyle="@ButtonStyle.Primary" />
-        }
-    </div>
-</div>
-
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1rem 1.5rem;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <span class="material-icons" style="color: var(--rz-text-secondary-color);">folder</span>
+        <span class="material-icons" style="color: var(--fk-texto-secundario);">folder</span>
         @if (circuitoConectado)
         {
             <RadzenDropDown Data="@proyectos"
@@ -45,116 +31,97 @@
 @if (proyectoSeleccionadoId == Guid.Empty)
 {
     <div class="gx-card" style="text-align: center; padding: 3rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">info</span>
+        <span class="material-icons" style="font-size: 3rem; color: #d1d5db;">info</span>
         <p class="text-secondary" style="margin-top: 1rem;">Seleccioná un proyecto para ver sus conceptos.</p>
-    </div>
-}
-else if (mostrandoFormulario)
-{
-    <div class="gx-card" style="padding: 2rem; max-width: 520px;">
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-            <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">add_circle</span>
-            <h3 style="margin: 0.5rem 0 0.25rem;">Nuevo Concepto</h3>
-            <p style="color: var(--rz-text-secondary); margin: 0;">
-                Crear concepto para <strong>@nombreProyectoSeleccionado</strong>
-            </p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <RadzenTextBox @bind-Value="@modelo.Nombre"
-                           Placeholder="Nombre del concepto"
-                           Style="width: 100%;" />
-
-            <RadzenNumeric @bind-Value="@modelo.Valor"
-                           Placeholder="Valor ($)"
-                           Min="0"
-                           Format="c"
-                           Style="width: 100%;" />
-
-            <RadzenDropDown Data="@tiposMovimiento"
-                            TextProperty="Texto"
-                            ValueProperty="Valor"
-                            @bind-Value="@modelo.Tipo"
-                            Placeholder="Tipo de movimiento..."
-                            Style="width: 100%;" />
-
-            <RadzenDropDown Data="@categorias"
-                            TextProperty="Nombre"
-                            ValueProperty="Id"
-                            @bind-Value="@modelo.CategoriaId"
-                            Placeholder="Seleccionar categoría..."
-                            Style="width: 100%;" />
-
-            <div style="display: flex; gap: 0.5rem;">
-                <RadzenButton Text="Guardar"
-                              Click="@HandleCrear"
-                              ButtonStyle="@ButtonStyle.Primary"
-                              Size="@ButtonSize.Medium"
-                              Style="flex: 1;" />
-                <RadzenButton Text="Cancelar"
-                              Click="@CancelarFormulario"
-                              ButtonStyle="@ButtonStyle.Secondary"
-                              Size="@ButtonSize.Medium"
-                              Style="flex: 1;" />
-            </div>
-        </div>
-    </div>
-}
-else if (cargando)
-{
-    <div class="gx-card" style="text-align: center; padding: 2rem;">
-        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
-        <p class="text-secondary" style="margin-top: 0.75rem;">Cargando conceptos...</p>
-    </div>
-}
-else if (conceptos.Count == 0)
-{
-    <div class="gx-card" style="text-align: center; padding: 3rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
-        <p class="text-secondary" style="margin-top: 1rem;">No hay conceptos en este proyecto. ¡Creá el primero!</p>
     </div>
 }
 else
 {
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        @foreach (var concepto in conceptos)
-        {
-            <div class="gx-card concepto-fila">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span class="material-icons" style="color: @(concepto.Tipo == 1 ? "var(--fk-magenta)" : "var(--fk-azul)");">
-                        @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
-                    </span>
-                    <div style="flex: 1;">
-                        <strong>@concepto.Nombre</strong>
-                        <p class="text-secondary" style="margin: 0.25rem 0 0; font-size: 0.85rem;">
-                            @(concepto.Tipo == 1 ? "Entrada" : "Salida") — @concepto.Valor.ToString("C")
-                        </p>
+    <div class="tabla-container">
+        <div class="tabla-header">
+            <h3 class="tabla-titulo">
+                <span class="material-icons" style="margin-right: 0.5rem; color: var(--fk-violeta); vertical-align: middle;">receipt_long</span>
+                Conceptos — @nombreProyectoSeleccionado
+            </h3>
+            <RadzenButton Text="Nuevo Concepto" Click="@MostrarFormulario" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+        </div>
+        <div class="tabla-body">
+            @if (mostrandoFormulario)
+            {
+                <div style="padding: 1.5rem; max-width: 520px;">
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <RadzenLabel Text="Nombre" Component="NombreCon" />
+                        <RadzenTextBox Name="NombreCon" @bind-Value="@modelo.Nombre" Placeholder="Nombre del concepto" Style="width: 100%;" />
+
+                        <RadzenLabel Text="Valor ($)" Component="ValorCon" />
+                        <RadzenNumeric Name="ValorCon" @bind-Value="@modelo.Valor" Min="0" Format="c" Style="width: 100%;" />
+
+                        <RadzenLabel Text="Tipo" Component="TipoCon" />
+                        <RadzenDropDown Name="TipoCon" Data="@tiposMovimiento" TextProperty="Texto" ValueProperty="Valor" @bind-Value="@modelo.Tipo" Placeholder="Tipo de movimiento..." Style="width: 100%;" />
+
+                        <RadzenLabel Text="Categoría" Component="CatCon" />
+                        <RadzenDropDown Name="CatCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaId" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
+
+                        <div style="display: flex; gap: 0.5rem;">
+                            <RadzenButton Text="Guardar" Click="@HandleCrear" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
+                            <RadzenButton Text="Cancelar" Click="@CancelarFormulario" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
+                        </div>
                     </div>
-                    <span style="font-size: 0.8rem; color: var(--rz-text-secondary-color, #aaa);">
-                        @concepto.FechaCreacion.ToString("dd/MM/yyyy")
-                    </span>
                 </div>
-            </div>
-        }
+            }
+            else if (cargando)
+            {
+                <div style="text-align: center; padding: 2rem;">
+                    <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
+                    <p class="text-secondary" style="margin-top: 0.75rem;">Cargando conceptos...</p>
+                </div>
+            }
+            else if (conceptos.Count == 0)
+            {
+                <div style="text-align: center; padding: 3rem;">
+                    <span class="material-icons" style="font-size: 3rem; color: #d1d5db;">receipt_long</span>
+                    <p class="text-secondary" style="margin-top: 1rem;">No hay conceptos en este proyecto. ¡Creá el primero!</p>
+                </div>
+            }
+            else
+            {
+                <table class="rz-datatable" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Valor</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var concepto in conceptos)
+                        {
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <span class="material-icons" style="color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); font-size: 1.25rem;">
+                                            @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
+                                        </span>
+                                        <strong>@concepto.Nombre</strong>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge-estado @(concepto.Tipo == 1 ? "badge-completado" : "badge-cancelado")">
+                                        @(concepto.Tipo == 1 ? "Entrada" : "Salida")
+                                    </span>
+                                </td>
+                                <td><strong>@concepto.Valor.ToString("C")</strong></td>
+                                <td class="text-secondary">@concepto.FechaCreacion.ToString("dd MMM yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
     </div>
 }
-
-<div style="text-align: left; margin-top: 1rem;">
-    <RadzenButton Text="Volver al inicio"
-                  ButtonStyle="@ButtonStyle.Secondary"
-                  Size="@ButtonSize.Small"
-                  Click="@IrAInicio" />
-</div>
-
-<style>
-.concepto-fila {
-    padding: 1rem 1.5rem;
-    transition: box-shadow 0.2s ease;
-}
-.concepto-fila:hover {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-</style>
 
 @code {
     private List<ProyectoCreadoDto> proyectos = [];
@@ -167,11 +134,7 @@ else
     private bool circuitoConectado;
     private CrearConceptoModelo modelo = new() { Nombre = string.Empty, Valor = 0, Tipo = 1 };
 
-    private List<TipoMovimientoOpcion> tiposMovimiento =
-    [
-        new(1, "Entrada"),
-        new(2, "Salida")
-    ];
+    private List<TipoMovimientoOpcion> tiposMovimiento = [new(1, "Entrada"), new(2, "Salida")];
 
     protected override async Task OnInitializedAsync()
     {
@@ -180,11 +143,7 @@ else
             proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
             categorias = await ServicioFinanzas.ObtenerCategoriasAsync();
         }
-        catch
-        {
-            proyectos = [];
-            categorias = [];
-        }
+        catch { proyectos = []; categorias = []; }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -202,31 +161,16 @@ else
         mostrandoFormulario = false;
         var proyecto = proyectos.FirstOrDefault(p => p.Id == proyectoSeleccionadoId);
         nombreProyectoSeleccionado = proyecto?.Nombre ?? string.Empty;
-
-        if (proyectoSeleccionadoId == Guid.Empty)
-        {
-            conceptos = [];
-            return;
-        }
-
+        if (proyectoSeleccionadoId == Guid.Empty) { conceptos = []; return; }
         await CargarConceptos();
     }
 
     private async Task CargarConceptos()
     {
         cargando = true;
-        try
-        {
-            conceptos = await ServicioFinanzas.ObtenerConceptosAsync(proyectoSeleccionadoId);
-        }
-        catch
-        {
-            conceptos = [];
-        }
-        finally
-        {
-            cargando = false;
-        }
+        try { conceptos = await ServicioFinanzas.ObtenerConceptosAsync(proyectoSeleccionadoId); }
+        catch { conceptos = []; }
+        finally { cargando = false; }
     }
 
     private void MostrarFormulario()
@@ -245,71 +189,32 @@ else
     {
         if (string.IsNullOrWhiteSpace(modelo.Nombre))
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Nombre obligatorio",
-                Detail = "El concepto debe tener un nombre.",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Nombre obligatorio", Detail = "El concepto debe tener un nombre.", Duration = 4000 });
             return;
         }
-
         if (modelo.Valor < 0)
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Valor inválido",
-                Detail = "El valor no puede ser negativo.",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Valor inválido", Detail = "El valor no puede ser negativo.", Duration = 4000 });
             return;
         }
-
         if (modelo.CategoriaId == Guid.Empty)
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Categoría obligatoria",
-                Detail = "Debés seleccionar una categoría.",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría obligatoria", Detail = "Debés seleccionar una categoría.", Duration = 4000 });
             return;
         }
 
         try
         {
             var resultado = await ServicioFinanzas.CrearConceptoAsync(modelo);
-
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = $"Concepto '{resultado?.Nombre}' creado",
-                Detail = "El concepto se ha creado exitosamente.",
-                Duration = 5000
-            });
-
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = $"Concepto '{resultado?.Nombre}' creado", Detail = "El concepto se ha creado exitosamente.", Duration = 5000 });
             mostrandoFormulario = false;
             modelo = new CrearConceptoModelo { Nombre = string.Empty, Valor = 0, Tipo = 1 };
             await CargarConceptos();
         }
         catch (HttpRequestException ex)
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Error al crear concepto",
-                Detail = ex.Message,
-                Duration = 5000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error al crear concepto", Detail = ex.Message, Duration = 5000 });
         }
-    }
-
-    private void IrAInicio()
-    {
-        Navegacion.NavigateTo("/");
     }
 
     private sealed record TipoMovimientoOpcion(int Valor, string Texto);

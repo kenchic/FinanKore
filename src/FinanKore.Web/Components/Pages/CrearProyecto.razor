@@ -8,78 +8,47 @@
 
 <PageTitle>Crear Proyecto - FinanKore</PageTitle>
 
-<div class="gx-card" style="max-width: 480px; margin: 3rem auto; padding: 2rem;">
+<div class="gx-card" style="max-width: 520px;">
     <div style="text-align: center; margin-bottom: 1.5rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">folder</span>
+        <span class="material-icons" style="font-size: 3rem; color: var(--fk-magenta);">create_new_folder</span>
         <h3 style="margin: 0.5rem 0 0.25rem;">Crear Proyecto</h3>
-        <p style="color: var(--rz-text-secondary); margin: 0;">Crea un nuevo proyecto financiero</p>
+        <p class="text-secondary" style="margin: 0;">Crea un nuevo proyecto financiero</p>
     </div>
 
     <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <RadzenLabel Text="Nombre del proyecto" Component="Nombre" />
         <RadzenTextBox @bind-Value="@modelo.Nombre"
-                       Placeholder="Nombre del proyecto"
+                       Placeholder="Ej: Ahorro para vacaciones"
                        Style="width: 100%;" />
 
         <RadzenButton Text="Crear Proyecto"
                       Click="@HandleCrear"
-                      ButtonStyle="@ButtonStyle.Primary"
-                      Size="@ButtonSize.Medium"
+                      ButtonStyle="ButtonStyle.Primary"
+                      Size="ButtonSize.Medium"
                       Style="width: 100%;" />
-    </div>
-
-    <div style="text-align: center; margin-top: 1rem;">
-        <RadzenButton Text="Volver al inicio"
-                      ButtonStyle="@ButtonStyle.Info"
-                      Size="@ButtonSize.Small"
-                      Click="@IrAInicio" />
     </div>
 </div>
 
 @code {
     private CrearProyectoModelo modelo = new();
 
-    private void IrAInicio()
-    {
-        Navegacion.NavigateTo("/");
-    }
-
     private async Task HandleCrear()
     {
         if (string.IsNullOrWhiteSpace(modelo.Nombre))
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Nombre obligatorio",
-                Detail = "El nombre del proyecto no puede estar vacío.",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Nombre obligatorio", Detail = "El nombre del proyecto no puede estar vacío.", Duration = 4000 });
             return;
         }
 
         try
         {
             var resultado = await ServicioFinanzas.CrearProyectoAsync(modelo);
-
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = $"Proyecto '{resultado?.Nombre}' creado",
-                Detail = "El proyecto se ha creado exitosamente.",
-                Duration = 5000
-            });
-
-            Navegacion.NavigateTo("/");
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = $"Proyecto '{resultado?.Nombre}' creado", Detail = "El proyecto se ha creado exitosamente.", Duration = 5000 });
+            Navegacion.NavigateTo("/finanzas/proyectos");
         }
         catch (HttpRequestException ex)
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Error al crear proyecto",
-                Detail = ex.Message,
-                Duration = 5000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error al crear proyecto", Detail = ex.Message, Duration = 5000 });
         }
     }
 }

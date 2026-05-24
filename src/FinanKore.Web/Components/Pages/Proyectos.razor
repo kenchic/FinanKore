@@ -6,73 +6,67 @@
 
 <PageTitle>Proyectos - FinanKore</PageTitle>
 
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-magenta);">folder</span>
-        <div style="flex: 1;">
-            <h2 style="margin: 0;">Proyectos</h2>
-            <p class="text-secondary" style="margin: 0;">Gestión de proyectos financieros</p>
-        </div>
-        <RadzenButton Text="Nuevo Proyecto" Click="@CrearProyecto" ButtonStyle="ButtonStyle.Primary" />
+<div class="tabla-container">
+    <div class="tabla-header">
+        <h3 class="tabla-titulo">
+            <span class="material-icons" style="margin-right: 0.5rem; color: var(--fk-magenta); vertical-align: middle;">folder</span>
+            Proyectos
+        </h3>
+        <RadzenButton Text="Nuevo Proyecto" Click="@CrearProyecto" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
     </div>
-</div>
-
-@if (cargando)
-{
-    <div class="gx-card" style="text-align: center; padding: 2rem;">
-        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
-        <p class="text-secondary" style="margin-top: 0.75rem;">Cargando proyectos...</p>
-    </div>
-}
-else if (proyectos.Count == 0)
-{
-    <div class="gx-card" style="text-align: center; padding: 3rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
-        <p class="text-secondary" style="margin-top: 1rem;">No hay proyectos aún. Creá tu primer proyecto para empezar.</p>
-    </div>
-}
-else
-{
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        @foreach (var proyecto in proyectos)
+    <div class="tabla-body">
+        @if (cargando)
         {
-            <div class="gx-card proyecto-fila">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span class="material-icons" style="color: var(--fk-magenta);">folder</span>
-                    <div style="flex: 1; cursor: pointer;" @onclick="() => IrAReportes(proyecto.Id)">
-                        <strong>@proyecto.Nombre</strong>
-                    </div>
-                    <RadzenButton Text="Conceptos"
-                                  Click="() => IrAConceptos(proyecto.Id)"
-                                  ButtonStyle="ButtonStyle.Secondary"
-                                  Size="ButtonSize.Small" />
-                    <RadzenButton Text="Reportes"
-                                  Click="() => IrAReportes(proyecto.Id)"
-                                  ButtonStyle="ButtonStyle.Primary"
-                                  Size="ButtonSize.Small" />
-                </div>
+            <div style="text-align: center; padding: 2rem;">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
+                <p class="text-secondary" style="margin-top: 0.75rem;">Cargando proyectos...</p>
             </div>
         }
+        else if (proyectos.Count == 0)
+        {
+            <div style="text-align: center; padding: 3rem;">
+                <span class="material-icons" style="font-size: 3rem; color: #d1d5db;">folder_open</span>
+                <p class="text-secondary" style="margin-top: 1rem;">No hay proyectos aún. Creá tu primer proyecto para empezar.</p>
+                <RadzenButton Text="Crear Proyecto" Click="@CrearProyecto" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
+            </div>
+        }
+        else
+        {
+            <table class="rz-datatable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th style="text-align: right;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var proyecto in proyectos)
+                    {
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <span class="material-icons" style="color: var(--fk-magenta); font-size: 1.25rem;">folder</span>
+                                    <strong style="cursor: pointer;" @onclick="() => IrAReportes(proyecto.Id)">@proyecto.Nombre</strong>
+                                </div>
+                            </td>
+                            <td style="text-align: right;">
+                                <RadzenButton Text="Conceptos"
+                                              Click="() => IrAConceptos(proyecto.Id)"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Size="ButtonSize.Small"
+                                              Style="margin-right: 0.5rem;" />
+                                <RadzenButton Text="Reportes"
+                                              Click="() => IrAReportes(proyecto.Id)"
+                                              ButtonStyle="ButtonStyle.Primary"
+                                              Size="ButtonSize.Small" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
-}
-
-<div style="text-align: left; margin-top: 1rem;">
-    <RadzenButton Text="Volver al inicio"
-                  ButtonStyle="ButtonStyle.Secondary"
-                  Size="ButtonSize.Small"
-                  Click="@IrAInicio" />
 </div>
-
-<style>
-.proyecto-fila {
-    cursor: pointer;
-    padding: 1rem 1.5rem;
-    transition: box-shadow 0.2s ease;
-}
-.proyecto-fila:hover {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-</style>
 
 @code {
     private List<ProyectoCreadoDto> proyectos = [];
@@ -80,37 +74,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
-        }
-        catch
-        {
-            proyectos = [];
-        }
-        finally
-        {
-            cargando = false;
-        }
+        try { proyectos = await ServicioFinanzas.ObtenerProyectosAsync(); }
+        catch { proyectos = []; }
+        finally { cargando = false; }
     }
 
-    private void CrearProyecto()
-    {
-        Navegacion.NavigateTo("/finanzas/proyectos/crear");
-    }
-
-    private void IrAConceptos(Guid id)
-    {
-        Navegacion.NavigateTo($"/finanzas/proyectos/{id}/conceptos");
-    }
-
-    private void IrAReportes(Guid id)
-    {
-        Navegacion.NavigateTo($"/finanzas/proyectos/{id}/reportes");
-    }
-
-    private void IrAInicio()
-    {
-        Navegacion.NavigateTo("/");
-    }
+    private void CrearProyecto() => Navegacion.NavigateTo("/finanzas/proyectos/crear");
+    private void IrAConceptos(Guid id) => Navegacion.NavigateTo($"/finanzas/proyectos/{id}/conceptos");
+    private void IrAReportes(Guid id) => Navegacion.NavigateTo($"/finanzas/proyectos/{id}/reportes");
 }

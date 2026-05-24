@@ -7,26 +7,12 @@
 
 <PageTitle>Reportes - FinanKore</PageTitle>
 
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-violeta);">bar_chart</span>
-        <div style="flex: 1;">
-            <h2 style="margin: 0;">Reportes</h2>
-            <p class="text-secondary" style="margin: 0;">Visualización de resultados financieros</p>
-        </div>
-        <RadzenButton Text="Volver al inicio"
-                      Click="@IrAInicio"
-                      ButtonStyle="ButtonStyle.Secondary"
-                      Size="ButtonSize.Small" />
-    </div>
-</div>
-
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
+<div class="gx-card" style="margin-bottom: 1rem;">
     <h4 style="margin: 0 0 1rem 0;">Filtros</h4>
     <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
         <div style="flex: 1; min-width: 200px;">
-            <label style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; color: var(--rz-text-secondary-color);">Proyecto</label>
-            <RadzenDropDown @bind-Value="proyectoFiltroId"
+            <RadzenLabel Text="Proyecto" Component="FiltroProy" />
+            <RadzenDropDown Id="FiltroProy" @bind-Value="proyectoFiltroId"
                             Data="proyectos"
                             TextProperty="Nombre"
                             ValueProperty="Id"
@@ -35,8 +21,8 @@
                             Style="width: 100%;" />
         </div>
         <div style="flex: 1; min-width: 200px;">
-            <label style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; color: var(--rz-text-secondary-color);">Nombre del reporte</label>
-            <RadzenTextBox @bind-Value="reporteFiltroNombre"
+            <RadzenLabel Text="Nombre del reporte" Component="FiltroNom" />
+            <RadzenTextBox Id="FiltroNom" @bind-Value="reporteFiltroNombre"
                            Placeholder="Buscar reporte..."
                            Style="width: 100%;" />
         </div>
@@ -49,48 +35,58 @@
     </div>
 </div>
 
-@if (cargando)
-{
-    <div class="gx-card" style="text-align: center; padding: 2rem;">
-        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
-        <p class="text-secondary" style="margin-top: 0.75rem;">Cargando reportes...</p>
+<div class="tabla-container">
+    <div class="tabla-header">
+        <h3 class="tabla-titulo">
+            <span class="material-icons" style="margin-right: 0.5rem; color: var(--fk-violeta); vertical-align: middle;">bar_chart</span>
+            Reportes
+        </h3>
     </div>
-}
-else if (reportesFiltrados.Count == 0)
-{
-    <div class="gx-card" style="text-align: center; padding: 3rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
-        <p class="text-secondary" style="margin-top: 1rem;">No se encontraron reportes con los filtros aplicados.</p>
-    </div>
-}
-else
-{
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        @foreach (var reporte in reportesFiltrados)
+    <div class="tabla-body">
+        @if (cargando)
         {
-            <div class="gx-card reporte-fila">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span class="material-icons" style="color: var(--fk-violeta);">bar_chart</span>
-                    <div style="flex: 1;">
-                        <div style="font-size: 0.875rem; color: var(--rz-text-secondary-color);">@reporte.ProyectoNombre</div>
-                        <strong>@reporte.ReporteNombre</strong>
-                    </div>
-                    <RadzenButton Text="Conceptos"
-                                  Click="@(() => IrAConceptos(reporte.Id))"
-                                  ButtonStyle="ButtonStyle.Primary"
-                                  Size="ButtonSize.Small"
-                                  Icon="receipt_long" />
-                </div>
+            <div style="text-align: center; padding: 2rem;">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
+                <p class="text-secondary" style="margin-top: 0.75rem;">Cargando reportes...</p>
             </div>
         }
+        else if (reportesFiltrados.Count == 0)
+        {
+            <div style="text-align: center; padding: 3rem;">
+                <span class="material-icons" style="font-size: 3rem; color: #d1d5db;">bar_chart</span>
+                <p class="text-secondary" style="margin-top: 1rem;">No se encontraron reportes con los filtros aplicados.</p>
+            </div>
+        }
+        else
+        {
+            <table class="rz-datatable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Proyecto</th>
+                        <th>Reporte</th>
+                        <th style="text-align: right;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reporte in reportesFiltrados)
+                    {
+                        <tr>
+                            <td class="text-secondary">@reporte.ProyectoNombre</td>
+                            <td><strong>@reporte.ReporteNombre</strong></td>
+                            <td style="text-align: right;">
+                                <RadzenButton Text="Conceptos"
+                                              Click="@(() => IrAConceptos(reporte.Id))"
+                                              ButtonStyle="ButtonStyle.Primary"
+                                              Size="ButtonSize.Small"
+                                              Icon="receipt_long" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
-}
-
-<style>
-.reporte-fila {
-    padding: 1rem 1.5rem;
-}
-</style>
+</div>
 
 @code {
     private List<ReporteListadoDto> reportes = [];
@@ -100,32 +96,17 @@ else
     private string reporteFiltroNombre = string.Empty;
     private bool cargando = true;
 
-    protected override async Task OnInitializedAsync()
-    {
-        await CargarDatos();
-    }
+    protected override async Task OnInitializedAsync() => await CargarDatos();
 
     private async Task CargarDatos()
     {
         cargando = true;
         try
         {
-            var tareas = new List<Task>
-            {
-                CargarReportes(),
-                CargarProyectos()
-            };
-            await Task.WhenAll(tareas);
+            await Task.WhenAll(CargarReportes(), CargarProyectos());
         }
-        catch
-        {
-            reportes = [];
-            reportesFiltrados = [];
-        }
-        finally
-        {
-            cargando = false;
-        }
+        catch { reportes = []; reportesFiltrados = []; }
+        finally { cargando = false; }
     }
 
     private async Task CargarReportes()
@@ -134,27 +115,15 @@ else
         reportesFiltrados = reportes.ToList();
     }
 
-    private async Task CargarProyectos()
-    {
-        proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
-    }
+    private async Task CargarProyectos() => proyectos = await ServicioFinanzas.ObtenerProyectosAsync();
 
     private void AplicarFiltros()
     {
         reportesFiltrados = reportes
             .Where(r => !proyectoFiltroId.HasValue || r.ProyectoId == proyectoFiltroId.Value)
-            .Where(r => string.IsNullOrWhiteSpace(reporteFiltroNombre) ||
-                        r.ReporteNombre.Contains(reporteFiltroNombre, StringComparison.OrdinalIgnoreCase))
+            .Where(r => string.IsNullOrWhiteSpace(reporteFiltroNombre) || r.ReporteNombre.Contains(reporteFiltroNombre, StringComparison.OrdinalIgnoreCase))
             .ToList();
     }
 
-    private void IrAInicio()
-    {
-        Navegacion.NavigateTo("/");
-    }
-
-    private void IrAConceptos(Guid reporteId)
-    {
-        Navegacion.NavigateTo($"/finanzas/reportes/{reporteId}/conceptos");
-    }
+    private void IrAConceptos(Guid reporteId) => Navegacion.NavigateTo($"/finanzas/reportes/{reporteId}/conceptos");
 }

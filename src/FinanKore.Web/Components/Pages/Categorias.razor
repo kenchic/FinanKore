@@ -8,107 +8,75 @@
 
 <PageTitle>Categorías - FinanKore</PageTitle>
 
-<div class="gx-card" style="margin-bottom: 1rem; padding: 1.5rem;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-        <span class="material-icons" style="font-size: 2.5rem; color: var(--fk-azul);">category</span>
-        <div style="flex: 1;">
-            <h2 style="margin: 0;">Categorías</h2>
-            <p class="text-secondary" style="margin: 0;">Gestión de categorías globales del sistema</p>
-        </div>
-        <RadzenButton Text="Nueva Categoría" Click="@MostrarFormulario" ButtonStyle="@ButtonStyle.Primary" />
+<div class="tabla-container">
+    <div class="tabla-header">
+        <h3 class="tabla-titulo">
+            <span class="material-icons" style="margin-right: 0.5rem; color: var(--fk-azul); vertical-align: middle;">category</span>
+            Categorías
+        </h3>
+        <RadzenButton Text="Nueva Categoría" Click="@MostrarFormulario" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
     </div>
-</div>
-
-@if (mostrandoFormulario)
-{
-    <div class="gx-card" style="padding: 2rem; max-width: 520px;">
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-            <span class="material-icons" style="font-size: 3rem; color: var(--rz-primary);">add_circle</span>
-            <h3 style="margin: 0.5rem 0 0.25rem;">Nueva Categoría</h3>
-            <p style="color: var(--rz-text-secondary); margin: 0;">
-                Crear una categoría disponible para todos los proyectos
-            </p>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <RadzenTextBox @bind-Value="@modelo.Nombre"
-                           Placeholder="Nombre de la categoría"
-                           Style="width: 100%;" />
-
-            <RadzenTextArea @bind-Value="@modelo.Descripcion"
-                            Placeholder="Descripción (opcional)"
-                            Rows="3"
-                            Style="width: 100%;" />
-
-            <div style="display: flex; gap: 0.5rem;">
-                <RadzenButton Text="Guardar"
-                              Click="@HandleCrear"
-                              ButtonStyle="@ButtonStyle.Primary"
-                              Size="@ButtonSize.Medium"
-                              Style="flex: 1;" />
-                <RadzenButton Text="Cancelar"
-                              Click="@CancelarFormulario"
-                              ButtonStyle="@ButtonStyle.Secondary"
-                              Size="@ButtonSize.Medium"
-                              Style="flex: 1;" />
-            </div>
-        </div>
-    </div>
-}
-else if (cargando)
-{
-    <div class="gx-card" style="text-align: center; padding: 2rem;">
-        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
-        <p class="text-secondary" style="margin-top: 0.75rem;">Cargando categorías...</p>
-    </div>
-}
-else if (categorias.Count == 0)
-{
-    <div class="gx-card" style="text-align: center; padding: 3rem;">
-        <span class="material-icons" style="font-size: 3rem; color: var(--rz-text-secondary-color, #bbb);">inbox</span>
-        <p class="text-secondary" style="margin-top: 1rem;">No hay categorías aún. ¡Creá la primera!</p>
-    </div>
-}
-else
-{
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-        @foreach (var categoria in categorias)
+    <div class="tabla-body">
+        @if (mostrandoFormulario)
         {
-            <div class="gx-card categoria-fila">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span class="material-icons" style="color: var(--fk-azul);">category</span>
-                    <div style="flex: 1;">
-                        <strong>@categoria.Nombre</strong>
-                        @if (!string.IsNullOrWhiteSpace(categoria.Descripcion))
-                        {
-                            <p class="text-secondary" style="margin: 0.25rem 0 0; font-size: 0.85rem;">@categoria.Descripcion</p>
-                        }
+            <div style="padding: 1.5rem; max-width: 520px;">
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <RadzenLabel Text="Nombre" Component="NombreCat" />
+                    <RadzenTextBox Name="NombreCat" @bind-Value="@modelo.Nombre" Placeholder="Nombre de la categoría" Style="width: 100%;" />
+
+                    <RadzenLabel Text="Descripción" Component="DescCat" />
+                    <RadzenTextArea Name="DescCat" @bind-Value="@modelo.Descripcion" Placeholder="Descripción (opcional)" Rows="3" Style="width: 100%;" />
+
+                    <div style="display: flex; gap: 0.5rem;">
+                        <RadzenButton Text="Guardar" Click="@HandleCrear" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
+                        <RadzenButton Text="Cancelar" Click="@CancelarFormulario" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
                     </div>
-                    <span style="font-size: 0.8rem; color: var(--rz-text-secondary-color, #aaa);">
-                        @categoria.FechaCreacion.ToString("dd/MM/yyyy")
-                    </span>
                 </div>
             </div>
         }
+        else if (cargando)
+        {
+            <div style="text-align: center; padding: 2rem;">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 36px; height: 36px;" />
+                <p class="text-secondary" style="margin-top: 0.75rem;">Cargando categorías...</p>
+            </div>
+        }
+        else if (categorias.Count == 0)
+        {
+            <div style="text-align: center; padding: 3rem;">
+                <span class="material-icons" style="font-size: 3rem; color: #d1d5db;">category</span>
+                <p class="text-secondary" style="margin-top: 1rem;">No hay categorías aún. ¡Creá la primera!</p>
+            </div>
+        }
+        else
+        {
+            <table class="rz-datatable" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Fecha Creación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var categoria in categorias)
+                    {
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <span class="material-icons" style="color: var(--fk-azul); font-size: 1.25rem;">category</span>
+                                    <strong>@categoria.Nombre</strong>
+                                </div>
+                            </td>
+                            <td class="text-secondary">@categoria.Descripcion</td>
+                            <td>@categoria.FechaCreacion.ToString("dd MMM yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     </div>
-}
-
-<div style="text-align: left; margin-top: 1rem;">
-    <RadzenButton Text="Volver al inicio"
-                  ButtonStyle="@ButtonStyle.Secondary"
-                  Size="@ButtonSize.Small"
-                  Click="@IrAInicio" />
 </div>
-
-<style>
-.categoria-fila {
-    padding: 1rem 1.5rem;
-    transition: box-shadow 0.2s ease;
-}
-.categoria-fila:hover {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-</style>
 
 @code {
     private List<CategoriaCreadaDto> categorias = [];
@@ -116,26 +84,14 @@ else
     private bool mostrandoFormulario;
     private CrearCategoriaModelo modelo = new() { Nombre = string.Empty, Descripcion = string.Empty };
 
-    protected override async Task OnInitializedAsync()
-    {
-        await CargarCategorias();
-    }
+    protected override async Task OnInitializedAsync() => await CargarCategorias();
 
     private async Task CargarCategorias()
     {
         cargando = true;
-        try
-        {
-            categorias = await ServicioFinanzas.ObtenerCategoriasAsync();
-        }
-        catch
-        {
-            categorias = [];
-        }
-        finally
-        {
-            cargando = false;
-        }
+        try { categorias = await ServicioFinanzas.ObtenerCategoriasAsync(); }
+        catch { categorias = []; }
+        finally { cargando = false; }
     }
 
     private void MostrarFormulario()
@@ -154,46 +110,21 @@ else
     {
         if (string.IsNullOrWhiteSpace(modelo.Nombre))
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Nombre obligatorio",
-                Detail = "La categoría debe tener un nombre.",
-                Duration = 4000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Nombre obligatorio", Detail = "La categoría debe tener un nombre.", Duration = 4000 });
             return;
         }
 
         try
         {
             var resultado = await ServicioFinanzas.CrearCategoriaAsync(modelo);
-
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Success,
-                Summary = $"Categoría '{resultado?.Nombre}' creada",
-                Detail = "La categoría se ha creado exitosamente.",
-                Duration = 5000
-            });
-
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = $"Categoría '{resultado?.Nombre}' creada", Detail = "La categoría se ha creado exitosamente.", Duration = 5000 });
             mostrandoFormulario = false;
             modelo = new CrearCategoriaModelo { Nombre = string.Empty, Descripcion = string.Empty };
             await CargarCategorias();
         }
         catch (HttpRequestException ex)
         {
-            Notificacion.Notify(new NotificationMessage
-            {
-                Severity = NotificationSeverity.Error,
-                Summary = "Error al crear categoría",
-                Detail = ex.Message,
-                Duration = 5000
-            });
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error al crear categoría", Detail = ex.Message, Duration = 5000 });
         }
-    }
-
-    private void IrAInicio()
-    {
-        Navegacion.NavigateTo("/");
     }
 }
