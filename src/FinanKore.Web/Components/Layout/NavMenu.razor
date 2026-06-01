@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedSessionStorage AlmacenamientoSesion
 @inject NavigationManager Navegacion
+@inject EstadoAutenticacion Estado
+@implements IDisposable
 
 <aside class="sidebar">
     <div class="sidebar-brand">
@@ -9,29 +11,19 @@
     </div>
 
     <nav class="sidebar-nav">
-        @if (cargando)
-        {
-            <div class="sidebar-loading">
-                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" ShowValue="false" Style="width: 24px; height: 24px;" />
-            </div>
-        }
-        else if (autenticado)
+        @if (autenticado)
         {
             <NavLink href="/" Match="NavLinkMatch.All" class="sidebar-nav-item">
                 <span class="material-icons">dashboard</span>
                 <span>Inicio</span>
             </NavLink>
-            <NavLink href="/finanzas/proyectos" class="sidebar-nav-item">
-                <span class="material-icons">folder</span>
-                <span>Proyectos</span>
-            </NavLink>
             <NavLink href="/finanzas/categorias" class="sidebar-nav-item">
                 <span class="material-icons">category</span>
                 <span>Categorías</span>
             </NavLink>
-            <NavLink href="/finanzas/conceptos" class="sidebar-nav-item">
-                <span class="material-icons">list_alt</span>
-                <span>Conceptos</span>
+            <NavLink href="/finanzas/proyectos" class="sidebar-nav-item">
+                <span class="material-icons">folder</span>
+                <span>Proyectos</span>
             </NavLink>
             <NavLink href="/finanzas/reportes" class="sidebar-nav-item">
                 <span class="material-icons">bar_chart</span>
@@ -71,32 +63,78 @@
 
 @code {
     private bool autenticado;
-    private bool cargando = true;
     private string usuarioNombre = string.Empty;
     private string usuarioCorreo = string.Empty;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
+        Navegacion.LocationChanged += OnLocationChanged;
+        Estado.AlCambiarEstado += OnEstadoAutenticacionCambio;
+        await VerificarSesionAsync();
+    }
+
+    private async void OnEstadoAutenticacionCambio()
+    {
+        await InvokeAsync(async () =>
+        {
+            await VerificarSesionAsync();
+            StateHasChanged();
+        });
+    }
+
+    private async void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        await VerificarSesionAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task VerificarSesionAsync()
+    {
+        if (Estado.Usuario is not null)
+        {
+            autenticado = true;
+            usuarioNombre = Estado.Usuario.NombreCompleto;
+            usuarioCorreo = Estado.Usuario.Correo;
+            return;
+        }
+
+        try
         {
             var resultado = await AlmacenamientoSesion.GetAsync<UsuarioRegistradoDto>("usuario_sesion");
-            autenticado = resultado.Success;
-            if (autenticado && resultado.Value is not null)
+            autenticado = resultado.Success && resultado.Value is not null;
+            if (autenticado)
             {
-                usuarioNombre = resultado.Value.NombreCompleto;
-                usuarioCorreo = resultado.Value.Correo;
+                usuarioNombre = resultado.Value!.NombreCompleto;
+                usuarioCorreo = resultado.Value!.Correo;
+                Estado.Usuario = resultado.Value;
             }
-            cargando = false;
-            StateHasChanged();
+            else
+            {
+                usuarioNombre = string.Empty;
+                usuarioCorreo = string.Empty;
+            }
+        }
+        catch
+        {
+            autenticado = false;
+            usuarioNombre = string.Empty;
+            usuarioCorreo = string.Empty;
         }
     }
 
     private async Task CerrarSesion()
     {
+        Estado.Usuario = null;
         await AlmacenamientoSesion.DeleteAsync("usuario_sesion");
         autenticado = false;
         usuarioNombre = string.Empty;
         usuarioCorreo = string.Empty;
         Navegacion.NavigateTo("/", forceLoad: true);
+    }
+
+    public void Dispose()
+    {
+        Navegacion.LocationChanged -= OnLocationChanged;
+        Estado.AlCambiarEstado -= OnEstadoAutenticacionCambio;
     }
 }

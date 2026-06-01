@@ -112,7 +112,7 @@ else if (usuario is not null)
         <div class="tabla-body">
             @if (proyectosRecientes is not null && proyectosRecientes.Any())
             {
-                <table class="rz-datatable">
+                <table>
                     <thead>
                         <tr>
                             <th>Nombre</th>
@@ -123,12 +123,9 @@ else if (usuario is not null)
                         @foreach (var proyecto in proyectosRecientes.Take(5))
                         {
                             <tr>
-                                <td><strong>@proyecto.Nombre</strong></td>
+                                <td>@proyecto.Nombre</td>
                                 <td>
-                                    <RadzenButton Text="Conceptos"
-                                                  ButtonStyle="ButtonStyle.Light"
-                                                  Size="ButtonSize.Small"
-                                                  Click="@(() => IrAConceptos(proyecto.Id))" />
+                                    <RadzenButton Icon="list_alt" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => IrAConceptos(proyecto.Id))" title="Conceptos" />
                                 </td>
                             </tr>
                         }

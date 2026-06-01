@@ -85,13 +85,12 @@ else
             }
             else
             {
-                <table class="rz-datatable" style="width: 100%;">
+                <table>
                     <thead>
                         <tr>
                             <th>Nombre</th>
                             <th>Tipo</th>
                             <th>Valor</th>
-                            <th>Categoría</th>
                             <th>Fecha</th>
                         </tr>
                     </thead>
@@ -100,15 +99,15 @@ else
                         {
                             <tr>
                                 <td>
-                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                        <span class="material-icons" style="color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); font-size: 1.25rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                        <span class="material-icons" style="color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); font-size: 0.9rem;">
                                             @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
                                         </span>
-                                        <strong>@concepto.Nombre</strong>
+                                        <span>@concepto.Nombre</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <span class="badge-estado @(concepto.Tipo == 1 ? "badge-completado" : "badge-cancelado")">
+                                    <span class="badge-estado @(concepto.Tipo == 1 ? "badge-entrada" : "badge-salida")">
                                         @(concepto.Tipo == 1 ? "Entrada" : "Salida")
                                     </span>
                                 </td>

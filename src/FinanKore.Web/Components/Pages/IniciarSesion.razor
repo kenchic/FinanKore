@@ -4,6 +4,7 @@
 @inject NotificationService Notificacion
 @inject NavigationManager Navegacion
 @inject ProtectedSessionStorage AlmacenamientoSesion
+@inject EstadoAutenticacion Estado
 
 <PageTitle>Iniciar Sesión - FinanKore</PageTitle>
 
@@ -68,6 +69,7 @@
             if (resultado is not null)
             {
                 await AlmacenamientoSesion.SetAsync("usuario_sesion", resultado);
+                Estado.Usuario = resultado;
 
                 Notificacion.Notify(new NotificationMessage
                 {

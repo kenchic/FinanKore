@@ -32,7 +32,7 @@
         }
         else
         {
-            <table class="rz-datatable" style="width: 100%;">
+            <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
@@ -44,21 +44,14 @@
                     {
                         <tr>
                             <td>
-                                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                    <span class="material-icons" style="color: var(--fk-magenta); font-size: 1.25rem;">folder</span>
-                                    <strong style="cursor: pointer;" @onclick="() => IrAReportes(proyecto.Id)">@proyecto.Nombre</strong>
+                                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span class="material-icons" style="color: var(--fk-magenta); font-size: 0.9rem;">folder</span>
+                                    <span style="cursor: pointer;" @onclick="() => IrAReportes(proyecto.Id)">@proyecto.Nombre</span>
                                 </div>
                             </td>
                             <td style="text-align: right;">
-                                <RadzenButton Text="Conceptos"
-                                              Click="() => IrAConceptos(proyecto.Id)"
-                                              ButtonStyle="ButtonStyle.Light"
-                                              Size="ButtonSize.Small"
-                                              Style="margin-right: 0.5rem;" />
-                                <RadzenButton Text="Reportes"
-                                              Click="() => IrAReportes(proyecto.Id)"
-                                              ButtonStyle="ButtonStyle.Primary"
-                                              Size="ButtonSize.Small" />
+                                <RadzenButton Icon="list_alt" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="() => IrAConceptos(proyecto.Id)" title="Conceptos" />
+                                <RadzenButton Icon="bar_chart" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Class="btn-tabla" Click="() => IrAReportes(proyecto.Id)" title="Reportes" />
                             </td>
                         </tr>
                     }

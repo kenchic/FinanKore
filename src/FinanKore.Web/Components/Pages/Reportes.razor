@@ -59,7 +59,7 @@
         }
         else
         {
-            <table class="rz-datatable" style="width: 100%;">
+            <table>
                 <thead>
                     <tr>
                         <th>Proyecto</th>
@@ -72,13 +72,14 @@
                     {
                         <tr>
                             <td class="text-secondary">@reporte.ProyectoNombre</td>
-                            <td><strong>@reporte.ReporteNombre</strong></td>
+                            <td>@reporte.ReporteNombre</td>
                             <td style="text-align: right;">
-                                <RadzenButton Text="Conceptos"
+                                <RadzenButton Icon="receipt_long"
                                               Click="@(() => IrAConceptos(reporte.Id))"
                                               ButtonStyle="ButtonStyle.Primary"
                                               Size="ButtonSize.Small"
-                                              Icon="receipt_long" />
+                                              Class="btn-tabla"
+                                              title="Conceptos" />
                             </td>
                         </tr>
                     }

@@ -81,7 +81,7 @@
         {
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                 <div style="flex: 0 0 auto; min-width: 200px;">
-                    <table class="rz-datatable" style="width: 100%;">
+                    <table style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>Categoría</th>
@@ -97,11 +97,11 @@
                                     <td style="text-align: right;">
                                         @if (total >= 0)
                                         {
-                                            <span style="color: var(--fk-verde); font-weight: 600;">$ @total.ToString("N0")</span>
+                                            <span style="color: var(--fk-verde);">$ @total.ToString("N0")</span>
                                         }
                                         else
                                         {
-                                            <span style="color: var(--fk-magenta); font-weight: 600;">$ (@Math.Abs(total).ToString("N0"))</span>
+                                            <span style="color: var(--fk-magenta);">$ (@Math.Abs(total).ToString("N0"))</span>
                                         }
                                     </td>
                                 </tr>
@@ -124,7 +124,7 @@
                 </div>
 
                 <div style="flex: 1; min-width: 400px; overflow-x: auto;">
-                    <table class="rz-datatable" style="width: 100%; min-width: 500px;">
+                    <table style="width: 100%; min-width: 500px;">
                         <thead>
                             <tr>
                                 <th>Concepto</th>
@@ -139,8 +139,8 @@
                             {
                                 <tr>
                                     <td>
-                                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                            <span class="material-icons" style="font-size: 1.1rem; color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                                        <div style="display: flex; align-items: center; gap: 0.35rem;">
+                                            <span class="material-icons" style="font-size: 0.9rem; color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
                                                 @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
                                             </span>
                                             <span>@concepto.Nombre</span>
@@ -151,17 +151,17 @@
                                         <td style="text-align: right;">
                                             @if (concepto.CategoriaId == categoria.Id)
                                             {
-                                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem;">
+                                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.35rem;">
                                                     @if (concepto.Tipo == 1)
                                                     {
-                                                        <span style="color: var(--fk-verde); font-weight: 600;">$ @concepto.Valor.ToString("N0")</span>
+                                                        <span style="color: var(--fk-verde);">$ @concepto.Valor.ToString("N0")</span>
                                                     }
                                                     else
                                                     {
-                                                        <span style="color: var(--fk-magenta); font-weight: 600;">$ (@concepto.Valor.ToString("N0"))</span>
+                                                        <span style="color: var(--fk-magenta);">$ (@concepto.Valor.ToString("N0"))</span>
                                                     }
-                                                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Click="@(() => AbrirModalEditar(concepto))" Style="padding: 0.25rem;" />
-                                                    <RadzenButton Icon="cancel" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Click="@(() => CancelarConcepto(concepto.Id))" Style="padding: 0.25rem;" />
+                                                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalEditar(concepto))" title="Editar" />
+                                                    <RadzenButton Icon="cancel" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => CancelarConcepto(concepto.Id))" title="Cancelar" />
                                                 </div>
                                             }
                                         </td>
