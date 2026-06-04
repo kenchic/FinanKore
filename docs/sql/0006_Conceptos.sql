@@ -80,15 +80,15 @@ BEGIN
 END
 GO
 
--- 5. Índice único para nombres de concepto por proyecto
+-- 5. Índice único para combinación nombre + categoría por proyecto
 IF NOT EXISTS (SELECT * FROM sys.indexes i
                INNER JOIN sys.tables t ON i.object_id = t.object_id
                INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
                WHERE s.name = N'Finanzas' AND t.name = N'Conceptos'
-                 AND i.name = N'UQ_Conceptos_ProyectoId_Nombre')
+                 AND i.name = N'UQ_Conceptos_ProyectoId_Nombre_CategoriaId')
 BEGIN
-    CREATE UNIQUE NONCLUSTERED INDEX [UQ_Conceptos_ProyectoId_Nombre]
-        ON [Finanzas].[Conceptos] ([ProyectoId], [Nombre]);
+    CREATE UNIQUE NONCLUSTERED INDEX [UQ_Conceptos_ProyectoId_Nombre_CategoriaId]
+        ON [Finanzas].[Conceptos] ([ProyectoId], [Nombre], [CategoriaId]);
 END
 GO
 

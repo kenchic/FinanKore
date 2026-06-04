@@ -71,36 +71,49 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var concepto in conceptos)
+                        @foreach (var grupo in conceptosAgrupados)
                         {
+                            var nombre = grupo.Key;
                             <tr>
-                                <td>
-                                    <div style="display: flex; align-items: center; gap: 0.35rem;">
-                                        <span class="material-icons" style="font-size: 0.9rem; color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
-                                            @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
-                                        </span>
-                                        <span>@concepto.Nombre</span>
-                                    </div>
-                                </td>
+                                <td style="font-weight: 500; text-align: left;">@nombre</td>
                                 @foreach (var categoria in categoriasUsadas)
                                 {
+                                    var conceptoEnCategoria = grupo.FirstOrDefault(c => c.CategoriaId == categoria.Id);
                                     <td style="text-align: right;">
-                                        @if (concepto.CategoriaId == categoria.Id)
+                                        @if (conceptoEnCategoria is not null)
                                         {
-                                            @if (concepto.Tipo == 1)
-                                            {
-                                                <span style="color: var(--fk-verde);">$ @concepto.Valor.ToString("N0")</span>
-                                            }
-                                            else
-                                            {
-                                                <span style="color: var(--fk-magenta);">$ (@concepto.Valor.ToString("N0"))</span>
-                                            }
+                                            <span style="display: inline-flex; align-items: center; gap: 0.25rem; color: @(conceptoEnCategoria.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                                                <span class="material-icons" style="font-size: 0.8rem;">@(conceptoEnCategoria.Tipo == 1 ? "trending_up" : "trending_down")</span>
+                                                @if (conceptoEnCategoria.Tipo == 1)
+                                                {
+                                                    <span>$ @conceptoEnCategoria.Valor.ToString("N0")</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>$ (@conceptoEnCategoria.Valor.ToString("N0"))</span>
+                                                }
+                                            </span>
                                         }
                                     </td>
                                 }
                             </tr>
                         }
                     </tbody>
+                    <tfoot>
+                        <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
+                            <td style="text-align: left;">Total</td>
+                            @foreach (var categoria in categoriasUsadas)
+                            {
+                                var totalCategoria = conceptos
+                                    .Where(c => c.CategoriaId == categoria.Id)
+                                    .Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
+                                var colorTotal = totalCategoria >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)";
+                                <td style="text-align: right; color: @colorTotal;">
+                                    $ @Math.Abs(totalCategoria).ToString("N0")
+                                </td>
+                            }
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         }
@@ -111,6 +124,7 @@
     [Parameter] public Guid ProyectoId { get; set; }
 
     private List<ConceptoCreadoDto> conceptos = [];
+    private List<IGrouping<string, ConceptoCreadoDto>> conceptosAgrupados = [];
     private List<CategoriaCreadaDto> categorias = [];
     private List<CategoriaCreadaDto> categoriasUsadas = [];
     private string nombreProyecto = string.Empty;
@@ -142,8 +156,13 @@
     private async Task CargarConceptos()
     {
         cargando = true;
-        try { conceptos = await ServicioFinanzas.ObtenerConceptosAsync(ProyectoId); CalcularCategoriasUsadas(); }
-        catch { conceptos = []; categoriasUsadas = []; }
+        try
+        {
+            conceptos = await ServicioFinanzas.ObtenerConceptosAsync(ProyectoId);
+            conceptosAgrupados = conceptos.GroupBy(c => c.Nombre).OrderBy(g => g.Key).ToList();
+            CalcularCategoriasUsadas();
+        }
+        catch { conceptos = []; conceptosAgrupados = []; categoriasUsadas = []; }
         finally { cargando = false; }
     }
 

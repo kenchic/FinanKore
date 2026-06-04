@@ -34,8 +34,8 @@ public sealed class Proyecto : Entidad, IRaizAgregado
 
     public Concepto CrearConcepto(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId)
     {
-        if (_conceptos.Any(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
-            throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre en este proyecto.");
+        if (_conceptos.Any(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) && c.CategoriaId == categoriaId))
+            throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre y categoría en este proyecto.");
 
         var concepto = Concepto.Crear(nombre, valor, tipo, Id, categoriaId);
         _conceptos.Add(concepto);
