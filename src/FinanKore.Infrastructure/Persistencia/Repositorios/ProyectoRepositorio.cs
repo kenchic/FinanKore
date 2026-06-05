@@ -17,6 +17,9 @@ public sealed class ProyectoRepositorio(AppDbContext contexto) : IProyectoReposi
     public async Task<IReadOnlyList<Proyecto>> ObtenerTodosAsync(CancellationToken token = default)
         => await contexto.Proyectos.AsNoTracking().ToListAsync(token);
 
+    public async Task<Concepto?> ObtenerConceptoPorIdAsync(Guid conceptoId, CancellationToken token = default)
+        => await contexto.Conceptos.FirstOrDefaultAsync(c => c.Id == conceptoId, token);
+
     public async Task AgregarAsync(Proyecto entidad, CancellationToken token = default)
         => await contexto.Proyectos.AddAsync(entidad, token);
 

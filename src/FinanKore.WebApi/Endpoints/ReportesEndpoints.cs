@@ -93,6 +93,27 @@ public static class ReportesEndpoints
             }
         });
 
+        grupo.MapDelete("{reporteId:guid}/conceptos/{conceptoId:guid}", async (
+            Guid reporteId,
+            Guid conceptoId,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            try
+            {
+                await mediador.Send(new EliminarConceptoReporteComando(reporteId, conceptoId), token);
+                return Results.NoContent();
+            }
+            catch (ExcepcionDominio ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.NotFound(new { error = ex.Message });
+            }
+        });
+
         return app;
     }
 }

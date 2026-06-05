@@ -43,6 +43,28 @@ public sealed class ServicioFinanzas
             .ReadFromJsonAsync<ProyectoCreadoDto>(cancellationToken: token);
     }
 
+    public async Task EliminarConceptoProyectoAsync(
+        Guid proyectoId,
+        Guid conceptoId,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.DeleteAsync(
+            $"api/finanzas/proyectos/{proyectoId}/conceptos/{conceptoId}", token);
+
+        respuesta.EnsureSuccessStatusCode();
+    }
+
+    public async Task EliminarConceptoReporteAsync(
+        Guid reporteId,
+        Guid conceptoId,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.DeleteAsync(
+            $"api/reportes/{reporteId}/conceptos/{conceptoId}", token);
+
+        respuesta.EnsureSuccessStatusCode();
+    }
+
     public async Task<List<CategoriaCreadaDto>> ObtenerCategoriasAsync(
         CancellationToken token = default)
     {
@@ -170,6 +192,24 @@ public sealed class ServicioFinanzas
 
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
+    }
+
+    public async Task<ConceptoCreadoDto?> EditarConceptoProyectoAsync(
+        Guid proyectoId,
+        Guid conceptoId,
+        string nombre,
+        decimal valor,
+        CancellationToken token = default)
+    {
+        var respuesta = await _http.PutAsJsonAsync(
+            $"api/finanzas/proyectos/{proyectoId}/conceptos/{conceptoId}",
+            new { nombre, valor },
+            token);
+
+        respuesta.EnsureSuccessStatusCode();
+
+        return await respuesta.Content
+            .ReadFromJsonAsync<ConceptoCreadoDto>(cancellationToken: token);
     }
 }
 

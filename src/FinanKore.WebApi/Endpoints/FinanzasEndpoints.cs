@@ -100,6 +100,49 @@ public static class FinanzasEndpoints
             }
         });
 
+        conceptoGrupo.MapPut("{conceptoId:guid}", async (
+            Guid conceptoId,
+            ActualizarConceptoComando comando,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            try
+            {
+                var comandoConId = comando with { ConceptoId = conceptoId };
+                var resultado = await mediador.Send(comandoConId, token);
+                return Results.Ok(resultado);
+            }
+            catch (ExcepcionDominio ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.NotFound(new { error = ex.Message });
+            }
+        });
+
+        conceptoGrupo.MapDelete("{conceptoId:guid}", async (
+            Guid proyectoId,
+            Guid conceptoId,
+            IMediator mediador,
+            CancellationToken token) =>
+        {
+            try
+            {
+                await mediador.Send(new EliminarConceptoComando(proyectoId, conceptoId), token);
+                return Results.NoContent();
+            }
+            catch (ExcepcionDominio ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Results.NotFound(new { error = ex.Message });
+            }
+        });
+
         return app;
     }
 }
