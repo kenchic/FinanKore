@@ -3,6 +3,8 @@
 @inject ProtectedSessionStorage AlmacenamientoSesion
 @inject NavigationManager Navegacion
 @inject EstadoAutenticacion Estado
+@inject IJSRuntime JS
+@inject ServicioConfiguracion ServicioConfiguracion
 @implements IDisposable
 
 <aside class="sidebar">
@@ -59,11 +61,20 @@
                 <span>Registrarse</span>
             </NavLink>
         }
+
+        <div class="sidebar-divider"></div>
+
+        <button class="sidebar-theme-toggle" @onclick="AlternarTema">
+            <span class="material-icons">@(temaOscuro ? "light_mode" : "dark_mode")</span>
+            <span>@(temaOscuro ? "Modo Claro" : "Modo Oscuro")</span>
+        </button>
     </nav>
 </aside>
 
 @code {
     private bool autenticado;
+    private bool temaOscuro;
+    private bool _temaCargado;
     private string usuarioNombre = string.Empty;
     private string usuarioCorreo = string.Empty;
 
@@ -74,11 +85,24 @@
         await VerificarSesionAsync();
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!_temaCargado)
+        {
+            await IntentarCargarTemaAsync();
+            if (_temaCargado)
+            {
+                StateHasChanged();
+            }
+        }
+    }
+
     private async void OnEstadoAutenticacionCambio()
     {
         await InvokeAsync(async () =>
         {
             await VerificarSesionAsync();
+            await IntentarCargarTemaAsync();
             StateHasChanged();
         });
     }
@@ -120,6 +144,66 @@
             autenticado = false;
             usuarioNombre = string.Empty;
             usuarioCorreo = string.Empty;
+        }
+    }
+
+    private async Task IntentarCargarTemaAsync()
+    {
+        try
+        {
+            await CargarTemaAsync();
+            _temaCargado = true;
+        }
+        catch (InvalidOperationException)
+        {
+            // JS interop no disponible durante prerenderizado estático.
+            // Se reintentará cuando se dispare OnEstadoAutenticacionCambio
+            // o en el siguiente render interactivo.
+        }
+    }
+
+    private async Task CargarTemaAsync()
+    {
+        var tema = await JS.InvokeAsync<string>("eval", "fkTema.obtenerTema()");
+        temaOscuro = tema == "dark";
+
+        if (autenticado && Estado.Usuario is not null)
+        {
+            try
+            {
+                var preferencias = await ServicioConfiguracion.ObtenerPreferenciasAsync(Estado.Usuario.Id);
+                if (preferencias is not null)
+                {
+                    var temaFromDb = string.Equals(preferencias.Tema, "Oscuro", StringComparison.OrdinalIgnoreCase) ? "dark" : "light";
+                    if (tema != temaFromDb)
+                    {
+                        temaOscuro = temaFromDb == "dark";
+                        await JS.InvokeVoidAsync("eval", $"fkTema.establecerTema('{temaFromDb}')");
+                    }
+                }
+            }
+            catch
+            {
+                // Si falla la API, usar el valor del cookie
+            }
+        }
+    }
+
+    private async Task AlternarTema()
+    {
+        var nuevoTema = await JS.InvokeAsync<string>("eval", "fkTema.alternarTema()");
+        temaOscuro = nuevoTema == "dark";
+
+        if (autenticado && Estado.Usuario is not null)
+        {
+            try
+            {
+                await ServicioConfiguracion.CambiarTemaAsync(Estado.Usuario.Id, nuevoTema == "dark" ? "Oscuro" : "Claro");
+            }
+            catch
+            {
+                // Si falla la API, el tema ya está guardado en cookie
+            }
         }
     }
 

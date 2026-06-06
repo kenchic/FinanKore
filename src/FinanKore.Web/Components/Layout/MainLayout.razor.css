@@ -44,7 +44,6 @@
 }
 
 #blazor-error-ui {
-    color-scheme: light only;
     background: #fff3cd;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
@@ -76,4 +75,21 @@
     .layout-main {
         padding: 1rem;
     }
+}
+
+/* ============================================================
+   Tema Oscuro
+   ============================================================ */
+
+html[data-bs-theme="dark"] .layout-dashboard {
+    background: #0f172a;
+}
+
+html[data-bs-theme="dark"] .layout-header {
+    background: #1e293b;
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+html[data-bs-theme="dark"] .layout-header-title {
+    color: #f3f4f6;
 }

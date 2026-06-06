@@ -160,6 +160,36 @@
         background-color: #fff5f5;
     }
 
+.sidebar-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    background: transparent;
+    color: #4a4a68;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+    .sidebar-theme-toggle .material-icons {
+        font-size: 1.25rem;
+        color: #8a8aa0;
+        transition: color 0.15s ease;
+    }
+
+    .sidebar-theme-toggle:hover {
+        background-color: #f5f3ff;
+        color: var(--fk-magenta);
+    }
+
+        .sidebar-theme-toggle:hover .material-icons {
+            color: var(--fk-magenta);
+        }
+
 @media (max-width: 768px) {
     .sidebar {
         width: 60px;
@@ -168,7 +198,8 @@
     .sidebar-brand-text,
     .sidebar-nav-item span:not(.material-icons),
     .sidebar-user-info,
-    .sidebar-logout span:not(.material-icons) {
+    .sidebar-logout span:not(.material-icons),
+    .sidebar-theme-toggle span:not(.material-icons) {
         display: none;
     }
 
@@ -191,4 +222,57 @@
         justify-content: center;
         padding: 0.7rem;
     }
+
+    .sidebar-theme-toggle {
+        justify-content: center;
+        padding: 0.7rem;
+    }
+}
+
+/* ============================================================
+   Tema Oscuro
+   ============================================================ */
+
+html[data-bs-theme="dark"] .sidebar {
+    background: #0f172a;
+    border-right-color: rgba(255, 255, 255, 0.06);
+}
+
+html[data-bs-theme="dark"] .sidebar-brand {
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+html[data-bs-theme="dark"] .sidebar-nav-item {
+    color: #cbd5e1;
+}
+
+html[data-bs-theme="dark"] .sidebar-nav-item:hover {
+    background-color: #1e293b;
+    color: var(--fk-magenta);
+}
+
+html[data-bs-theme="dark"] .sidebar-nav-item.active {
+    background-color: #1e293b;
+    color: var(--fk-magenta);
+}
+
+html[data-bs-theme="dark"] .sidebar-divider {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+html[data-bs-theme="dark"] .sidebar-user-name {
+    color: #f3f4f6;
+}
+
+html[data-bs-theme="dark"] .sidebar-user-avatar {
+    background: #334155;
+}
+
+html[data-bs-theme="dark"] .sidebar-theme-toggle {
+    color: #cbd5e1;
+}
+
+html[data-bs-theme="dark"] .sidebar-theme-toggle:hover {
+    background-color: #1e293b;
+    color: var(--fk-magenta);
 }

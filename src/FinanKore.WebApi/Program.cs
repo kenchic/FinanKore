@@ -23,5 +23,6 @@ app.MapPerfilEndpoints();
 app.MapFinanzasEndpoints();
 app.MapProyectoEndpoints();
 app.MapReportesEndpoints();
+app.MapConfiguracionEndpoints();
 
 app.Run();

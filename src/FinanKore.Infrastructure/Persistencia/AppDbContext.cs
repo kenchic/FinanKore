@@ -1,4 +1,5 @@
 using FinanKore.Aplicacion.Comun.Interfaces;
+using FinanKore.Dominio.Configuracion;
 using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Perfil;
 using FinanKore.Dominio.Proyecto;
@@ -17,6 +18,7 @@ public sealed class AppDbContext : DbContext, IUnidadDeTrabajo
     public DbSet<Concepto> Conceptos => Set<Concepto>();
     public DbSet<Reporte> Reportes => Set<Reporte>();
     public DbSet<ConceptoReporte> ConceptoReportes => Set<ConceptoReporte>();
+    public DbSet<Preferencias> Preferencias => Set<Preferencias>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

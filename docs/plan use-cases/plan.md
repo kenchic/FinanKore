@@ -11,3 +11,4 @@ Esta tabla enumera los casos de uso en el orden lógico en que deben ser desarro
 | [x] | 6 | Crear Reporte Proyecto | 
 | [x] | 7 | Crear Concepto Reporte | 
 | [ ] | 8 | Cargar Archivos Concepto Reporte |
+| [x] | 9 | Modo Oscuro / Claro |

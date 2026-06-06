@@ -23,6 +23,13 @@ builder.Services.AddHttpClient<ServicioFinanzas>(cliente =>
         ?? "http://localhost:5157");
 });
 
+builder.Services.AddHttpClient<ServicioConfiguracion>(cliente =>
+{
+    cliente.BaseAddress = new Uri(
+        builder.Configuration["ApiBaseUrl"]
+        ?? "http://localhost:5157");
+});
+
 builder.Services.AddScoped<EstadoAutenticacion>();
 
 var app = builder.Build();
