@@ -21,13 +21,13 @@
     <div class="tabla-body">
         @if (modalVisible)
         {
-            <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000;" @onclick="CerrarModal">
-                <div style="background: #fff; border-radius: 10px; padding: 1.5rem 2rem; min-width: 400px; max-width: 480px; box-shadow: 0 12px 40px rgba(0,0,0,0.2);" @onclick:stopPropagation="true">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div class="fk-modal-overlay" @onclick="CerrarModal">
+                <div class="fk-modal" @onclick:stopPropagation="true">
+                    <div class="fk-modal-header">
                         <span class="material-icons" style="color: var(--fk-magenta);">add_circle</span>
                         <strong>Agregar Concepto</strong>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="fk-modal-body">
                         <RadzenLabel Text="Nombre" Component="NombreCon" />
                         <RadzenTextBox Name="NombreCon" @bind-Value="@modelo.Nombre" Placeholder="Nombre del concepto" Style="width: 100%;" />
 
@@ -40,7 +40,7 @@
                         <RadzenLabel Text="Categoría" Component="CatCon" />
                         <RadzenDropDown Name="CatCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaId" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
 
-                        <div style="display: flex; gap: 0.5rem;">
+                        <div class="fk-modal-actions">
                             <RadzenButton Text="Guardar" Click="@GuardarConcepto" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
                             <RadzenButton Text="Cancelar" Click="@CerrarModal" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
                         </div>
@@ -51,16 +51,16 @@
 
         @if (modalEditarVisible)
         {
-            <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1000;" @onclick="CerrarModalEditar">
-                <div style="background: #fff; border-radius: 10px; padding: 1.5rem 2rem; min-width: 400px; max-width: 480px; box-shadow: 0 12px 40px rgba(0,0,0,0.2);" @onclick:stopPropagation="true">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem;">
+            <div class="fk-modal-overlay" @onclick="CerrarModalEditar">
+                <div class="fk-modal" @onclick:stopPropagation="true">
+                    <div class="fk-modal-header">
                         <span class="material-icons" style="color: var(--fk-magenta);">edit</span>
                         <strong>Editar Concepto</strong>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="fk-modal-body">
                         <div>
-                            <div style="font-size: 0.75rem; color: #6b7280; margin-bottom: 0.25rem;">Concepto</div>
-                            <div style="font-weight: 600; font-size: 1rem;">@modeloEditar.Nombre</div>
+                            <div class="fk-modal-sublabel">Concepto</div>
+                            <div class="fk-modal-subvalue">@modeloEditar.Nombre</div>
                         </div>
 
                         <div>
@@ -68,7 +68,7 @@
                             <RadzenNumeric Name="ValorEdit" @bind-Value="@modeloEditar.Valor" Min="0" Style="width: 100%;" />
                         </div>
 
-                        <div style="display: flex; gap: 0.5rem;">
+                        <div class="fk-modal-actions">
                             <RadzenButton Text="Guardar" Click="@GuardarEdicion" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
                             <RadzenButton Text="Cancelar" Click="@CerrarModalEditar" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
                         </div>
@@ -79,16 +79,16 @@
 
         @if (modalConfirmarEliminarVisible)
         {
-            <div style="position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 1001;" @onclick="CerrarModalConfirmarEliminar">
-                <div style="background: #fff; border-radius: 10px; padding: 1.5rem 2rem; min-width: 360px; max-width: 440px; box-shadow: 0 12px 40px rgba(0,0,0,0.2);" @onclick:stopPropagation="true">
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+            <div class="fk-modal-overlay fk-modal-overlay-danger" @onclick="CerrarModalConfirmarEliminar">
+                <div class="fk-modal fk-modal-narrow" @onclick:stopPropagation="true">
+                    <div class="fk-modal-header">
                         <span class="material-icons" style="color: #ef4444;">warning</span>
                         <strong>Confirmar eliminación</strong>
                     </div>
-                    <p style="margin-bottom: 1.25rem; color: #4b5563;">
+                    <p class="fk-modal-danger-text">
                         ¿Estás seguro de eliminar el concepto <strong>@conceptoEliminandoNombre</strong>?
                     </p>
-                    <div style="display: flex; gap: 0.5rem;">
+                    <div class="fk-modal-actions">
                         <RadzenButton Text="Eliminar" Click="@ConfirmarEliminar" ButtonStyle="ButtonStyle.Danger" Size="ButtonSize.Small" Style="flex: 1;" />
                         <RadzenButton Text="Cancelar" Click="@CerrarModalConfirmarEliminar" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
                     </div>
@@ -112,8 +112,8 @@
         }
         else
         {
-            <div style="overflow-x: auto;">
-                <table style="width: 100%; min-width: 600px;">
+            <div class="tabla-body">
+                 <table>
                     <thead>
                         <tr>
                             <th>Concepto</th>

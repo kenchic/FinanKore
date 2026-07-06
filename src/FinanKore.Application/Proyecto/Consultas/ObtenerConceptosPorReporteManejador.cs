@@ -22,7 +22,7 @@ public sealed class ObtenerConceptosPorReporteManejador(
                 c.Id,
                 c.Nombre,
                 c.Valor,
-                c.Tipo,
+                (int)c.Tipo,
                 c.ReporteId,
                 c.CategoriaId,
                 c.FechaCreacion))

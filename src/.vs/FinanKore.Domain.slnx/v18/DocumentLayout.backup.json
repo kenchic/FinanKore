@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "E:\\Documentos\\Proyectos\\FinanKore\\src\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{78EC8814-98FC-8262-BE18-DAEB538DFDA0}|FinanKore.Infrastructure\\FinanKore.Infrastructure.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.infrastructure\\persistencia\\repositorios\\reporterepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78EC8814-98FC-8262-BE18-DAEB538DFDA0}|FinanKore.Infrastructure\\FinanKore.Infrastructure.csproj|solutionrelative:finankore.infrastructure\\persistencia\\repositorios\\reporterepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.web\\components\\pages\\reportesproyecto.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|solutionrelative:finankore.web\\components\\pages\\reportesproyecto.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AC23C4AD-C8D7-FA19-BF80-BD6E847D2522}|FinanKore.WebApi\\FinanKore.WebApi.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.webapi\\endpoints\\proyectoendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC23C4AD-C8D7-FA19-BF80-BD6E847D2522}|FinanKore.WebApi\\FinanKore.WebApi.csproj|solutionrelative:finankore.webapi\\endpoints\\proyectoendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.web\\servicios\\serviciofinanzas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|solutionrelative:finankore.web\\servicios\\serviciofinanzas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|e:\\documentos\\proyectos\\finankore\\src\\finankore.web\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8A4A365C-D8FA-49F3-A6AF-AEF316859343}|FinanKore.Web\\FinanKore.Web.csproj|solutionrelative:finankore.web\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -31,15 +47,66 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ReporteRepositorio.cs",
+              "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
+              "RelativeDocumentMoniker": "FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
+              "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
+              "RelativeToolTip": "FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAgwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-06T18:55:39.147Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProyectoEndpoints.cs",
+              "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\Endpoints\\ProyectoEndpoints.cs",
+              "RelativeDocumentMoniker": "FinanKore.WebApi\\Endpoints\\ProyectoEndpoints.cs",
+              "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\Endpoints\\ProyectoEndpoints.cs",
+              "RelativeToolTip": "FinanKore.WebApi\\Endpoints\\ProyectoEndpoints.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwB8AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-06T18:51:30.992Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ServicioFinanzas.cs",
+              "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Servicios\\ServicioFinanzas.cs",
+              "RelativeDocumentMoniker": "FinanKore.Web\\Servicios\\ServicioFinanzas.cs",
+              "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Servicios\\ServicioFinanzas.cs",
+              "RelativeToolTip": "FinanKore.Web\\Servicios\\ServicioFinanzas.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAADgv3AAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-06T18:50:26.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReportesProyecto.razor",
+              "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\Pages\\ReportesProyecto.razor",
+              "RelativeDocumentMoniker": "FinanKore.Web\\Components\\Pages\\ReportesProyecto.razor",
+              "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\Pages\\ReportesProyecto.razor",
+              "RelativeToolTip": "FinanKore.Web\\Components\\Pages\\ReportesProyecto.razor",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAswKQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-06T17:46:17.557Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "App.razor",
               "DocumentMoniker": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\App.razor",
               "RelativeDocumentMoniker": "FinanKore.Web\\Components\\App.razor",
               "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Web\\Components\\App.razor",
               "RelativeToolTip": "FinanKore.Web\\Components\\App.razor",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAswBkAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAswBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-06-01T21:36:02.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-01T21:36:02.651Z"
             }
           ]
         }

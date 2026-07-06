@@ -27,7 +27,7 @@ public sealed class ActualizarConceptoReporteValorManejador(
             concepto.Id,
             concepto.Nombre,
             concepto.Valor,
-            concepto.Tipo,
+            (int)concepto.Tipo,
             concepto.ReporteId,
             concepto.CategoriaId,
             concepto.FechaCreacion);

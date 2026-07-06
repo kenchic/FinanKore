@@ -20,6 +20,12 @@ public sealed class ReporteRepositorio(AppDbContext contexto) : IReporteReposito
     public async Task<IReadOnlyList<Reporte>> ObtenerPorProyectoAsync(Guid proyectoId, CancellationToken token = default)
         => await contexto.Reportes.AsNoTracking().Where(r => r.ProyectoId == proyectoId).ToListAsync(token);
 
+    public async Task<IReadOnlyList<Reporte>> ObtenerPorProyectoConConceptosAsync(Guid proyectoId, CancellationToken token = default)
+        => await contexto.Reportes.AsNoTracking()
+            .Include(r => r.Conceptos)
+            .Where(r => r.ProyectoId == proyectoId)
+            .ToListAsync(token);
+
     public async Task<ConceptoReporte?> ObtenerConceptoPorIdAsync(Guid conceptoId, CancellationToken token = default)
         => await contexto.ConceptoReportes.FirstOrDefaultAsync(c => c.Id == conceptoId, token);
 

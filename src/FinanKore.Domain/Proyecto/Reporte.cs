@@ -44,8 +44,11 @@ public sealed class Reporte : Entidad, IRaizAgregado
 
     public ConceptoReporte CrearConceptoReporte(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId)
     {
-        if (_conceptos.Any(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
-            throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre en este reporte.");
+        if (_conceptos.Any(c =>
+            c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) &&
+            c.Tipo == tipo &&
+            c.CategoriaId == categoriaId))
+            throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre, tipo y categoría en este reporte.");
 
         var concepto = ConceptoReporte.Crear(nombre, valor, tipo, Id, categoriaId);
         _conceptos.Add(concepto);

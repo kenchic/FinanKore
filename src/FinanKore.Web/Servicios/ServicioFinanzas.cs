@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using FinanKore.Aplicacion.Proyecto.Dtos;
 using FinanKore.Web.Models;
 
 namespace FinanKore.Web.Servicios;
@@ -10,6 +11,19 @@ public sealed class ServicioFinanzas
     public ServicioFinanzas(HttpClient http)
     {
         _http = http;
+    }
+
+    private static async Task EnsureSuccessAsync(HttpResponseMessage respuesta, CancellationToken token)
+    {
+        if (respuesta.IsSuccessStatusCode)
+            return;
+
+        var detalle = await respuesta.Content.ReadAsStringAsync(token);
+        if (string.IsNullOrWhiteSpace(detalle))
+            detalle = respuesta.ReasonPhrase ?? "Sin detalle del servidor.";
+
+        var mensaje = $"HTTP {(int)respuesta.StatusCode}: {detalle}";
+        throw new HttpRequestException(mensaje, null, respuesta.StatusCode);
     }
 
     public async Task<List<ProyectoCreadoDto>> ObtenerProyectosAsync(
@@ -37,7 +51,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.PostAsJsonAsync(
             "api/finanzas/proyectos", modelo, token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ProyectoCreadoDto>(cancellationToken: token);
@@ -51,7 +65,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.DeleteAsync(
             $"api/finanzas/proyectos/{proyectoId}/conceptos/{conceptoId}", token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
     }
 
     public async Task EliminarConceptoReporteAsync(
@@ -62,7 +76,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.DeleteAsync(
             $"api/reportes/{reporteId}/conceptos/{conceptoId}", token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
     }
 
     public async Task<List<CategoriaCreadaDto>> ObtenerCategoriasAsync(
@@ -81,16 +95,16 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.PostAsJsonAsync(
             "api/finanzas/categorias", modelo, token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<CategoriaCreadaDto>(cancellationToken: token);
     }
 
-    public async Task<List<ReporteCreadoDto>> ObtenerReportesAsync(Guid proyectoId,
+    public async Task<List<ReporteConConceptosDto>> ObtenerReportesAsync(Guid proyectoId,
         CancellationToken token = default)
     {
-        var resultado = await _http.GetFromJsonAsync<List<ReporteCreadoDto>>(
+        var resultado = await _http.GetFromJsonAsync<List<ReporteConConceptosDto>>(
             $"api/proyectos/{proyectoId}/reportes", token);
 
         return resultado ?? [];
@@ -103,7 +117,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.PostAsJsonAsync(
             $"api/proyectos/{modelo.ProyectoId}/reportes", modelo, token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ReporteCreadoDto>(cancellationToken: token);
@@ -134,7 +148,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.PostAsJsonAsync(
             $"api/finanzas/proyectos/{modelo.ProyectoId}/conceptos", modelo, token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoCreadoDto>(cancellationToken: token);
@@ -156,7 +170,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.PostAsJsonAsync(
             $"api/reportes/{modelo.ReporteId}/conceptos", modelo, token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
@@ -170,7 +184,7 @@ public sealed class ServicioFinanzas
         var respuesta = await _http.PutAsync(
             $"api/reportes/{reporteId}/conceptos/{conceptoId}/valor", null, token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
@@ -188,7 +202,7 @@ public sealed class ServicioFinanzas
             new { nombre, valor },
             token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoReporteDto>(cancellationToken: token);
@@ -206,14 +220,12 @@ public sealed class ServicioFinanzas
             new { nombre, valor },
             token);
 
-        respuesta.EnsureSuccessStatusCode();
+        await EnsureSuccessAsync(respuesta, token);
 
         return await respuesta.Content
             .ReadFromJsonAsync<ConceptoCreadoDto>(cancellationToken: token);
     }
 }
-
-public sealed record ConceptoReporteDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ReporteId, Guid CategoriaId, DateTimeOffset FechaCreacion);
 
 public sealed record ProyectoCreadoDto(Guid Id, string Nombre);
 

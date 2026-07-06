@@ -40,8 +40,8 @@ public sealed class ConceptoReporteConfiguracion : IEntityTypeConfiguration<Conc
         builder.HasIndex(c => c.CategoriaId)
             .HasDatabaseName("IX_ConceptoReportes_CategoriaId");
 
-        builder.HasIndex(c => new { c.ReporteId, c.Nombre })
+        builder.HasIndex(c => new { c.ReporteId, c.Nombre, c.Tipo, c.CategoriaId })
             .IsUnique()
-            .HasDatabaseName("UQ_ConceptoReportes_ReporteId_Nombre");
+            .HasDatabaseName("UQ_ConceptoReportes_ReporteId_Nombre_Tipo_CategoriaId");
     }
 }

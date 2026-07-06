@@ -80,15 +80,15 @@ BEGIN
 END
 GO
 
--- 5. Índice único para nombres de concepto por reporte
+-- 5. Índice único para nombres de concepto por reporte (compuesto por nombre + tipo + categoría)
 IF NOT EXISTS (SELECT * FROM sys.indexes i
                INNER JOIN sys.tables t ON i.object_id = t.object_id
                INNER JOIN sys.schemas s ON t.schema_id = s.schema_id
                WHERE s.name = N'Proyecto' AND t.name = N'ConceptoReportes'
-                 AND i.name = N'UQ_ConceptoReportes_ReporteId_Nombre')
+                 AND i.name = N'UQ_ConceptoReportes_ReporteId_Nombre_Tipo_CategoriaId')
 BEGIN
-    CREATE UNIQUE NONCLUSTERED INDEX [UQ_ConceptoReportes_ReporteId_Nombre]
-        ON [Proyecto].[ConceptoReportes] ([ReporteId], [Nombre]);
+    CREATE UNIQUE NONCLUSTERED INDEX [UQ_ConceptoReportes_ReporteId_Nombre_Tipo_CategoriaId]
+        ON [Proyecto].[ConceptoReportes] ([ReporteId], [Nombre], [Tipo], [CategoriaId]);
 END
 GO
 

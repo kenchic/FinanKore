@@ -177,14 +177,13 @@
                     var temaFromDb = string.Equals(preferencias.Tema, "Oscuro", StringComparison.OrdinalIgnoreCase) ? "dark" : "light";
                     if (tema != temaFromDb)
                     {
-                        temaOscuro = temaFromDb == "dark";
-                        await JS.InvokeVoidAsync("eval", $"fkTema.establecerTema('{temaFromDb}')");
+                        await ServicioConfiguracion.CambiarTemaAsync(Estado.Usuario.Id, tema == "dark" ? "Oscuro" : "Claro");
                     }
                 }
             }
             catch
             {
-                // Si falla la API, usar el valor del cookie
+                // Si falla la API, el cookie sigue como fuente de verdad
             }
         }
     }

@@ -1,5 +1,6 @@
 @page "/finanzas/proyectos/{proyectoId:guid}/reportes"
 @rendermode InteractiveServer
+@using FinanKore.Aplicacion.Proyecto.Dtos
 @using FinanKore.Web.Models
 @using FinanKore.Web.Servicios
 @inject ServicioFinanzas ServicioFinanzas
@@ -29,7 +30,7 @@
     <div class="tabla-header">
         <h3 class="tabla-titulo">
             <span class="material-icons" style="margin-right: 0.5rem; color: var(--fk-violeta); vertical-align: middle;">bar_chart</span>
-            Reportes — @nombreProyecto
+            Conceptos en Reportes — @nombreProyecto
         </h3>
     </div>
     <div class="tabla-body">
@@ -40,7 +41,7 @@
                 <p class="text-secondary" style="margin-top: 0.75rem;">Cargando reportes...</p>
             </div>
         }
-        else if (reportes.Count == 0)
+        else if (conceptosReporte.Count == 0)
         {
             <div style="text-align: center; padding: 3rem;">
                 <span class="material-icons" style="font-size: 3rem; color: #d1d5db;">bar_chart</span>
@@ -52,26 +53,57 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Fecha</th>
+                        <th>Concepto</th>
+                        @foreach (var categoria in categoriasUsadas)
+                        {
+                            <th>@categoria.Nombre</th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var reporte in reportes)
+                    @foreach (var grupo in conceptosAgrupados)
                     {
+                        var nombre = grupo.Key;
                         <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                    <span class="material-icons" style="color: var(--fk-violeta); font-size: 0.9rem;">bar_chart</span>
-                                    <span>@reporte.Nombre</span>
-                                </div>
-                            </td>
-                            <td class="text-secondary">@reporte.Descripcion</td>
-                            <td>@reporte.FechaCreacion.ToString("dd MMM yyyy HH:mm")</td>
+                            <td style="font-weight: 500; text-align: left;">@nombre</td>
+                            @foreach (var categoria in categoriasUsadas)
+                            {
+                                var conceptoEnCategoria = grupo.FirstOrDefault(c => c.CategoriaId == categoria.Id);
+                                <td style="text-align: right;">
+                                    @if (conceptoEnCategoria is not null)
+                                    {
+                                        <span style="display: inline-flex; align-items: center; gap: 0.25rem; color: @(conceptoEnCategoria.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                                            <span class="material-icons" style="font-size: 0.8rem;">@(conceptoEnCategoria.Tipo == 1 ? "trending_up" : "trending_down")</span>
+                                            @if (conceptoEnCategoria.Tipo == 1)
+                                            {
+                                                <span>$ @conceptoEnCategoria.Valor.ToString("N0")</span>
+                                            }
+                                            else
+                                            {
+                                                <span>$ (@conceptoEnCategoria.Valor.ToString("N0"))</span>
+                                            }
+                                        </span>
+                                    }
+                                </td>
+                            }
                         </tr>
                     }
                 </tbody>
+                <tfoot>
+                    <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
+                        <td style="text-align: left;">Total</td>
+                        @foreach (var categoria in categoriasUsadas)
+                        {
+                            var totalCategoria = conceptosReporte
+                                .Where(c => c.CategoriaId == categoria.Id)
+                                .Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
+                            var colorTotal = totalCategoria >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)";
+                            <td style="text-align: right; color: @colorTotal;">
+                                $ @Math.Abs(totalCategoria).ToString("N0")
+                            </td>
+                        }
+                    </tr>
+                </tfoot>
             </table>
         }
     </div>
@@ -80,15 +112,19 @@
 @code {
     [Parameter] public Guid ProyectoId { get; set; }
 
-    private List<ReporteCreadoDto> reportes = [];
-    private CrearReporteModelo modelo = new();
+    private List<ConceptoReporteDto> conceptosReporte = [];
+    private List<IGrouping<string, ConceptoReporteDto>> conceptosAgrupados = [];
+    private List<CategoriaCreadaDto> categorias = [];
+    private List<CategoriaCreadaDto> categoriasUsadas = [];
     private string nombreProyecto = string.Empty;
     private bool cargando = true;
+    private CrearReporteModelo modelo = new();
 
     protected override async Task OnInitializedAsync()
     {
         modelo.ProyectoId = ProyectoId;
         await CargarProyecto();
+        await CargarCategorias();
         await CargarReportes();
     }
 
@@ -98,12 +134,30 @@
         catch { nombreProyecto = "Proyecto"; }
     }
 
+    private async Task CargarCategorias()
+    {
+        try { categorias = await ServicioFinanzas.ObtenerCategoriasAsync(); }
+        catch { categorias = []; }
+    }
+
     private async Task CargarReportes()
     {
         cargando = true;
-        try { reportes = await ServicioFinanzas.ObtenerReportesAsync(ProyectoId); }
-        catch { reportes = []; }
+        try
+        {
+            var reportes = await ServicioFinanzas.ObtenerReportesAsync(ProyectoId);
+            conceptosReporte = reportes.SelectMany(r => r.Conceptos).ToList();
+            conceptosAgrupados = conceptosReporte.GroupBy(c => c.Nombre).OrderBy(g => g.Key).ToList();
+            CalcularCategoriasUsadas();
+        }
+        catch { conceptosReporte = []; conceptosAgrupados = []; categoriasUsadas = []; }
         finally { cargando = false; }
+    }
+
+    private void CalcularCategoriasUsadas()
+    {
+        var idsUsados = conceptosReporte.Select(c => c.CategoriaId).Distinct().ToList();
+        categoriasUsadas = categorias.Where(c => idsUsados.Contains(c.Id)).OrderBy(c => c.Nombre).ToList();
     }
 
     private async Task HandleCrear()
@@ -124,7 +178,9 @@
         }
         catch (HttpRequestException ex)
         {
-            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error al crear reporte", Detail = ex.Message, Duration = 5000 });
+            var codigo = (int?)ex.StatusCode;
+            var resumen = codigo.HasValue ? $"Error {(int)codigo} al crear reporte" : "Error al crear reporte";
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = resumen, Detail = ex.Message, Duration = 8000 });
         }
     }
 }

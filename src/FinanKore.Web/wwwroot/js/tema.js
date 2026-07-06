@@ -22,6 +22,19 @@ window.fkTema = {
     iniciar: function () {
         var tema = this.obtenerTema();
         this.establecerTema(tema);
+
+        var self = this;
+        var observer = new MutationObserver(function () {
+            var actual = document.documentElement.getAttribute('data-bs-theme');
+            var cookie = self.obtenerTema();
+            if (actual !== cookie) {
+                document.documentElement.setAttribute('data-bs-theme', cookie);
+            }
+        });
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['data-bs-theme']
+        });
     }
 };
 
