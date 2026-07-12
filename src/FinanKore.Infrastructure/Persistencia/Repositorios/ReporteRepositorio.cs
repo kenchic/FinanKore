@@ -1,5 +1,4 @@
 using FinanKore.Dominio.Proyecto;
-using FinanKore.Infraestructura.Persistencia;
 using Microsoft.EntityFrameworkCore;
 
 namespace FinanKore.Infraestructura.Persistencia.Repositorios;

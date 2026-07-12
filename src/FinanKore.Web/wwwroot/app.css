@@ -420,6 +420,126 @@ h1:focus {
 }
 
 /* ============================================================
+   Pestañas por categoría (horizontal tabs SaaS)
+   ============================================================ */
+
+.pestanas-categorias {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #fafbfc;
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.pestana-categoria {
+    padding: 0.65rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--fk-texto-secundario);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color .15s, border-color .15s;
+    white-space: nowrap;
+}
+
+.pestana-categoria:hover {
+    color: var(--fk-texto-primario);
+}
+
+.pestana-categoria.activa {
+    color: var(--fk-magenta);
+    border-bottom-color: var(--fk-magenta);
+    font-weight: 600;
+}
+
+.pestana-categoria .badge-conteo {
+    background: #e5e7eb;
+    color: var(--fk-texto-secundario);
+    border-radius: 999px;
+    padding: 0.05rem 0.45rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.pestana-categoria.activa .badge-conteo {
+    background: var(--fk-magenta);
+    color: #fff;
+}
+
+.pestana-contenido {
+    padding: 0;
+}
+
+.pestana-contenido table {
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    min-width: 100%;
+}
+
+.pestana-contenido table thead th {
+    background: #fafbfc;
+    color: #6b7280;
+    font-weight: 600;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+.pestana-contenido table thead th:last-child {
+    border-right: none;
+}
+
+.pestana-contenido table tbody td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+    border-right: 1px solid #e5e7eb;
+    vertical-align: middle;
+    color: var(--fk-texto-primario);
+    line-height: 1.3;
+}
+
+.pestana-contenido table tbody td:last-child {
+    border-right: none;
+}
+
+.pestana-contenido table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.pestana-contenido table tbody tr:hover td {
+    background-color: #f9fafb;
+}
+
+.pestana-contenido table tfoot td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: none;
+}
+
+/* Variante violeta para páginas de Reportes */
+.pestanas-categorias-violeta .pestana-categoria.activa {
+    color: var(--fk-violeta);
+    border-bottom-color: var(--fk-violeta);
+}
+
+.pestanas-categorias-violeta .pestana-categoria.activa .badge-conteo {
+    background: var(--fk-violeta);
+}
+
+/* ============================================================
    Badges de estado (estilo pill premium)
    ============================================================ */
 
@@ -584,6 +704,61 @@ h1:focus {
 
 [data-bs-theme="dark"] .rz-datatable .rz-datatable-tbody > tr > td {
     border-right-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+[data-bs-theme="dark"] .pestanas-categorias {
+    background: #0f172a;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-bs-theme="dark"] .pestana-categoria {
+    color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .pestana-categoria:hover {
+    color: #f3f4f6;
+}
+
+[data-bs-theme="dark"] .pestana-categoria.activa {
+    color: #f472b6;
+    border-bottom-color: #f472b6;
+}
+
+[data-bs-theme="dark"] .pestana-categoria .badge-conteo {
+    background: #334155;
+    color: #94a3b8;
+}
+
+[data-bs-theme="dark"] .pestana-categoria.activa .badge-conteo {
+    background: #f472b6;
+    color: #0f172a;
+}
+
+[data-bs-theme="dark"] .pestana-contenido table thead th {
+    background: #0f172a;
+    color: #94a3b8;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    border-right-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-bs-theme="dark"] .pestana-contenido table tbody td {
+    border-bottom-color: rgba(255, 255, 255, 0.04);
+    border-right-color: rgba(255, 255, 255, 0.06);
+    color: var(--fk-texto-primario);
+}
+
+[data-bs-theme="dark"] .pestana-contenido table tbody tr:hover td {
+    background-color: #334155;
+}
+
+[data-bs-theme="dark"] .pestanas-categorias-violeta .pestana-categoria.activa {
+    color: #a78bfa;
+    border-bottom-color: #a78bfa;
+}
+
+[data-bs-theme="dark"] .pestanas-categorias-violeta .pestana-categoria.activa .badge-conteo {
+    background: #a78bfa;
+    color: #0f172a;
 }
 
 [data-bs-theme="dark"] .sidebar {

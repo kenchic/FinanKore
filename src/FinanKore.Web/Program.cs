@@ -31,6 +31,7 @@ builder.Services.AddHttpClient<ServicioConfiguracion>(cliente =>
 });
 
 builder.Services.AddScoped<EstadoAutenticacion>();
+builder.Services.AddScoped<EstadoSidebar>();
 
 var app = builder.Build();
 

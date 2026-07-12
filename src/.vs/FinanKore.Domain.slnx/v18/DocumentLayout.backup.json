@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
               "ToolTip": "E:\\Documentos\\Proyectos\\FinanKore\\src\\FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
               "RelativeToolTip": "FinanKore.Infrastructure\\Persistencia\\Repositorios\\ReporteRepositorio.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAgwCgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-06T18:55:39.147Z",
               "EditorCaption": ""
@@ -67,8 +67,7 @@
               "RelativeToolTip": "FinanKore.WebApi\\Endpoints\\ProyectoEndpoints.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAgwB8AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T18:51:30.992Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T18:51:30.992Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "FinanKore.Web\\Servicios\\ServicioFinanzas.cs",
               "ViewState": "AgIAAGcAAAAAAAAAAADgv3AAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-06T18:50:26.385Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-06T18:50:26.385Z"
             },
             {
               "$type": "Document",

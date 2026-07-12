@@ -20,23 +20,29 @@
     <div class="tabla-body">
         @if (modalVisible)
         {
-            <div style="padding: 1.5rem; max-width: 480px; border-bottom: 1px solid var(--fk-gris-borde);">
-                <div class="fk-modal-body">
-                    <RadzenLabel Text="Nombre" Component="NombreCon" />
-                    <RadzenTextBox Name="NombreCon" @bind-Value="@modelo.Nombre" Placeholder="Nombre del concepto" Style="width: 100%;" />
+            <div class="fk-modal-overlay" @onclick="CerrarModal">
+                <div class="fk-modal" @onclick:stopPropagation="true">
+                    <div class="fk-modal-header">
+                        <span class="material-icons" style="color: var(--fk-violeta);">add_circle</span>
+                        <strong>Agregar Concepto</strong>
+                    </div>
+                    <div class="fk-modal-body">
+                        <RadzenLabel Text="Nombre" Component="NombreCon" />
+                        <RadzenTextBox Name="NombreCon" @bind-Value="@modelo.Nombre" Placeholder="Nombre del concepto" Style="width: 100%;" />
 
-                    <RadzenLabel Text="Valor" Component="ValorCon" />
-                    <RadzenNumeric Name="ValorCon" @bind-Value="@modelo.Valor" Min="0" Format="c" Style="width: 100%;" />
+                        <RadzenLabel Text="Valor" Component="ValorCon" />
+                        <RadzenNumeric Name="ValorCon" @bind-Value="@modelo.Valor" Min="0" Format="c" Style="width: 100%;" />
 
-                    <RadzenLabel Text="Tipo" Component="TipoCon" />
-                    <RadzenDropDown Name="TipoCon" Data="@tiposMovimiento" TextProperty="Texto" ValueProperty="Valor" @bind-Value="@modelo.Tipo" Placeholder="Seleccionar tipo..." Style="width: 100%;" />
+                        <RadzenLabel Text="Tipo" Component="TipoCon" />
+                        <RadzenDropDown Name="TipoCon" Data="@tiposMovimiento" TextProperty="Texto" ValueProperty="Valor" @bind-Value="@modelo.Tipo" Placeholder="Seleccionar tipo..." Style="width: 100%;" />
 
-                    <RadzenLabel Text="Categoría" Component="CatCon" />
-                    <RadzenDropDown Name="CatCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaId" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
+                        <RadzenLabel Text="Categoría" Component="CatCon" />
+                        <RadzenDropDown Name="CatCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaId" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
 
-                    <div class="fk-modal-actions">
-                        <RadzenButton Text="Guardar" Click="@GuardarConcepto" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
-                        <RadzenButton Text="Cancelar" Click="@CerrarModal" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
+                        <div class="fk-modal-actions">
+                            <RadzenButton Text="Guardar" Click="@GuardarConcepto" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
+                            <RadzenButton Text="Cancelar" Click="@CerrarModal" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,21 +50,27 @@
 
         @if (modalEditarVisible)
         {
-            <div class="fk-modal-form-edit">
-                <div class="fk-modal-header">
-                    <span class="material-icons" style="color: var(--fk-violeta);">edit</span>
-                    <strong>Editar Concepto</strong>
-                </div>
-                <div class="fk-modal-body">
-                    <RadzenLabel Text="Nombre" Component="NombreEdit" />
-                    <RadzenTextBox Name="NombreEdit" @bind-Value="@modeloEditar.Nombre" Style="width: 100%;" />
+            <div class="fk-modal-overlay" @onclick="CerrarModalEditar">
+                <div class="fk-modal" @onclick:stopPropagation="true">
+                    <div class="fk-modal-header">
+                        <span class="material-icons" style="color: var(--fk-violeta);">edit</span>
+                        <strong>Editar Concepto</strong>
+                    </div>
+                    <div class="fk-modal-body">
+                        <div>
+                            <div class="fk-modal-sublabel">Concepto</div>
+                            <div class="fk-modal-subvalue">@modeloEditar.Nombre</div>
+                        </div>
 
-                    <RadzenLabel Text="Valor" Component="ValorEdit" />
-                    <RadzenNumeric Name="ValorEdit" @bind-Value="@modeloEditar.Valor" Min="0" Style="width: 100%;" />
+                        <div>
+                            <RadzenLabel Text="Valor" Component="ValorEdit" />
+                            <RadzenNumeric Name="ValorEdit" @bind-Value="@modeloEditar.Valor" Min="0" Style="width: 100%;" />
+                        </div>
 
-                    <div class="fk-modal-actions">
-                        <RadzenButton Text="Guardar" Click="@GuardarEdicion" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
-                        <RadzenButton Text="Cancelar" Click="@CerrarModalEditar" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
+                        <div class="fk-modal-actions">
+                            <RadzenButton Text="Guardar" Click="@GuardarEdicion" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
+                            <RadzenButton Text="Cancelar" Click="@CerrarModalEditar" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,67 +155,79 @@
                     </table>
                 </div>
 
-                <div style="flex: 1; min-width: 400px; overflow-x: auto;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Concepto</th>
-                                @foreach (var categoria in categoriasUsadas)
-                                {
-                                    <th>@categoria.Nombre</th>
-                                }
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var grupo in conceptosAgrupados)
-                            {
-                                var nombre = grupo.Key;
-                                <tr>
-                                    <td style="font-weight: 500; text-align: left;">@nombre</td>
-                                    @foreach (var categoria in categoriasUsadas)
+                <div style="flex: 1; min-width: 480px; overflow-x: auto;">
+                    <div class="pestanas-categorias pestanas-categorias-violeta">
+                        @foreach (var cat in categoriasUsadas)
+                        {
+                            <button type="button"
+                                    class="pestana-categoria @(cat.Id == categoriaActivaId ? "activa" : "")"
+                                    @onclick="@(() => categoriaActivaId = cat.Id)">
+                                <span class="material-icons" style="font-size: 0.95rem;">label</span>
+                                @cat.Nombre
+                                <span class="badge-conteo">@conceptos.Count(c => c.CategoriaId == cat.Id)</span>
+                            </button>
+                        }
+                    </div>
+                    <div class="pestana-contenido">
+                        @{
+                            var conceptosDeCat = conceptos.Where(c => c.CategoriaId == categoriaActivaId).OrderBy(c => c.Nombre).ToList();
+                            var totalCat = conceptosDeCat.Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
+                        }
+                        @if (conceptosDeCat.Count == 0)
+                        {
+                            <div style="text-align: center; padding: 2rem;">
+                                <span class="material-icons" style="font-size: 2rem; color: #d1d5db;">label_off</span>
+                                <p class="text-secondary">Esta categoría no tiene conceptos.</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: left;">Concepto</th>
+                                        <th style="text-align: right;">Valor</th>
+                                        <th style="text-align: right;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var c in conceptosDeCat)
                                     {
-                                        var conceptosEnCelda = grupo.Where(c => c.CategoriaId == categoria.Id);
-                                        <td style="text-align: right;">
-                                            @foreach (var concepto in conceptosEnCelda)
-                                            {
-                                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.35rem; margin-bottom: 0.25rem;">
-                                                    <span class="material-icons" style="font-size: 0.85rem; color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
-                                                        @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
+                                        <tr>
+                                            <td style="text-align: left; font-weight: 500;">@c.Nombre</td>
+                                            <td style="text-align: right; white-space: nowrap;">
+                                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 0.35rem;">
+                                                    <span class="material-icons" style="font-size: 0.85rem; color: @(c.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                                                        @(c.Tipo == 1 ? "trending_up" : "trending_down")
                                                     </span>
-                                                    @if (concepto.Tipo == 1)
+                                                    @if (c.Tipo == 1)
                                                     {
-                                                        <span style="color: var(--fk-verde);">$ @concepto.Valor.ToString("N0")</span>
+                                                        <span style="color: var(--fk-verde);">$ @c.Valor.ToString("N0")</span>
                                                     }
                                                     else
                                                     {
-                                                        <span style="color: var(--fk-magenta);">$ (@concepto.Valor.ToString("N0"))</span>
+                                                        <span style="color: var(--fk-magenta);">$ (@c.Valor.ToString("N0"))</span>
                                                     }
-                                                    <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalEditar(concepto))" title="Editar" />
-                                                    <RadzenButton Icon="cancel" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => CancelarConcepto(concepto.Id))" title="Cancelar" />
-                                                    <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalConfirmarEliminar(concepto))" title="Eliminar" />
                                                 </div>
-                                            }
-                                        </td>
+                                            </td>
+                                            <td style="text-align: right; white-space: nowrap;">
+                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalEditar(c))" title="Editar" />
+                                                <RadzenButton Icon="cancel" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => CancelarConcepto(c.Id))" title="Cancelar" />
+                                                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalConfirmarEliminar(c))" title="Eliminar" />
+                                            </td>
+                                        </tr>
                                     }
-                                </tr>
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
-                                <td style="text-align: left;">Total</td>
-                                @foreach (var categoria in categoriasUsadas)
-                                {
-                                    var totalCategoria = conceptos
-                                        .Where(c => c.CategoriaId == categoria.Id)
-                                        .Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
-                                    var colorTotal = totalCategoria >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)";
-                                    <td style="text-align: right; color: @colorTotal;">
-                                        $ @Math.Abs(totalCategoria).ToString("N0")
-                                    </td>
-                                }
-                            </tr>
-                        </tfoot>
-                    </table>
+                                </tbody>
+                                <tfoot>
+                                    <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
+                                        <td style="text-align: left;">Total</td>
+                                        <td style="text-align: right; color: @(totalCat >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)");">$ @Math.Abs(totalCat).ToString("N0")</td>
+                                        <td></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        }
+                    </div>
                 </div>
             </div>
         }
@@ -214,7 +238,7 @@
     [Parameter] public Guid ReporteId { get; set; }
 
     private List<ConceptoReporteDto> conceptos = [];
-    private List<IGrouping<string, ConceptoReporteDto>> conceptosAgrupados = [];
+    private Guid categoriaActivaId;
     private List<CategoriaCreadaDto> categorias = [];
     private List<CategoriaCreadaDto> categoriasUsadas = [];
     private string nombreReporte = string.Empty;
@@ -262,11 +286,12 @@
         try
         {
             conceptos = await ServicioFinanzas.ObtenerConceptosPorReporteAsync(ReporteId);
-            conceptosAgrupados = conceptos.GroupBy(c => c.Nombre).OrderBy(g => g.Key).ToList();
             CalcularCategoriasUsadas();
             CalcularSaldo();
+            if (categoriaActivaId == Guid.Empty || !categoriasUsadas.Any(c => c.Id == categoriaActivaId))
+                categoriaActivaId = categoriasUsadas.FirstOrDefault()?.Id ?? Guid.Empty;
         }
-        catch { conceptos = []; conceptosAgrupados = []; categoriasUsadas = []; }
+        catch { conceptos = []; categoriasUsadas = []; categoriaActivaId = Guid.Empty; }
         finally { cargando = false; }
     }
 

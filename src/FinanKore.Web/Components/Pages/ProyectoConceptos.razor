@@ -112,64 +112,74 @@
         }
         else
         {
-            <div class="tabla-body">
-                 <table>
-                    <thead>
-                        <tr>
-                            <th>Concepto</th>
-                            @foreach (var categoria in categoriasUsadas)
-                            {
-                                <th>@categoria.Nombre</th>
-                            }
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var grupo in conceptosAgrupados)
-                        {
-                            var nombre = grupo.Key;
+            <div class="pestanas-categorias">
+                @foreach (var cat in categoriasUsadas)
+                {
+                    <button type="button"
+                            class="pestana-categoria @(cat.Id == categoriaActivaId ? "activa" : "")"
+                            @onclick="@(() => categoriaActivaId = cat.Id)">
+                        <span class="material-icons" style="font-size: 0.95rem;">label</span>
+                        @cat.Nombre
+                        <span class="badge-conteo">@conceptos.Count(c => c.CategoriaId == cat.Id)</span>
+                    </button>
+                }
+            </div>
+            <div class="pestana-contenido">
+                @{
+                    var conceptosDeCat = conceptos.Where(c => c.CategoriaId == categoriaActivaId).OrderBy(c => c.Nombre).ToList();
+                    var totalCat = conceptosDeCat.Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
+                }
+                @if (conceptosDeCat.Count == 0)
+                {
+                    <div style="text-align: center; padding: 2rem;">
+                        <span class="material-icons" style="font-size: 2rem; color: #d1d5db;">label_off</span>
+                        <p class="text-secondary">Esta categoría no tiene conceptos.</p>
+                    </div>
+                }
+                else
+                {
+                    <table>
+                        <thead>
                             <tr>
-                                <td style="font-weight: 500; text-align: left;">@nombre</td>
-                                @foreach (var categoria in categoriasUsadas)
-                                {
-                                    var conceptoEnCategoria = grupo.FirstOrDefault(c => c.CategoriaId == categoria.Id);
-                                    <td style="text-align: right;">
-                                        @if (conceptoEnCategoria is not null)
-                                        {
-                                            <span style="display: inline-flex; align-items: center; gap: 0.25rem; color: @(conceptoEnCategoria.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
-                                                <span class="material-icons" style="font-size: 0.8rem;">@(conceptoEnCategoria.Tipo == 1 ? "trending_up" : "trending_down")</span>
-                                                @if (conceptoEnCategoria.Tipo == 1)
-                                                {
-                                                    <span>$ @conceptoEnCategoria.Valor.ToString("N0")</span>
-                                                }
-                                                else
-                                                {
-                                                    <span>$ (@conceptoEnCategoria.Valor.ToString("N0"))</span>
-                                                }
-                                                <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalEditar(conceptoEnCategoria))" title="Editar" />
-                                                <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalConfirmarEliminar(conceptoEnCategoria))" title="Eliminar" />
-                                            </span>
-                                        }
-                                    </td>
-                                }
+                                <th style="text-align: left;">Concepto</th>
+                                <th style="text-align: right;">Valor</th>
+                                <th style="text-align: right;">Acciones</th>
                             </tr>
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
-                            <td style="text-align: left;">Total</td>
-                            @foreach (var categoria in categoriasUsadas)
+                        </thead>
+                        <tbody>
+                            @foreach (var c in conceptosDeCat)
                             {
-                                var totalCategoria = conceptos
-                                    .Where(c => c.CategoriaId == categoria.Id)
-                                    .Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
-                                var colorTotal = totalCategoria >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)";
-                                <td style="text-align: right; color: @colorTotal;">
-                                    $ @Math.Abs(totalCategoria).ToString("N0")
-                                </td>
+                                <tr>
+                                    <td style="text-align: left; font-weight: 500;">@c.Nombre</td>
+                                    <td style="text-align: right;">
+                                        <span style="display: inline-flex; align-items: center; gap: 0.35rem; color: @(c.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                                            <span class="material-icons" style="font-size: 0.95rem;">@(c.Tipo == 1 ? "trending_up" : "trending_down")</span>
+                                            @if (c.Tipo == 1)
+                                            {
+                                                <span>$ @c.Valor.ToString("N0")</span>
+                                            }
+                                            else
+                                            {
+                                                <span>$ (@c.Valor.ToString("N0"))</span>
+                                            }
+                                        </span>
+                                    </td>
+                                    <td style="text-align: right;">
+                                        <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalEditar(c))" title="Editar" />
+                                        <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalConfirmarEliminar(c))" title="Eliminar" />
+                                    </td>
+                                </tr>
                             }
-                        </tr>
-                    </tfoot>
-                </table>
+                        </tbody>
+                        <tfoot>
+                            <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
+                                <td style="text-align: left;">Total</td>
+                                <td style="text-align: right; color: @(totalCat >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)");">$ @Math.Abs(totalCat).ToString("N0")</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                }
             </div>
         }
     </div>
@@ -179,7 +189,7 @@
     [Parameter] public Guid ProyectoId { get; set; }
 
     private List<ConceptoCreadoDto> conceptos = [];
-    private List<IGrouping<string, ConceptoCreadoDto>> conceptosAgrupados = [];
+    private Guid categoriaActivaId;
     private List<CategoriaCreadaDto> categorias = [];
     private List<CategoriaCreadaDto> categoriasUsadas = [];
     private string nombreProyecto = string.Empty;
@@ -220,10 +230,11 @@
         try
         {
             conceptos = await ServicioFinanzas.ObtenerConceptosAsync(ProyectoId);
-            conceptosAgrupados = conceptos.GroupBy(c => c.Nombre).OrderBy(g => g.Key).ToList();
             CalcularCategoriasUsadas();
+            if (categoriaActivaId == Guid.Empty || !categoriasUsadas.Any(c => c.Id == categoriaActivaId))
+                categoriaActivaId = categoriasUsadas.FirstOrDefault()?.Id ?? Guid.Empty;
         }
-        catch { conceptos = []; conceptosAgrupados = []; categoriasUsadas = []; }
+        catch { conceptos = []; categoriasUsadas = []; categoriaActivaId = Guid.Empty; }
         finally { cargando = false; }
     }
 

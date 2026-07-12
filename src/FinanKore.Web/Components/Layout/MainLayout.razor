@@ -1,8 +1,10 @@
 ﻿@inherits LayoutComponentBase
+@inject EstadoSidebar EstadoSidebar
+@implements IDisposable
 
 <div class="layout-dashboard">
     <NavMenu />
-    <div class="layout-content">
+    <div class="layout-content @(EstadoSidebar.Colapsado ? "layout-content-colapsado" : "")">
         <header class="layout-header">
             <div class="layout-header-left">
                 <h1 class="layout-header-title">@TituloPagina</h1>
@@ -25,4 +27,19 @@
 
 @code {
     private string TituloPagina => "FinanKore";
+
+    protected override void OnInitialized()
+    {
+        EstadoSidebar.AlCambiar += OnSidebarCambio;
+    }
+
+    private void OnSidebarCambio()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        EstadoSidebar.AlCambiar -= OnSidebarCambio;
+    }
 }
