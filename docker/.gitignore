@@ -1,0 +1,12 @@
+# Salidas de dotnet publish: se regeneran con docker/scripts/publish-local.ps1
+publish/
+db-init/seed/migrations.sql
+
+# Binarios sueltos que pudieran colarse
+**/bin/
+**/obj/
+
+# Archivos temporales de IDE
+**/.vs/
+**/.vscode/
+**/*.user

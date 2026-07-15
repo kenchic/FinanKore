@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/.git/
+**/graphify-out/
+**/.graphify_python/
+**/node_modules/
+**/*.user
+**/.agents/
+**/docs/
+**/docker/db-init/scripts/HashPassword/bin/
+**/docker/db-init/scripts/HashPassword/obj/

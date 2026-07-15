@@ -1,0 +1,119 @@
+name: finankore
+
+services:
+  sqlserver:
+    # IMPORTANTE: usar una version ESPECIFICA, nunca :latest.
+    # La imagen :latest se actualizo en julio 2026 con un bug que deja
+    # el binario con rutas de compilacion hardcodeadas (F:\dbs\sh\...)
+    # que no existen en el contenedor, y SQL Server no puede abrir
+    # las bases del sistema (master, model, msdb, tempdb).
+    # CU14 es la ultima acumulativa estable que probamos.
+    image: mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04
+    container_name: finankore-sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+      MSSQL_PID: "Developer"
+      # Desactivar el core dump (error 183) cuando SQL Server falla al intentar
+      # acceder a /proc/PID/maps. Valor 0 = no intentar dump; 1 = mini dump; 2 = full.
+      MSSQL_DUMPCORE: "0"
+    ports:
+      - "14330:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+      - ./sqlserver/conf:/mssql-conf
+    networks:
+      - finankore-net
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -C -No -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    # Limite de RAM para que no muera por OOM (error 17120) en equipos con muchos contenedores.
+    # SQL Server 2022 Developer necesita minimo ~2 GB para arrancar estable.
+    # Si tu maquina tiene poca RAM, bajalo a 1G o cambia a la edicion Express (MSSQL_PID).
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    # NOTA: NO usar `user: "0:0"`. SQL Server en Docker debe correr como el
+    # usuario `mssql` interno de la imagen. Forzar root corrompe los permisos
+    # de las bases y causa el error F:\dbs\sh\... al iniciar.
+
+  db-init:
+    build:
+      context: .
+      dockerfile: db-init/Dockerfile
+    container_name: finankore-db-init
+    environment:
+      SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+      CONNECTION_STRING: "Data Source=sqlserver,1433;Initial Catalog=FinanKore;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    networks:
+      - finankore-net
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: finankore-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # Escucha en TODAS las interfaces (IPv4 e IPv6). Antes era http://+:8080
+      # que en .NET 10 se traduce solo a IPv6 ([::]:8080), y el healthcheck
+      # con localhost fallaba porque resolvia a 127.0.0.1 (IPv4).
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      ConnectionStrings__CadenaConexion: "Data Source=sqlserver,1433;Initial Catalog=FinanKore;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+    ports:
+      - "5157:8080"
+    networks:
+      - finankore-net
+    # Healthcheck: wget a localhost:8080. localhost resuelve a 127.0.0.1 (IPv4),
+    # que es donde ahora escucha la app gracias a ASPNETCORE_URLS=http://0.0.0.0:8080.
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - wget -qO- http://127.0.0.1:8080/ > /dev/null 2>&1 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    container_name: finankore-web
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      # Ver comentario en api: escuchar en 0.0.0.0 evita problemas IPv4/IPv6.
+      ASPNETCORE_URLS: http://0.0.0.0:8080
+      ApiBaseUrl: "http://api:8080"
+      ConnectionStrings__master: "Data Source=sqlserver,1433;Initial Catalog=FinanKore;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;"
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "5175:8080"
+    networks:
+      - finankore-net
+
+volumes:
+  sqlserver-data:
+    name: finankore_sqlserver-data
+
+networks:
+  finankore-net:
+    name: finankore-net
+    driver: bridge
