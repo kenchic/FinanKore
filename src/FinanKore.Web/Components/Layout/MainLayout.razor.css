@@ -9,8 +9,6 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    margin-left: 250px;
-    transition: margin-left .2s ease;
 }
 
 .layout-header {
@@ -65,12 +63,8 @@
     }
 
 @media (max-width: 768px) {
-    .layout-content {
-        margin-left: 0;
-    }
-
-    .layout-content-colapsado {
-        margin-left: 0;
+    .sidebar {
+        width: 60px;
     }
 
     .layout-header {
@@ -80,10 +74,6 @@
     .layout-main {
         padding: 1rem;
     }
-}
-
-.layout-content-colapsado {
-    margin-left: 60px;
 }
 
 /* ============================================================
