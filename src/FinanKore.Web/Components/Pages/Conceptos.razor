@@ -100,9 +100,12 @@ else
                             <tr>
                                 <td>
                                     <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                        <span class="material-icons" style="color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); font-size: 0.9rem;">
-                                            @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
-                                        </span>
+                                        @if (concepto.Valor > 0)
+                                        {
+                                            <span class="material-icons" style="color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); font-size: 0.9rem;">
+                                                @(concepto.Tipo == 1 ? "trending_up" : "trending_down")
+                                            </span>
+                                        }
                                         <span>@concepto.Nombre</span>
                                     </div>
                                 </td>
@@ -111,7 +114,14 @@ else
                                         @(concepto.Tipo == 1 ? "Entrada" : "Salida")
                                     </span>
                                 </td>
-                                <td><strong>@concepto.Valor.ToString("C")</strong></td>
+                                @if (concepto.Valor > 0)
+                                {
+                                    <td><strong>@concepto.Valor.ToString("C")</strong></td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
                                 <td class="text-secondary">@concepto.FechaCreacion.ToString("dd MMM yyyy")</td>
                             </tr>
                         }

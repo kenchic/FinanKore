@@ -6,6 +6,7 @@
 @inject IJSRuntime JS
 @inject ServicioConfiguracion ServicioConfiguracion
 @inject EstadoSidebar EstadoSidebar
+@inject EstadoCalculadora EstadoCalculadora
 @implements IDisposable
 
 <aside class="sidebar @(estadoColapsado ? "colapsado" : "")">
@@ -36,6 +37,15 @@
                 <span class="material-icons">bar_chart</span>
                 <span>Reportes</span>
             </NavLink>
+
+            <div class="sidebar-divider"></div>
+
+            <div class="sidebar-section-title">Utilidades</div>
+
+            <button type="button" class="sidebar-nav-item sidebar-utility" @onclick="AbrirCalculadora" title="Abrir calculadora">
+                <span class="material-icons">calculate</span>
+                <span>Calculadora</span>
+            </button>
 
             <div class="sidebar-divider"></div>
 
@@ -247,6 +257,11 @@
         usuarioNombre = string.Empty;
         usuarioCorreo = string.Empty;
         Navegacion.NavigateTo("/", forceLoad: true);
+    }
+
+    private void AbrirCalculadora()
+    {
+        EstadoCalculadora.Abrir();
     }
 
     public void Dispose()

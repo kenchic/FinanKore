@@ -89,11 +89,14 @@
                                 <tr>
                                     <td style="text-align: left; font-weight: 500;">@c.Nombre</td>
                                     <td style="text-align: right;">
-                                        <span style="display: inline-flex; align-items: center; gap: 0.35rem; color: @(c.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
-                                            <span class="material-icons" style="font-size: 0.95rem;">@(c.Tipo == 1 ? "trending_up" : "trending_down")</span>
-                                            @if (c.Tipo == 1) { <span>$ @c.Valor.ToString("N0")</span> }
-                                            else { <span>$ (@c.Valor.ToString("N0"))</span> }
-                                        </span>
+                                        @if (c.Valor > 0)
+                                        {
+                                            <span style="display: inline-flex; align-items: center; gap: 0.35rem; color: @(c.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                                                <span class="material-icons" style="font-size: 0.95rem;">@(c.Tipo == 1 ? "trending_up" : "trending_down")</span>
+                                                @if (c.Tipo == 1) { <span>$ @c.Valor.ToString("N0")</span> }
+                                                else { <span>$ (@c.Valor.ToString("N0"))</span> }
+                                            </span>
+                                        }
                                     </td>
                                 </tr>
                             }

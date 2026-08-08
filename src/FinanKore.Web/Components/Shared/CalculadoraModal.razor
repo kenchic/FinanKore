@@ -1,0 +1,381 @@
+@using System.Globalization
+@rendermode InteractiveServer
+@implements IAsyncDisposable
+@inject EstadoCalculadora Estado
+@inject IJSRuntime JS
+
+@if (Estado.Abierta)
+{
+    @if (!Estado.Minimizada)
+    {
+        <div id="@_panelId" class="calculadora-panel" role="dialog" aria-label="Calculadora">
+            <div class="calculadora-header" data-handle="drag">
+                <h3 class="calculadora-titulo">
+                    <span class="material-icons">calculate</span>
+                    Calculadora
+                </h3>
+                <div class="calculadora-acciones">
+                    <button type="button" class="calculadora-accion" @onclick="AlternarMinimizar" title="Minimizar" aria-label="Minimizar calculadora">
+                        <span class="material-icons">horizontal_rule</span>
+                    </button>
+                    <button type="button" class="calculadora-accion calculadora-cerrar" @onclick="Cerrar" title="Cerrar (Esc)" aria-label="Cerrar calculadora">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="calculadora-display" aria-live="polite">
+                <div class="calculadora-historial">@historial</div>
+                <div class="calculadora-actual">@numeroActual</div>
+            </div>
+
+            <div class="calculadora-grid">
+                <button type="button" class="btn-funcion" @onclick="Limpiar" title="Limpiar todo (Delete)">C</button>
+                <button type="button" class="btn-funcion" @onclick="BorrarUltimo" title="Borrar último (Backspace)">⌫</button>
+                <button type="button" class="btn-funcion" @onclick="CambiarSigno" title="Cambiar signo">±</button>
+                <button type="button" class="btn-operador" @onclick="@(() => AplicarOperador('/'))" title="Dividir (/)">÷</button>
+
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('7'))">7</button>
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('8'))">8</button>
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('9'))">9</button>
+                <button type="button" class="btn-operador" @onclick="@(() => AplicarOperador('*'))" title="Multiplicar (*)">×</button>
+
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('4'))">4</button>
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('5'))">5</button>
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('6'))">6</button>
+                <button type="button" class="btn-operador" @onclick="@(() => AplicarOperador('-'))" title="Restar (-)">−</button>
+
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('1'))">1</button>
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('2'))">2</button>
+                <button type="button" class="btn-numero" @onclick="@(() => AgregarDigito('3'))">3</button>
+                <button type="button" class="btn-operador" @onclick="@(() => AplicarOperador('+'))" title="Sumar (+)">+</button>
+
+                <button type="button" class="btn-numero btn-cero" @onclick="@(() => AgregarDigito('0'))">0</button>
+                <button type="button" class="btn-numero" @onclick="AgregarPunto" title="Decimal (.)">.</button>
+                <button type="button" class="btn-igual" @onclick="Calcular" title="Igual (Enter)">=</button>
+            </div>
+
+            <div class="calculadora-ayuda">
+                <span><kbd>Esc</kbd> cerrar</span>
+                <span><kbd>Enter</kbd> igual</span>
+                <span><kbd>⌫</kbd> borrar</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <button type="button" id="@_panelId" class="calculadora-bolita" @onclick="Expandir" title="Expandir calculadora" aria-label="Expandir calculadora">
+            <span class="material-icons" data-handle="drag">calculate</span>
+        </button>
+    }
+}
+
+@code {
+    private string _panelId = $"fk-calc-{Guid.NewGuid():N}";
+    private string numeroActual = "0";
+    private string historial = string.Empty;
+    private decimal? numeroPrevio = null;
+    private char? operadorPendiente = null;
+    private bool reiniciarDisplay = false;
+    private DotNetObjectReference<CalculadoraModal>? _objRef;
+    private bool _dragInicializado = false;
+
+    protected override void OnInitialized()
+    {
+        Estado.AlCambiar += OnEstadoCambio;
+        Estado.AlCambiarMinimizada += OnMinimizadaCambio;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _objRef = DotNetObjectReference.Create(this);
+            try
+            {
+                await JS.InvokeVoidAsync("fkCalculadoraTeclado.registrar", _objRef);
+            }
+            catch
+            {
+            }
+        }
+
+        if (Estado.Abierta && !_dragInicializado)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("fkCalculadoraDrag.restaurarPosicion", _panelId);
+                await JS.InvokeVoidAsync("fkCalculadoraDrag.iniciar", _panelId, "[data-handle='drag']", _objRef);
+                _dragInicializado = true;
+            }
+            catch
+            {
+            }
+        }
+    }
+
+    private void OnEstadoCambio()
+    {
+        if (!Estado.Abierta)
+        {
+            ReiniciarEstado();
+            _dragInicializado = false;
+        }
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnMinimizadaCambio()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public void OnTeclaPresionada(string tecla)
+    {
+        if (!Estado.Abierta || Estado.Minimizada) return;
+
+        switch (tecla)
+        {
+            case "0": case "1": case "2": case "3": case "4":
+            case "5": case "6": case "7": case "8": case "9":
+                AgregarDigito(tecla[0]);
+                break;
+            case "+": case "-": case "*": case "/":
+                AplicarOperador(tecla[0]);
+                break;
+            case ".": case ",":
+                AgregarPunto();
+                break;
+            case "Enter": case "=":
+                Calcular();
+                break;
+            case "Backspace":
+                BorrarUltimo();
+                break;
+            case "Escape":
+                Cerrar();
+                break;
+            case "Delete":
+                Limpiar();
+                break;
+        }
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    [JSInvokable]
+    public void OnDragEnd(double x, double y)
+    {
+        Estado.ActualizarPosicion(x, y);
+    }
+
+    private void AgregarDigito(char digito)
+    {
+        if (reiniciarDisplay)
+        {
+            numeroActual = digito.ToString();
+            reiniciarDisplay = false;
+            return;
+        }
+
+        if (numeroActual == "0")
+        {
+            numeroActual = digito.ToString();
+        }
+        else if (numeroActual == "-0")
+        {
+            numeroActual = "-" + digito;
+        }
+        else
+        {
+            if (numeroActual.Length >= 15) return;
+            numeroActual += digito;
+        }
+    }
+
+    private void AgregarPunto()
+    {
+        if (reiniciarDisplay)
+        {
+            numeroActual = "0.";
+            reiniciarDisplay = false;
+            return;
+        }
+
+        if (!numeroActual.Contains('.'))
+            numeroActual += ".";
+    }
+
+    private void AplicarOperador(char operador)
+    {
+        if (operadorPendiente.HasValue && !reiniciarDisplay)
+        {
+            CalcularEncadenado(operador);
+            return;
+        }
+
+        numeroPrevio = ParsearDecimal(numeroActual);
+        operadorPendiente = operador;
+        reiniciarDisplay = true;
+        historial = $"{FormatearNumero(numeroPrevio.Value)} {OperadorSimbolo(operador)}";
+    }
+
+    private void Calcular()
+    {
+        if (!operadorPendiente.HasValue || !numeroPrevio.HasValue) return;
+
+        var opAnterior = OperadorSimbolo(operadorPendiente.Value);
+        var valorAnterior = FormatearNumero(numeroPrevio.Value);
+        var valorActual = numeroActual;
+        var actual = ParsearDecimal(numeroActual);
+
+        if (operadorPendiente == '/' && actual == 0m)
+        {
+            historial = $"{valorAnterior} {opAnterior} {valorActual} =";
+            numeroActual = "Error";
+            numeroPrevio = null;
+            operadorPendiente = null;
+            reiniciarDisplay = true;
+            return;
+        }
+
+        var resultado = operadorPendiente.Value switch
+        {
+            '+' => numeroPrevio.Value + actual,
+            '-' => numeroPrevio.Value - actual,
+            '*' => numeroPrevio.Value * actual,
+            '/' => numeroPrevio.Value / actual,
+            _ => actual
+        };
+
+        historial = $"{valorAnterior} {opAnterior} {valorActual} =";
+        numeroActual = FormatearNumero(resultado);
+        numeroPrevio = null;
+        operadorPendiente = null;
+        reiniciarDisplay = true;
+    }
+
+    private void CalcularEncadenado(char nuevoOperador)
+    {
+        if (!operadorPendiente.HasValue || !numeroPrevio.HasValue) return;
+
+        var actual = ParsearDecimal(numeroActual);
+
+        if (operadorPendiente == '/' && actual == 0m)
+        {
+            historial = $"{FormatearNumero(numeroPrevio.Value)} {OperadorSimbolo(operadorPendiente.Value)} {numeroActual} =";
+            numeroActual = "Error";
+            numeroPrevio = null;
+            operadorPendiente = null;
+            reiniciarDisplay = true;
+            return;
+        }
+
+        var resultado = operadorPendiente.Value switch
+        {
+            '+' => numeroPrevio.Value + actual,
+            '-' => numeroPrevio.Value - actual,
+            '*' => numeroPrevio.Value * actual,
+            '/' => numeroPrevio.Value / actual,
+            _ => actual
+        };
+
+        historial = $"{FormatearNumero(resultado)} {OperadorSimbolo(nuevoOperador)}";
+        numeroPrevio = resultado;
+        operadorPendiente = nuevoOperador;
+        numeroActual = FormatearNumero(resultado);
+        reiniciarDisplay = true;
+    }
+
+    private void Limpiar()
+    {
+        ReiniciarEstado();
+    }
+
+    private void BorrarUltimo()
+    {
+        if (reiniciarDisplay) return;
+
+        if (numeroActual.Length <= 1 || (numeroActual.Length == 2 && numeroActual.StartsWith('-')))
+        {
+            numeroActual = "0";
+        }
+        else
+        {
+            numeroActual = numeroActual[..^1];
+        }
+    }
+
+    private void CambiarSigno()
+    {
+        if (numeroActual == "0" || numeroActual == "0." || numeroActual == "Error") return;
+
+        if (numeroActual.StartsWith('-'))
+            numeroActual = numeroActual[1..];
+        else
+            numeroActual = "-" + numeroActual;
+    }
+
+    private void Cerrar() => Estado.Cerrar();
+
+    private void AlternarMinimizar() => Estado.AlternarMinimizar();
+
+    private void Expandir()
+    {
+        if (Estado.Minimizada)
+            Estado.Minimizada = false;
+    }
+
+    private void ReiniciarEstado()
+    {
+        numeroActual = "0";
+        numeroPrevio = null;
+        operadorPendiente = null;
+        reiniciarDisplay = false;
+        historial = string.Empty;
+    }
+
+    private decimal ParsearDecimal(string valor)
+    {
+        if (decimal.TryParse(valor, NumberStyles.Any, CultureInfo.CurrentCulture, out var v))
+            return v;
+        if (decimal.TryParse(valor.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out v))
+            return v;
+        return 0m;
+    }
+
+    private string FormatearNumero(decimal valor)
+    {
+        return valor.ToString("0.##########", CultureInfo.CurrentCulture);
+    }
+
+    private string OperadorSimbolo(char op) => op switch
+    {
+        '+' => "+",
+        '-' => "−",
+        '*' => "×",
+        '/' => "÷",
+        _ => op.ToString()
+    };
+
+    public async ValueTask DisposeAsync()
+    {
+        Estado.AlCambiar -= OnEstadoCambio;
+        Estado.AlCambiarMinimizada -= OnMinimizadaCambio;
+        try
+        {
+            await JS.InvokeVoidAsync("fkCalculadoraTeclado.limpiar");
+        }
+        catch
+        {
+        }
+        try
+        {
+            await JS.InvokeVoidAsync("fkCalculadoraDrag.detener");
+        }
+        catch
+        {
+        }
+        _objRef?.Dispose();
+    }
+}

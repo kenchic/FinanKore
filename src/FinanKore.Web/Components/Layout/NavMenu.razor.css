@@ -243,6 +243,29 @@
             color: var(--fk-magenta);
         }
 
+.sidebar-section-title {
+    padding: 0.5rem 1rem 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--fk-texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sidebar-utility {
+    width: 100%;
+    text-align: left;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: 0.25rem;
+}
+
+    .sidebar-utility:hover .material-icons {
+        color: var(--fk-magenta);
+    }
+
 @media (max-width: 768px) {
     .sidebar {
         width: 60px;
@@ -252,7 +275,9 @@
     .sidebar-nav-item span:not(.material-icons),
     .sidebar-user-info,
     .sidebar-logout span:not(.material-icons),
-    .sidebar-theme-toggle span:not(.material-icons) {
+    .sidebar-theme-toggle span:not(.material-icons),
+    .sidebar-utility span:not(.material-icons),
+    .sidebar-section-title {
         display: none;
     }
 
@@ -277,6 +302,11 @@
     }
 
     .sidebar-theme-toggle {
+        justify-content: center;
+        padding: 0.7rem;
+    }
+
+    .sidebar-utility {
         justify-content: center;
         padding: 0.7rem;
     }
