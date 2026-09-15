@@ -59,6 +59,29 @@
 
     private void IrARegistrar() => Navegacion.NavigateTo("/registrar");
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (Estado.Usuario is not null)
+        {
+            Navegacion.NavigateTo("/", forceLoad: false);
+            return;
+        }
+
+        try
+        {
+            var resultado = await AlmacenamientoSesion.GetAsync<UsuarioRegistradoDto>("usuario_sesion");
+            if (resultado.Success && resultado.Value is not null)
+            {
+                Estado.Usuario = resultado.Value;
+                Navegacion.NavigateTo("/", forceLoad: false);
+            }
+        }
+        catch
+        {
+            // Sin circuito (prerendering SSR) o sin sesión.
+        }
+    }
+
     private async Task HandleIniciarSesion()
     {
         cargando = true;

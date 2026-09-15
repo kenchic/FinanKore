@@ -12,8 +12,11 @@
 <aside class="sidebar @(estadoColapsado ? "colapsado" : "")">
     <div class="sidebar-brand">
         <span class="material-icons sidebar-brand-icon">account_balance</span>
-        <span class="sidebar-brand-text">FinanKore</span>
-        <button class="sidebar-toggle" @onclick="AlternarSidebar" title="@(estadoColapsado ? "Expandir menú" : "Colapsar menú")">
+        <div class="sidebar-brand-text-group">
+            <span class="sidebar-brand-text">FinanKore</span>
+            <span class="sidebar-brand-version">@ServicioVersion.Version</span>
+        </div>
+        <button class="sidebar-toggle" title="@(estadoColapsado ? "Expandir menú" : "Colapsar menú")" @onclick="AlternarSidebar">
             <span class="material-icons">@(estadoColapsado ? "chevron_right" : "chevron_left")</span>
         </button>
     </div>
@@ -256,7 +259,7 @@
         autenticado = false;
         usuarioNombre = string.Empty;
         usuarioCorreo = string.Empty;
-        Navegacion.NavigateTo("/", forceLoad: true);
+        Navegacion.NavigateTo("/iniciar-sesion", forceLoad: true);
     }
 
     private void AbrirCalculadora()

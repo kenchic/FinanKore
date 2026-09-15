@@ -1,0 +1,14 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Versionado automatico con MinVer: toma los tags de git (ej. v0.1.0).
+         Sin tag, usa el minimo declarado con sufijo -alpha. Nunca poner Version en csproj. -->
+    <MinVerMinimumMajorMinor>0.1</MinVerMinimumMajorMinor>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="8.0.0" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

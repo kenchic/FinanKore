@@ -1,4 +1,5 @@
 @page "/finanzas/proyectos/{proyectoId:guid}/conceptos"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 @rendermode InteractiveServer
 @using FinanKore.Web.Models
 @using FinanKore.Web.Servicios
@@ -18,6 +19,30 @@
             <RadzenButton Text="Agregar Concepto" Click="@AbrirModal" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" />
         </div>
     </div>
+    @if (!cargando && conceptos.Count > 0)
+    {
+        <div style="display: flex; gap: 2rem; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid var(--fk-gris-borde); flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons" style="color: var(--fk-verde); font-size: 1.25rem;">trending_up</span>
+                <span style="color: var(--fk-texto-secundario); font-weight: 500;">Entradas</span>
+                <strong style="color: var(--fk-verde);">$ @totalEntradas.ToString("N0")</strong>
+            </div>
+            <div style="width: 1px; height: 24px; background: var(--fk-gris-borde);"></div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons" style="color: var(--fk-magenta); font-size: 1.25rem;">trending_down</span>
+                <span style="color: var(--fk-texto-secundario); font-weight: 500;">Salidas</span>
+                <strong style="color: var(--fk-magenta);">$ (@totalSalidas.ToString("N0"))</strong>
+            </div>
+            <div style="width: 1px; height: 24px; background: var(--fk-gris-borde);"></div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="material-icons" style="color: @(totalGeneral >= 0 ? "var(--fk-azul)" : "var(--fk-magenta)"); font-size: 1.25rem;">account_balance_wallet</span>
+                <span style="color: var(--fk-texto-secundario); font-weight: 500;">Total</span>
+                <strong style="color: @(totalGeneral >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)");">
+                    $ @(totalGeneral >= 0 ? totalGeneral.ToString("N0") : "(" + Math.Abs(totalGeneral).ToString("N0") + ")")
+                </strong>
+            </div>
+        </div>
+    }
     <div class="tabla-body">
         @if (modalVisible)
         {
@@ -206,6 +231,9 @@
     private Guid conceptoEliminandoId = Guid.Empty;
     private string conceptoEliminandoNombre = string.Empty;
     private List<TipoMovimientoOpcion> tiposMovimiento = [new(1, "Entrada"), new(2, "Salida")];
+    private decimal totalEntradas;
+    private decimal totalSalidas;
+    private decimal totalGeneral;
 
     protected override async Task OnInitializedAsync()
     {
@@ -234,10 +262,11 @@
         {
             conceptos = await ServicioFinanzas.ObtenerConceptosAsync(ProyectoId);
             CalcularCategoriasUsadas();
+            CalcularTotales();
             if (categoriaActivaId == Guid.Empty || !categoriasUsadas.Any(c => c.Id == categoriaActivaId))
                 categoriaActivaId = categoriasUsadas.FirstOrDefault()?.Id ?? Guid.Empty;
         }
-        catch { conceptos = []; categoriasUsadas = []; categoriaActivaId = Guid.Empty; }
+        catch { conceptos = []; categoriasUsadas = []; categoriaActivaId = Guid.Empty; totalEntradas = totalSalidas = totalGeneral = 0; }
         finally { cargando = false; }
     }
 
@@ -245,6 +274,13 @@
     {
         var idsUsados = conceptos.Select(c => c.CategoriaId).Distinct().ToList();
         categoriasUsadas = categorias.Where(c => idsUsados.Contains(c.Id)).OrderBy(c => c.Nombre).ToList();
+    }
+
+    private void CalcularTotales()
+    {
+        totalEntradas = conceptos.Where(c => c.Tipo == 1).Sum(c => c.Valor);
+        totalSalidas  = conceptos.Where(c => c.Tipo == 2).Sum(c => c.Valor);
+        totalGeneral  = totalEntradas - totalSalidas;
     }
 
     private void AbrirModal()
