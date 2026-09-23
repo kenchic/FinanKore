@@ -5,6 +5,7 @@
 @inject NavigationManager Navegacion
 @inject ProtectedSessionStorage AlmacenamientoSesion
 @inject EstadoAutenticacion Estado
+@inject ILogger<IniciarSesion> Logger
 
 <PageTitle>Iniciar Sesión - FinanKore</PageTitle>
 
@@ -93,6 +94,8 @@
             {
                 await AlmacenamientoSesion.SetAsync("usuario_sesion", resultado);
                 Estado.Usuario = resultado;
+
+                Logger.LogInformation("LOGIN-OK: usuario {Correo} autenticado, navegando a /", resultado.Correo);
 
                 Notificacion.Notify(new NotificationMessage
                 {

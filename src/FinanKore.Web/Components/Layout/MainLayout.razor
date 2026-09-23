@@ -1,5 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @inject EstadoSidebar EstadoSidebar
+@inject EstadoAutenticacion Estado
+@inject AutenticacionStateProvider ProveedorAutenticacion
+@inject NavigationManager Navegacion
+@inject ILogger<MainLayout> Logger
 @implements IDisposable
 
 <div class="layout-dashboard">
@@ -14,7 +18,19 @@
             </div>
         </header>
         <main class="layout-main">
-            @Body
+            @if (RestaurandoSesion)
+            {
+                <p>Cargando sesión…</p>
+            }
+            else if (EsRutaPublica || Estado.Usuario is not null)
+            {
+                @Body
+            }
+            else
+            {
+                Logger.LogWarning("GUARD: ruta protegida sin sesion: {Ruta} -> redirigiendo a iniciar-sesion", new Uri(Navegacion.Uri).AbsolutePath);
+                <RedirigirAIniciarSesion />
+            }
         </main>
     </div>
 </div>
@@ -28,11 +44,41 @@
 </div>
 
 @code {
+    private static readonly string[] RutasPublicas = { "/iniciar-sesion", "/registrar", "/not-found" };
+
     private string TituloPagina => "FinanKore";
+
+    private bool EsRutaPublica
+    {
+        get
+        {
+            var ruta = new Uri(Navegacion.Uri).AbsolutePath;
+            if (ruta.Length > 1 && ruta.EndsWith('/'))
+            {
+                ruta = ruta[..^1];
+            }
+            return RutasPublicas.Contains(ruta, StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
+    private bool RestaurandoSesion { get; set; } = true;
 
     protected override void OnInitialized()
     {
         EstadoSidebar.AlCambiar += OnSidebarCambio;
+        Estado.AlCambiarEstado += OnEstadoAutenticacionCambio;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+        await ProveedorAutenticacion.RestaurarSesionAsync();
+        RestaurandoSesion = false;
+        await InvokeAsync(StateHasChanged);
     }
 
     private void OnSidebarCambio()
@@ -40,8 +86,14 @@
         InvokeAsync(StateHasChanged);
     }
 
+    private void OnEstadoAutenticacionCambio()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
     public void Dispose()
     {
         EstadoSidebar.AlCambiar -= OnSidebarCambio;
+        Estado.AlCambiarEstado -= OnEstadoAutenticacionCambio;
     }
 }

@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Options;
 using FinanKore.Web.Components;
 using FinanKore.Web.Servicios;
@@ -11,8 +12,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Persistir el key ring de DataProtection (antiforgery/circuitos) fuera del contenedor:
+// sin esto, cada recreation del contenedor invalida las cookies de navegadores abiertos
+// ("The key {GUID} was not found in the key ring").
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "keys")))
+    .SetApplicationName("FinanKore");
+
 builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddScoped<AuthenticationStateProvider, AutenticacionStateProvider>();
+builder.Services.AddScoped<AutenticacionStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
+    sp.GetRequiredService<AutenticacionStateProvider>());
 builder.Services.AddAuthorization();
 builder.Services
     .AddAuthentication("SesionAnonima")

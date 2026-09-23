@@ -21,23 +21,30 @@ public sealed class AutenticacionStateProvider : AuthenticationStateProvider
         _estado.AlCambiarEstado += OnEstadoCambio;
     }
 
-    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+    public async Task RestaurarSesionAsync()
     {
-        if (_estado.Usuario is null)
+        if (_estado.Usuario is not null)
         {
-            try
+            return;
+        }
+
+        try
+        {
+            var resultado = await _almacenamiento.GetAsync<UsuarioRegistradoDto>(ClaveSesion);
+            if (resultado.Success && resultado.Value is not null)
             {
-                var resultado = await _almacenamiento.GetAsync<UsuarioRegistradoDto>(ClaveSesion);
-                if (resultado.Success && resultado.Value is not null)
-                {
-                    _estado.Usuario = resultado.Value;
-                }
-            }
-            catch
-            {
-                // Sin circuito disponible (prerendering SSR) o sesión expirada.
+                _estado.Usuario = resultado.Value;
             }
         }
+        catch
+        {
+            // Sin circuito disponible (prerendering SSR) o sesión expirada.
+        }
+    }
+
+    public override async Task<AuthenticationState> GetAuthenticationStateAsync()
+    {
+        await RestaurarSesionAsync();
 
         var usuario = _estado.Usuario;
         if (usuario is null)
