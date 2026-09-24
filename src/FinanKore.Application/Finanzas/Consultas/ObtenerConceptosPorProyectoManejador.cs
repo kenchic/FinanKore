@@ -25,7 +25,8 @@ public sealed class ObtenerConceptosPorProyectoManejador(
                 c.Tipo,
                 c.ProyectoId,
                 c.CategoriaId,
-                c.FechaCreacion))
+                c.FechaCreacion,
+                c.CategoriaSecundariaId))
             .ToList();
     }
 }

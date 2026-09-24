@@ -32,15 +32,32 @@ public sealed class Proyecto : Entidad, IRaizAgregado
         return new Proyecto(nombre);
     }
 
-    public Concepto CrearConcepto(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId)
+    public Concepto CrearConcepto(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId, Guid? categoriaSecundariaId = null)
     {
         if (_conceptos.Any(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) && c.CategoriaId == categoriaId))
             throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre y categoría en este proyecto.");
 
-        var concepto = Concepto.Crear(nombre, valor, tipo, Id, categoriaId);
+        var concepto = Concepto.Crear(nombre, valor, tipo, Id, categoriaId, categoriaSecundariaId);
         _conceptos.Add(concepto);
 
         return concepto;
+    }
+
+    public void ActualizarConcepto(Guid conceptoId, string nombre, decimal valor, Guid categoriaId, Guid? categoriaSecundariaId)
+    {
+        var concepto = _conceptos.FirstOrDefault(c => c.Id == conceptoId)
+            ?? throw new Excepciones.ExcepcionDominio("El concepto no existe en este proyecto.");
+
+        if (_conceptos.Any(c =>
+                c.Id != conceptoId &&
+                c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) &&
+                c.CategoriaId == categoriaId))
+            throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre y categoría en este proyecto.");
+
+        concepto.ActualizarNombre(nombre);
+        concepto.ActualizarValor(valor);
+        concepto.ActualizarCategoria(categoriaId);
+        concepto.ActualizarCategoriaSecundaria(categoriaSecundariaId);
     }
 
     public void EliminarConcepto(Guid conceptoId)

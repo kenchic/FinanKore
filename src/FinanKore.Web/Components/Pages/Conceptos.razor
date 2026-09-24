@@ -63,6 +63,9 @@ else
                         <RadzenLabel Text="Categoría" Component="CatCon" />
                         <RadzenDropDown Name="CatCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaId" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
 
+                        <RadzenLabel Text="Categoría secundaria (opcional)" Component="CatSecCon" />
+                        <RadzenDropDown Name="CatSecCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaSecundariaId" AllowClear="true" AllowFiltering="true" Placeholder="Sin categoría secundaria..." Style="width: 100%;" />
+
                         <div style="display: flex; gap: 0.5rem;">
                             <RadzenButton Text="Guardar" Click="@HandleCrear" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
                             <RadzenButton Text="Cancelar" Click="@CancelarFormulario" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
@@ -185,7 +188,7 @@ else
 
     private void MostrarFormulario()
     {
-        modelo = new CrearConceptoModelo { ProyectoId = proyectoSeleccionadoId, Nombre = string.Empty, Valor = 0, Tipo = 1 };
+        modelo = new CrearConceptoModelo { ProyectoId = proyectoSeleccionadoId, Nombre = string.Empty, Valor = 0, Tipo = 1, CategoriaSecundariaId = null };
         mostrandoFormulario = true;
     }
 
@@ -212,6 +215,12 @@ else
             Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría obligatoria", Detail = "Debés seleccionar una categoría.", Duration = 4000 });
             return;
         }
+        if (modelo.CategoriaSecundariaId is Guid sec && sec != Guid.Empty && sec == modelo.CategoriaId)
+        {
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría repetida", Detail = "La categoría secundaria no puede ser igual a la principal.", Duration = 4000 });
+            return;
+        }
+        modelo.CategoriaSecundariaId = modelo.CategoriaSecundariaId is Guid s && s != Guid.Empty ? s : null;
 
         try
         {

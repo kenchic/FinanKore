@@ -1,8 +1,5 @@
 using FinanKore.Aplicacion.Configuracion.Comandos;
-using FinanKore.Aplicacion.Finanzas.Comandos;
 using FinanKore.Aplicacion.Comun.Interfaces;
-using FinanKore.Aplicacion.Perfil.Comandos;
-using FinanKore.Aplicacion.Proyecto.Comandos;
 using FinanKore.Dominio.Configuracion;
 using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Perfil;
@@ -34,14 +31,6 @@ public static class InyeccionDependencia
         servicios.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
         servicios.AddScoped<IReporteRepositorio, ReporteRepositorio>();
         servicios.AddScoped<IPreferenciasRepositorio, PreferenciasRepositorio>();
-        servicios.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssemblyContaining<RegistrarUsuarioComando>());
-        servicios.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssemblyContaining<CrearProyectoComando>());
-        servicios.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssemblyContaining<CrearCategoriaComando>());
-        servicios.AddMediatR(cfg =>
-            cfg.RegisterServicesFromAssemblyContaining<CrearReporteComando>());
         servicios.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssemblyContaining<CambiarTemaComando>());
 

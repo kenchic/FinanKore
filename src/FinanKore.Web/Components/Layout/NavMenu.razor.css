@@ -54,6 +54,7 @@
 }
 
 .sidebar.colapsado .sidebar-brand-text-group,
+.sidebar.colapsado .sidebar-section-title,
 .sidebar.colapsado .sidebar-nav-item span:not(.material-icons),
 .sidebar.colapsado .sidebar-user-info,
 .sidebar.colapsado .sidebar-logout span:not(.material-icons),

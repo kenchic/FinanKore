@@ -51,6 +51,11 @@
         }
         else
         {
+            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0 0; flex-wrap: wrap;">
+                <span class="material-icons" style="color: var(--fk-texto-secundario); font-size: 1.1rem;">filter_alt</span>
+                <span style="color: var(--fk-texto-secundario); font-weight: 500;">Ver por</span>
+                <RadzenDropDown Name="FiltroCategoria" Data="@opcionesFiltroCategoria" TextProperty="Texto" ValueProperty="Valor" @bind-Value="@filtroPorSecundaria" Change="@CambiarFiltroCategoria" Style="width: 260px;" />
+            </div>
             <div class="pestanas-categorias pestanas-categorias-violeta">
                 @foreach (var cat in categoriasUsadas)
                 {
@@ -59,13 +64,13 @@
                             @onclick="@(() => categoriaActivaId = cat.Id)">
                         <span class="material-icons" style="font-size: 0.95rem;">label</span>
                         @cat.Nombre
-                        <span class="badge-conteo">@conceptosReporte.Count(c => c.CategoriaId == cat.Id)</span>
+                        <span class="badge-conteo">@conceptosReporte.Count(c => CategoriaFiltro(c) == cat.Id)</span>
                     </button>
                 }
             </div>
             <div class="pestana-contenido">
                 @{
-                    var conceptosDeCat = conceptosReporte.Where(c => c.CategoriaId == categoriaActivaId).OrderBy(c => c.Nombre).ToList();
+                    var conceptosDeCat = conceptosReporte.Where(c => CategoriaFiltro(c) == categoriaActivaId).OrderBy(c => c.Nombre).ToList();
                     var totalCat = conceptosDeCat.Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
                 }
                 @if (conceptosDeCat.Count == 0)
@@ -125,6 +130,8 @@
     private string nombreProyecto = string.Empty;
     private bool cargando = true;
     private CrearReporteModelo modelo = new();
+    private bool filtroPorSecundaria;
+    private List<FiltroCategoriaOpcion> opcionesFiltroCategoria = [new(false, "Categoría principal"), new(true, "Categoría secundaria")];
 
     protected override async Task OnInitializedAsync()
     {
@@ -163,8 +170,21 @@
 
     private void CalcularCategoriasUsadas()
     {
-        var idsUsados = conceptosReporte.Select(c => c.CategoriaId).Distinct().ToList();
+        var idsUsados = filtroPorSecundaria
+            ? conceptosReporte.Where(c => c.CategoriaSecundariaId.HasValue).Select(c => c.CategoriaSecundariaId!.Value).Distinct().ToList()
+            : conceptosReporte.Select(c => c.CategoriaId).Distinct().ToList();
         categoriasUsadas = categorias.Where(c => idsUsados.Contains(c.Id)).OrderBy(c => c.Nombre).ToList();
+    }
+
+    private Guid? CategoriaFiltro(ConceptoReporteDto concepto)
+        => filtroPorSecundaria ? concepto.CategoriaSecundariaId : concepto.CategoriaId;
+
+    private void CambiarFiltroCategoria()
+    {
+        CalcularCategoriasUsadas();
+        if (categoriaActivaId == Guid.Empty || !categoriasUsadas.Any(c => c.Id == categoriaActivaId))
+            categoriaActivaId = categoriasUsadas.FirstOrDefault()?.Id ?? Guid.Empty;
+        StateHasChanged();
     }
 
     private async Task HandleCrear()
@@ -190,4 +210,6 @@
             Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = resumen, Detail = ex.Message, Duration = 8000 });
         }
     }
+
+    private sealed record FiltroCategoriaOpcion(bool Valor, string Texto);
 }

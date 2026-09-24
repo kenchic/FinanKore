@@ -195,11 +195,13 @@ public sealed class ServicioFinanzas
         Guid conceptoId,
         string nombre,
         decimal valor,
+        Guid categoriaId,
+        Guid? categoriaSecundariaId,
         CancellationToken token = default)
     {
         var respuesta = await _http.PutAsJsonAsync(
             $"api/reportes/{reporteId}/conceptos/{conceptoId}",
-            new { nombre, valor },
+            new { nombre, valor, categoriaId, categoriaSecundariaId },
             token);
 
         await EnsureSuccessAsync(respuesta, token);
@@ -213,11 +215,13 @@ public sealed class ServicioFinanzas
         Guid conceptoId,
         string nombre,
         decimal valor,
+        Guid categoriaId,
+        Guid? categoriaSecundariaId,
         CancellationToken token = default)
     {
         var respuesta = await _http.PutAsJsonAsync(
             $"api/finanzas/proyectos/{proyectoId}/conceptos/{conceptoId}",
-            new { nombre, valor },
+            new { nombre, valor, categoriaId, categoriaSecundariaId },
             token);
 
         await EnsureSuccessAsync(respuesta, token);
@@ -229,7 +233,7 @@ public sealed class ServicioFinanzas
 
 public sealed record ProyectoCreadoDto(Guid Id, string Nombre);
 
-public sealed record ConceptoCreadoDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ProyectoId, Guid CategoriaId, DateTimeOffset FechaCreacion);
+public sealed record ConceptoCreadoDto(Guid Id, string Nombre, decimal Valor, int Tipo, Guid ProyectoId, Guid CategoriaId, DateTimeOffset FechaCreacion, Guid? CategoriaSecundariaId = null);
 
 public sealed record CategoriaCreadaDto(Guid Id, string Nombre, string? Descripcion, bool Activo, DateTimeOffset FechaCreacion);
 

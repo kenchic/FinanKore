@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanKore.Application\FinanKore.Application.csproj" />
+    <ProjectReference Include="..\FinanKore.SharedUI\FinanKore.SharedUI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

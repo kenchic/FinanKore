@@ -6,4 +6,6 @@ namespace FinanKore.Aplicacion.Proyecto.Comandos;
 public sealed record ActualizarConceptoReporteComando(
     Guid ConceptoId,
     string Nombre,
-    decimal Valor) : IRequest<ConceptoReporteDto>;
+    decimal Valor,
+    Guid CategoriaId,
+    Guid? CategoriaSecundariaId) : IRequest<ConceptoReporteDto>;

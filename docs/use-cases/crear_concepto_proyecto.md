@@ -73,6 +73,7 @@ graph TD
 public sealed record CrearConceptoComando(
     Guid ProyectoId,
     Guid CategoriaId,
+    Guid? CategoriaSecundariaId,
     string Nombre,
     decimal Valor,
     TipoMovimiento Tipo);
@@ -87,18 +88,19 @@ public sealed record ConceptoDto(
     TipoMovimiento Tipo,
     Guid ProyectoId,
     Guid CategoriaId,
-    DateTimeOffset FechaCreacion);
+    DateTimeOffset FechaCreacion,
+    Guid? CategoriaSecundariaId = null);
 ```
 
 ### Lógica de Dominio
 La lógica de creación de conceptos reside en el **Agregado Raíz `Proyecto`**:
 ```csharp
-public Concepto CrearConcepto(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId)
+public Concepto CrearConcepto(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId, Guid? categoriaSecundariaId = null)
 {
-    if (_conceptos.Any(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
-        throw new ExcepcionDominio("Ya existe un concepto con el mismo nombre en este proyecto.");
+    if (_conceptos.Any(c => c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) && c.CategoriaId == categoriaId))
+        throw new ExcepcionDominio("Ya existe un concepto con el mismo nombre y categoría en este proyecto.");
 
-    var concepto = Concepto.Crear(nombre, valor, tipo, Id, categoriaId);
+    var concepto = Concepto.Crear(nombre, valor, tipo, Id, categoriaId, categoriaSecundariaId);
     _conceptos.Add(concepto);
     return concepto;
 }
@@ -109,6 +111,7 @@ La entidad `Concepto` también contiene invariantes:
 - Valor no negativo.
 - Tipo de movimiento válido (enum).
 - ProyectoId y CategoriaId no vacíos.
+- CategoriaSecundariaId opcional: no puede ser `Guid.Empty` ni igual a la categoría principal (ver caso de uso [asignar_categoria_secundaria](asignar_categoria_secundaria.md)).
 
 ### Flujo de Secuencia
 
@@ -131,7 +134,7 @@ sequenceDiagram
     Inf->>DB: SELECT ... FROM Proyectos INCLUDE Conceptos
     DB-->>Inf: Proyecto con conceptos
     Inf-->>App: Proyecto
-    App->>Dom: proyecto.CrearConcepto(nombre, valor, tipo, categoriaId)
+    App->>Dom: proyecto.CrearConcepto(nombre, valor, tipo, categoriaId, categoriaSecundariaId?)
     Dom->>Dom: Validar invariantes y agregar a lista
     Dom-->>App: Concepto creado
     App->>Inf: GuardarCambiosAsync()
@@ -146,5 +149,5 @@ sequenceDiagram
 
 ### Persistencia
 - **Tabla**: `Finanzas.Conceptos`
-- **Columnas**: `Id` (PK), `Nombre`, `Valor` (decimal(18,2)), `Tipo` (int), `ProyectoId` (FK), `CategoriaId` (FK), `FechaCreacion`
+- **Columnas**: `Id` (PK), `Nombre`, `Valor` (decimal(18,2)), `Tipo` (int), `ProyectoId` (FK), `CategoriaId` (FK), `CategoriaSecundariaId` (FK nullable), `FechaCreacion`
 - **Índices**: `IX_Conceptos_ProyectoId`, `IX_Conceptos_CategoriaId`, `UQ_Conceptos_ProyectoId_Nombre`

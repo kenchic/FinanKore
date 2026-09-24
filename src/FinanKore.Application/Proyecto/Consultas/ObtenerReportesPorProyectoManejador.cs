@@ -29,7 +29,8 @@ public sealed class ObtenerReportesPorProyectoManejador(
                         (int)c.Tipo,
                         c.ReporteId,
                         c.CategoriaId,
-                        c.FechaCreacion))
+                        c.FechaCreacion,
+                        c.CategoriaSecundariaId))
                     .ToList()))
             .ToList();
     }

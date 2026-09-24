@@ -17,7 +17,7 @@ public sealed class CrearConceptoReporteManejador(
         var reporte = await repositorio.ObtenerPorIdConConceptosAsync(comando.ReporteId, token)
             ?? throw new global::FinanKore.Dominio.Excepciones.ExcepcionDominio("El reporte no existe.");
 
-        var concepto = reporte.CrearConceptoReporte(comando.Nombre, comando.Valor, comando.Tipo, comando.CategoriaId);
+        var concepto = reporte.CrearConceptoReporte(comando.Nombre, comando.Valor, comando.Tipo, comando.CategoriaId, comando.CategoriaSecundariaId);
 
         await unidadDeTrabajo.GuardarCambiosAsync(token);
 
@@ -28,6 +28,7 @@ public sealed class CrearConceptoReporteManejador(
             (int)concepto.Tipo,
             concepto.ReporteId,
             concepto.CategoriaId,
-            concepto.FechaCreacion);
+            concepto.FechaCreacion,
+            concepto.CategoriaSecundariaId);
     }
 }

@@ -11,6 +11,7 @@ public sealed class Concepto : Entidad
     public TipoMovimiento Tipo { get; private set; }
     public Guid ProyectoId { get; private set; }
     public Guid CategoriaId { get; private set; }
+    public Guid? CategoriaSecundariaId { get; private set; }
     public DateTimeOffset FechaCreacion { get; private set; }
 
     private Concepto()
@@ -18,7 +19,7 @@ public sealed class Concepto : Entidad
         Nombre = string.Empty;
     }
 
-    private Concepto(string nombre, decimal valor, TipoMovimiento tipo, Guid proyectoId, Guid categoriaId)
+    private Concepto(string nombre, decimal valor, TipoMovimiento tipo, Guid proyectoId, Guid categoriaId, Guid? categoriaSecundariaId)
     {
         Id = Guid.NewGuid();
         Nombre = nombre;
@@ -26,12 +27,13 @@ public sealed class Concepto : Entidad
         Tipo = tipo;
         ProyectoId = proyectoId;
         CategoriaId = categoriaId;
+        CategoriaSecundariaId = categoriaSecundariaId;
         FechaCreacion = DateTimeOffset.UtcNow;
 
-        AgregarEvento(new ConceptoCreado(Id, Nombre, Valor, Tipo, ProyectoId, CategoriaId));
+        AgregarEvento(new ConceptoCreado(Id, Nombre, Valor, Tipo, ProyectoId, CategoriaId, CategoriaSecundariaId));
     }
 
-    public static Concepto Crear(string nombre, decimal valor, TipoMovimiento tipo, Guid proyectoId, Guid categoriaId)
+    public static Concepto Crear(string nombre, decimal valor, TipoMovimiento tipo, Guid proyectoId, Guid categoriaId, Guid? categoriaSecundariaId = null)
     {
         if (string.IsNullOrWhiteSpace(nombre))
             throw new Excepciones.ExcepcionDominio("El nombre del concepto es obligatorio.");
@@ -51,7 +53,20 @@ public sealed class Concepto : Entidad
         if (categoriaId == Guid.Empty)
             throw new Excepciones.ExcepcionDominio("La categoría asociada es obligatoria.");
 
-        return new Concepto(nombre.Trim(), valor, tipo, proyectoId, categoriaId);
+        var secundaria = ValidarCategoriaSecundaria(categoriaSecundariaId);
+
+        if (secundaria == categoriaId)
+            throw new Excepciones.ExcepcionDominio("La categoría secundaria no puede ser igual a la categoría principal.");
+
+        return new Concepto(nombre.Trim(), valor, tipo, proyectoId, categoriaId, secundaria);
+    }
+
+    private static Guid? ValidarCategoriaSecundaria(Guid? categoriaSecundariaId)
+    {
+        if (categoriaSecundariaId is null || categoriaSecundariaId.Value != Guid.Empty)
+            return categoriaSecundariaId;
+
+        throw new Excepciones.ExcepcionDominio("La categoría secundaria no es válida.");
     }
 
     public void ActualizarNombre(string nombre)
@@ -79,5 +94,24 @@ public sealed class Concepto : Entidad
             throw new Excepciones.ExcepcionDominio("El tipo de movimiento no es válido.");
 
         Tipo = tipo;
+    }
+
+    public void ActualizarCategoria(Guid categoriaId)
+    {
+        if (categoriaId == Guid.Empty)
+            throw new Excepciones.ExcepcionDominio("La categoría asociada es obligatoria.");
+
+        CategoriaId = categoriaId;
+    }
+
+    public void ActualizarCategoriaSecundaria(Guid? categoriaSecundariaId)
+    {
+        if (categoriaSecundariaId.HasValue && categoriaSecundariaId.Value == Guid.Empty)
+            throw new Excepciones.ExcepcionDominio("La categoría secundaria no es válida.");
+
+        if (categoriaSecundariaId.HasValue && categoriaSecundariaId.Value == CategoriaId)
+            throw new Excepciones.ExcepcionDominio("La categoría secundaria no puede ser igual a la categoría principal.");
+
+        CategoriaSecundariaId = categoriaSecundariaId;
     }
 }

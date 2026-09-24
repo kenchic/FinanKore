@@ -19,8 +19,15 @@ public sealed class ActualizarConceptoManejador(
         if (concepto is null)
             throw new InvalidOperationException($"No se encontró el concepto Id {comando.ConceptoId}");
 
-        concepto.ActualizarNombre(comando.Nombre);
-        concepto.ActualizarValor(comando.Valor);
+        var proyecto = await repositorio.ObtenerPorIdConConceptosAsync(concepto.ProyectoId, token)
+            ?? throw new InvalidOperationException($"No se encontró el proyecto Id {concepto.ProyectoId}");
+
+        proyecto.ActualizarConcepto(
+            comando.ConceptoId,
+            comando.Nombre,
+            comando.Valor,
+            comando.CategoriaId,
+            comando.CategoriaSecundariaId);
 
         await unidadDeTrabajo.GuardarCambiosAsync(token);
 
@@ -31,6 +38,7 @@ public sealed class ActualizarConceptoManejador(
             concepto.Tipo,
             concepto.ProyectoId,
             concepto.CategoriaId,
-            concepto.FechaCreacion);
+            concepto.FechaCreacion,
+            concepto.CategoriaSecundariaId);
     }
 }

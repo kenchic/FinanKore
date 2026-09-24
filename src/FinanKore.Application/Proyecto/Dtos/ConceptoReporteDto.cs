@@ -7,4 +7,5 @@ public sealed record ConceptoReporteDto(
     int Tipo,
     Guid ReporteId,
     Guid CategoriaId,
-    DateTimeOffset FechaCreacion);
+    DateTimeOffset FechaCreacion,
+    Guid? CategoriaSecundariaId = null);

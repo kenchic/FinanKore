@@ -1,3 +1,4 @@
+using FinanKore.Dominio.Finanzas;
 using FinanKore.Dominio.Proyecto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -31,6 +32,18 @@ public sealed class ConceptoReporteConfiguracion : IEntityTypeConfiguration<Conc
         builder.Property(c => c.CategoriaId)
             .IsRequired();
 
+        builder.Property(c => c.CategoriaSecundariaId);
+
+        builder.HasOne<Categoria>()
+            .WithMany()
+            .HasForeignKey(c => c.CategoriaId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne<Categoria>()
+            .WithMany()
+            .HasForeignKey(c => c.CategoriaSecundariaId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.Property(c => c.FechaCreacion)
             .IsRequired();
 
@@ -39,6 +52,9 @@ public sealed class ConceptoReporteConfiguracion : IEntityTypeConfiguration<Conc
 
         builder.HasIndex(c => c.CategoriaId)
             .HasDatabaseName("IX_ConceptoReportes_CategoriaId");
+
+        builder.HasIndex(c => c.CategoriaSecundariaId)
+            .HasDatabaseName("IX_ConceptoReportes_CategoriaSecundariaId");
 
         builder.HasIndex(c => new { c.ReporteId, c.Nombre, c.Tipo, c.CategoriaId })
             .IsUnique()

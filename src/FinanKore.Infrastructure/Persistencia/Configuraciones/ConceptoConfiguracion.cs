@@ -31,6 +31,18 @@ public sealed class ConceptoConfiguracion : IEntityTypeConfiguration<Concepto>
         builder.Property(c => c.CategoriaId)
             .IsRequired();
 
+        builder.Property(c => c.CategoriaSecundariaId);
+
+        builder.HasOne<Categoria>()
+            .WithMany()
+            .HasForeignKey(c => c.CategoriaId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.HasOne<Categoria>()
+            .WithMany()
+            .HasForeignKey(c => c.CategoriaSecundariaId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.Property(c => c.FechaCreacion)
             .IsRequired();
 
@@ -39,6 +51,9 @@ public sealed class ConceptoConfiguracion : IEntityTypeConfiguration<Concepto>
 
         builder.HasIndex(c => c.CategoriaId)
             .HasDatabaseName("IX_Conceptos_CategoriaId");
+
+        builder.HasIndex(c => c.CategoriaSecundariaId)
+            .HasDatabaseName("IX_Conceptos_CategoriaSecundariaId");
 
         builder.HasIndex(c => new { c.ProyectoId, c.Nombre, c.CategoriaId })
             .IsUnique()

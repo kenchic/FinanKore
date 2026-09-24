@@ -29,7 +29,8 @@ public sealed class CrearReporteManejador(
                 concepto.Nombre,
                 concepto.Valor,
                 concepto.Tipo,
-                concepto.CategoriaId);
+                concepto.CategoriaId,
+                concepto.CategoriaSecundariaId);
         }
 
         await repositorio.AgregarAsync(reporte, token);

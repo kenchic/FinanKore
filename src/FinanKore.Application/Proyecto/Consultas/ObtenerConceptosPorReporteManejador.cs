@@ -25,7 +25,8 @@ public sealed class ObtenerConceptosPorReporteManejador(
                 (int)c.Tipo,
                 c.ReporteId,
                 c.CategoriaId,
-                c.FechaCreacion))
+                c.FechaCreacion,
+                c.CategoriaSecundariaId))
             .ToList();
     }
 }

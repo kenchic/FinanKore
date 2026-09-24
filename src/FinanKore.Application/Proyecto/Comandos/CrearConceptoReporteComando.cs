@@ -7,6 +7,7 @@ namespace FinanKore.Aplicacion.Proyecto.Comandos;
 public sealed record CrearConceptoReporteComando(
     Guid ReporteId,
     Guid CategoriaId,
+    Guid? CategoriaSecundariaId,
     string Nombre,
     decimal Valor,
     TipoMovimiento Tipo) : IRequest<ConceptoReporteDto>;

@@ -9,4 +9,5 @@ public sealed record ConceptoDto(
     TipoMovimiento Tipo,
     Guid ProyectoId,
     Guid CategoriaId,
-    DateTimeOffset FechaCreacion);
+    DateTimeOffset FechaCreacion,
+    Guid? CategoriaSecundariaId = null);

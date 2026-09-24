@@ -17,7 +17,7 @@ public sealed class CrearConceptoManejador(
         var proyecto = await repositorio.ObtenerPorIdConConceptosAsync(comando.ProyectoId, token)
             ?? throw new global::FinanKore.Dominio.Excepciones.ExcepcionDominio("El proyecto no existe.");
 
-        var concepto = proyecto.CrearConcepto(comando.Nombre, comando.Valor, comando.Tipo, comando.CategoriaId);
+        var concepto = proyecto.CrearConcepto(comando.Nombre, comando.Valor, comando.Tipo, comando.CategoriaId, comando.CategoriaSecundariaId);
 
         await unidadDeTrabajo.GuardarCambiosAsync(token);
 
@@ -28,6 +28,7 @@ public sealed class CrearConceptoManejador(
             concepto.Tipo,
             concepto.ProyectoId,
             concepto.CategoriaId,
-            concepto.FechaCreacion);
+            concepto.FechaCreacion,
+            concepto.CategoriaSecundariaId);
     }
 }

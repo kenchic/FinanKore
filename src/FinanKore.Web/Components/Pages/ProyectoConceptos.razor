@@ -65,6 +65,9 @@
                         <RadzenLabel Text="Categoría" Component="CatCon" />
                         <RadzenDropDown Name="CatCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaId" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
 
+                        <RadzenLabel Text="Categoría secundaria (opcional)" Component="CatSecCon" />
+                        <RadzenDropDown Name="CatSecCon" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modelo.CategoriaSecundariaId" AllowClear="true" AllowFiltering="true" Placeholder="Sin categoría secundaria..." Style="width: 100%;" />
+
                         <div class="fk-modal-actions">
                             <RadzenButton Text="Guardar" Click="@GuardarConcepto" ButtonStyle="ButtonStyle.Primary" Size="ButtonSize.Small" Style="flex: 1;" />
                             <RadzenButton Text="Cancelar" Click="@CerrarModal" ButtonStyle="ButtonStyle.Secondary" Size="ButtonSize.Small" Style="flex: 1;" />
@@ -91,6 +94,16 @@
                         <div>
                             <RadzenLabel Text="Valor" Component="ValorEdit" />
                             <RadzenNumeric Name="ValorEdit" @bind-Value="@modeloEditar.Valor" Min="0" Style="width: 100%;" />
+                        </div>
+
+                        <div>
+                            <RadzenLabel Text="Categoría principal" Component="CatEdit" />
+                            <RadzenDropDown Name="CatEdit" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modeloEditar.CategoriaId" AllowFiltering="true" Placeholder="Seleccionar categoría..." Style="width: 100%;" />
+                        </div>
+
+                        <div>
+                            <RadzenLabel Text="Categoría secundaria (opcional)" Component="CatSecEdit" />
+                            <RadzenDropDown Name="CatSecEdit" Data="@categorias" TextProperty="Nombre" ValueProperty="Id" @bind-Value="@modeloEditar.CategoriaSecundariaId" AllowClear="true" AllowFiltering="true" Placeholder="Sin categoría secundaria..." Style="width: 100%;" />
                         </div>
 
                         <div class="fk-modal-actions">
@@ -137,6 +150,11 @@
         }
         else
         {
+            <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem 0; flex-wrap: wrap;">
+                <span class="material-icons" style="color: var(--fk-texto-secundario); font-size: 1.1rem;">filter_alt</span>
+                <span style="color: var(--fk-texto-secundario); font-weight: 500;">Ver por</span>
+                <RadzenDropDown Name="FiltroCategoria" Data="@opcionesFiltroCategoria" TextProperty="Texto" ValueProperty="Valor" @bind-Value="@filtroPorSecundaria" Change="@CambiarFiltroCategoria" Style="width: 260px; height: 36px;" />
+            </div>
             <div class="pestanas-categorias">
                 @foreach (var cat in categoriasUsadas)
                 {
@@ -145,13 +163,13 @@
                             @onclick="@(() => categoriaActivaId = cat.Id)">
                         <span class="material-icons" style="font-size: 0.95rem;">label</span>
                         @cat.Nombre
-                        <span class="badge-conteo">@conceptos.Count(c => c.CategoriaId == cat.Id)</span>
+                        <span class="badge-conteo">@conceptos.Count(c => CategoriaFiltro(c) == cat.Id)</span>
                     </button>
                 }
             </div>
             <div class="pestana-contenido">
                 @{
-                    var conceptosDeCat = conceptos.Where(c => c.CategoriaId == categoriaActivaId).OrderBy(c => c.Nombre).ToList();
+                    var conceptosDeCat = conceptos.Where(c => CategoriaFiltro(c) == categoriaActivaId).OrderBy(c => c.Nombre).ToList();
                     var totalCat = conceptosDeCat.Sum(c => c.Tipo == 1 ? c.Valor : -c.Valor);
                 }
                 @if (conceptosDeCat.Count == 0)
@@ -218,6 +236,8 @@
 
     private List<ConceptoCreadoDto> conceptos = [];
     private Guid categoriaActivaId;
+    private bool filtroPorSecundaria;
+    private List<FiltroCategoriaOpcion> opcionesFiltroCategoria = [new(false, "Categoría principal"), new(true, "Categoría secundaria")];
     private List<CategoriaCreadaDto> categorias = [];
     private List<CategoriaCreadaDto> categoriasUsadas = [];
     private string nombreProyecto = string.Empty;
@@ -231,6 +251,7 @@
     private Guid conceptoEliminandoId = Guid.Empty;
     private string conceptoEliminandoNombre = string.Empty;
     private List<TipoMovimientoOpcion> tiposMovimiento = [new(1, "Entrada"), new(2, "Salida")];
+
     private decimal totalEntradas;
     private decimal totalSalidas;
     private decimal totalGeneral;
@@ -272,8 +293,21 @@
 
     private void CalcularCategoriasUsadas()
     {
-        var idsUsados = conceptos.Select(c => c.CategoriaId).Distinct().ToList();
+        var idsUsados = filtroPorSecundaria
+            ? conceptos.Where(c => c.CategoriaSecundariaId.HasValue).Select(c => c.CategoriaSecundariaId!.Value).Distinct().ToList()
+            : conceptos.Select(c => c.CategoriaId).Distinct().ToList();
         categoriasUsadas = categorias.Where(c => idsUsados.Contains(c.Id)).OrderBy(c => c.Nombre).ToList();
+    }
+
+    private Guid? CategoriaFiltro(ConceptoCreadoDto concepto)
+        => filtroPorSecundaria ? concepto.CategoriaSecundariaId : concepto.CategoriaId;
+
+    private void CambiarFiltroCategoria()
+    {
+        CalcularCategoriasUsadas();
+        if (categoriaActivaId == Guid.Empty || !categoriasUsadas.Any(c => c.Id == categoriaActivaId))
+            categoriaActivaId = categoriasUsadas.FirstOrDefault()?.Id ?? Guid.Empty;
+        StateHasChanged();
     }
 
     private void CalcularTotales()
@@ -285,7 +319,7 @@
 
     private void AbrirModal()
     {
-        modelo = new CrearConceptoModelo { ProyectoId = ProyectoId, Nombre = string.Empty, Valor = 0, Tipo = 1, CategoriaId = Guid.Empty };
+        modelo = new CrearConceptoModelo { ProyectoId = ProyectoId, Nombre = string.Empty, Valor = 0, Tipo = 1, CategoriaId = Guid.Empty, CategoriaSecundariaId = null };
         modalVisible = true;
     }
 
@@ -308,6 +342,12 @@
             Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría obligatoria", Detail = "Debés seleccionar una categoría.", Duration = 4000 });
             return;
         }
+        if (modelo.CategoriaSecundariaId is Guid sec && sec != Guid.Empty && sec == modelo.CategoriaId)
+        {
+            Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría repetida", Detail = "La categoría secundaria no puede ser igual a la principal.", Duration = 4000 });
+            return;
+        }
+        modelo.CategoriaSecundariaId = modelo.CategoriaSecundariaId is Guid s && s != Guid.Empty ? s : null;
 
         try
         {
@@ -325,7 +365,7 @@
     private void AbrirModalEditar(ConceptoCreadoDto concepto)
     {
         conceptoEditandoId = concepto.Id;
-        modeloEditar = new CrearConceptoModelo { ProyectoId = concepto.ProyectoId, Nombre = concepto.Nombre, Valor = concepto.Valor, Tipo = concepto.Tipo, CategoriaId = concepto.CategoriaId };
+        modeloEditar = new CrearConceptoModelo { ProyectoId = concepto.ProyectoId, Nombre = concepto.Nombre, Valor = concepto.Valor, Tipo = concepto.Tipo, CategoriaId = concepto.CategoriaId, CategoriaSecundariaId = concepto.CategoriaSecundariaId };
         modalEditarVisible = true;
     }
 
@@ -346,7 +386,19 @@
 
         try
         {
-            await ServicioFinanzas.EditarConceptoProyectoAsync(ProyectoId, conceptoEditandoId, modeloEditar.Nombre, modeloEditar.Valor);
+            if (modeloEditar.CategoriaId == Guid.Empty)
+            {
+                Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría obligatoria", Detail = "Debés seleccionar una categoría principal.", Duration = 4000 });
+                return;
+            }
+            var secundariaNormalizada = modeloEditar.CategoriaSecundariaId is Guid se && se != Guid.Empty ? se : (Guid?)null;
+            if (secundariaNormalizada.HasValue && secundariaNormalizada.Value == modeloEditar.CategoriaId)
+            {
+                Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Categoría repetida", Detail = "La categoría secundaria no puede ser igual a la principal.", Duration = 4000 });
+                return;
+            }
+
+            await ServicioFinanzas.EditarConceptoProyectoAsync(ProyectoId, conceptoEditandoId, modeloEditar.Nombre, modeloEditar.Valor, modeloEditar.CategoriaId, secundariaNormalizada);
             Notificacion.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Concepto actualizado", Detail = $"'{modeloEditar.Nombre}' se ha actualizado correctamente.", Duration = 4000 });
             modalEditarVisible = false;
             await CargarConceptos();
@@ -382,4 +434,5 @@
     }
 
     private sealed record TipoMovimientoOpcion(int Valor, string Texto);
+    private sealed record FiltroCategoriaOpcion(bool Valor, string Texto);
 }

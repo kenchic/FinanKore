@@ -42,7 +42,7 @@ public sealed class Reporte : Entidad, IRaizAgregado
         return new Reporte(proyectoId, nombre.Trim(), descripcion?.Trim() ?? string.Empty);
     }
 
-    public ConceptoReporte CrearConceptoReporte(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId)
+    public ConceptoReporte CrearConceptoReporte(string nombre, decimal valor, TipoMovimiento tipo, Guid categoriaId, Guid? categoriaSecundariaId = null)
     {
         if (_conceptos.Any(c =>
             c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) &&
@@ -50,10 +50,28 @@ public sealed class Reporte : Entidad, IRaizAgregado
             c.CategoriaId == categoriaId))
             throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre, tipo y categoría en este reporte.");
 
-        var concepto = ConceptoReporte.Crear(nombre, valor, tipo, Id, categoriaId);
+        var concepto = ConceptoReporte.Crear(nombre, valor, tipo, Id, categoriaId, categoriaSecundariaId);
         _conceptos.Add(concepto);
 
         return concepto;
+    }
+
+    public void ActualizarConceptoReporte(Guid conceptoId, string nombre, decimal valor, Guid categoriaId, Guid? categoriaSecundariaId)
+    {
+        var concepto = _conceptos.FirstOrDefault(c => c.Id == conceptoId)
+            ?? throw new Excepciones.ExcepcionDominio("El concepto no existe en este reporte.");
+
+        if (_conceptos.Any(c =>
+                c.Id != conceptoId &&
+                c.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) &&
+                c.Tipo == concepto.Tipo &&
+                c.CategoriaId == categoriaId))
+            throw new Excepciones.ExcepcionDominio("Ya existe un concepto con el mismo nombre, tipo y categoría en este reporte.");
+
+        concepto.ActualizarNombre(nombre);
+        concepto.ActualizarValor(valor);
+        concepto.ActualizarCategoria(categoriaId);
+        concepto.ActualizarCategoriaSecundaria(categoriaSecundariaId);
     }
 
     public void EliminarConceptoReporte(Guid conceptoId)

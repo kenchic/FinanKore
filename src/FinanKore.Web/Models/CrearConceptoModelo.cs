@@ -7,4 +7,5 @@ public sealed class CrearConceptoModelo
     public int Tipo { get; set; } = 1; // 1 = Entrada, 2 = Salida
     public Guid ProyectoId { get; set; }
     public Guid CategoriaId { get; set; }
+    public Guid? CategoriaSecundariaId { get; set; }
 }
