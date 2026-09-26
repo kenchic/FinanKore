@@ -95,6 +95,7 @@ else
                             <th>Nombre</th>
                             <th>Tipo</th>
                             <th>Valor</th>
+                            <th style="text-align: right; width: 90px;">%</th>
                             <th>Fecha</th>
                         </tr>
                     </thead>
@@ -120,10 +121,12 @@ else
                                 </td>
                                 @if (concepto.Valor > 0)
                                 {
-                                    <td><strong>@concepto.Valor.ToString("C")</strong></td>
+                                    <td style="text-align: right;"><strong>@concepto.Valor.ToString("C")</strong></td>
+                                    <td style="text-align: right; color: @(concepto.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); white-space: nowrap;">@PorcentajeRelativo(concepto)</td>
                                 }
                                 else
                                 {
+                                    <td></td>
                                     <td></td>
                                 }
                                 <td class="text-secondary">@concepto.FechaCreacion.ToString("dd MMM yyyy")</td>
@@ -148,6 +151,9 @@ else
     private CrearConceptoModelo modelo = new() { Nombre = string.Empty, Valor = 0, Tipo = 1 };
 
     private List<TipoMovimientoOpcion> tiposMovimiento = [new(1, "Entrada"), new(2, "Salida")];
+
+    private decimal totalEntradas;
+    private decimal totalSalidas;
 
     protected override async Task OnInitializedAsync()
     {
@@ -181,9 +187,29 @@ else
     private async Task CargarConceptos()
     {
         cargando = true;
-        try { conceptos = await ServicioFinanzas.ObtenerConceptosAsync(proyectoSeleccionadoId); }
-        catch { conceptos = []; }
+        try
+        {
+            conceptos = await ServicioFinanzas.ObtenerConceptosAsync(proyectoSeleccionadoId);
+            CalcularTotalesPorTipo();
+        }
+        catch { conceptos = []; totalEntradas = totalSalidas = 0; }
         finally { cargando = false; }
+    }
+
+    private void CalcularTotalesPorTipo()
+    {
+        totalEntradas = conceptos.Where(c => c.Tipo == 1).Sum(c => c.Valor);
+        totalSalidas  = conceptos.Where(c => c.Tipo == 2).Sum(c => c.Valor);
+    }
+
+    private string PorcentajeRelativo(ConceptoCreadoDto concepto)
+    {
+        var totalDelTipo = concepto.Tipo == 1 ? totalEntradas : totalSalidas;
+        if (totalDelTipo <= 0)
+        {
+            return "—";
+        }
+        return $"{Math.Round(concepto.Valor / totalDelTipo * 100m, MidpointRounding.AwayFromZero).ToString("N0")} %";
     }
 
     private void MostrarFormulario()

@@ -1,12 +1,37 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "E:\\Proyectos\\FinanKore\\src\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AC23C4AD-C8D7-FA19-BF80-BD6E847D2522}|FinanKore.WebApi\\FinanKore.WebApi.csproj|e:\\proyectos\\finankore\\src\\finankore.webapi\\endpoints\\finanzasendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AC23C4AD-C8D7-FA19-BF80-BD6E847D2522}|FinanKore.WebApi\\FinanKore.WebApi.csproj|solutionrelative:finankore.webapi\\endpoints\\finanzasendpoints.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FinanzasEndpoints.cs",
+              "DocumentMoniker": "E:\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\Endpoints\\FinanzasEndpoints.cs",
+              "RelativeDocumentMoniker": "FinanKore.WebApi\\Endpoints\\FinanzasEndpoints.cs",
+              "ToolTip": "E:\\Proyectos\\FinanKore\\src\\FinanKore.WebApi\\Endpoints\\FinanzasEndpoints.cs",
+              "RelativeToolTip": "FinanKore.WebApi\\Endpoints\\FinanzasEndpoints.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-25T01:43:17.743Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

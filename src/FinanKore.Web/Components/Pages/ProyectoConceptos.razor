@@ -186,6 +186,7 @@
                             <tr>
                                 <th style="text-align: left;">Concepto</th>
                                 <th style="text-align: right;">Valor</th>
+                                <th style="text-align: right; width: 90px;">%</th>
                                 <th style="text-align: right;">Acciones</th>
                             </tr>
                         </thead>
@@ -210,6 +211,12 @@
                                             </span>
                                         }
                                     </td>
+                                    <td style="text-align: right; color: @(c.Tipo == 1 ? "var(--fk-verde)" : "var(--fk-magenta)"); white-space: nowrap;">
+                                        @if (c.Valor > 0)
+                                        {
+                                            <span>@PorcentajeRelativo(c)</span>
+                                        }
+                                    </td>
                                     <td style="text-align: right;">
                                         <RadzenButton Icon="edit" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalEditar(c))" title="Editar" />
                                         <RadzenButton Icon="delete" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small" Class="btn-tabla" Click="@(() => AbrirModalConfirmarEliminar(c))" title="Eliminar" />
@@ -221,6 +228,7 @@
                             <tr style="border-top: 2px solid var(--fk-gris-borde); font-weight: 600;">
                                 <td style="text-align: left;">Total</td>
                                 <td style="text-align: right; color: @(totalCat >= 0 ? "var(--fk-verde)" : "var(--fk-magenta)");">$ @Math.Abs(totalCat).ToString("N0")</td>
+                                <td style="text-align: right;">@TotalPorcentajes(conceptosDeCat)</td>
                                 <td></td>
                             </tr>
                         </tfoot>
@@ -301,6 +309,30 @@
 
     private Guid? CategoriaFiltro(ConceptoCreadoDto concepto)
         => filtroPorSecundaria ? concepto.CategoriaSecundariaId : concepto.CategoriaId;
+
+    private string PorcentajeRelativo(ConceptoCreadoDto concepto)
+    {
+        var totalDelTipo = concepto.Tipo == 1 ? totalEntradas : totalSalidas;
+        if (totalDelTipo <= 0)
+        {
+            return "—";
+        }
+        return $"{Math.Round(concepto.Valor / totalDelTipo * 100m, MidpointRounding.AwayFromZero).ToString("N0")} %";
+    }
+
+    private string TotalPorcentajes(IEnumerable<ConceptoCreadoDto> conceptosDelTipo)
+    {
+        var suma = conceptosDelTipo
+            .Where(c => c.Valor > 0)
+            .Sum(c => PorcentajeExacto(c));
+        return $"{Math.Round(suma, MidpointRounding.AwayFromZero).ToString("N0")} %";
+    }
+
+    private decimal PorcentajeExacto(ConceptoCreadoDto c)
+    {
+        var totalDelTipo = c.Tipo == 1 ? totalEntradas : totalSalidas;
+        return totalDelTipo <= 0 ? 0m : c.Valor / totalDelTipo * 100m;
+    }
 
     private void CambiarFiltroCategoria()
     {
